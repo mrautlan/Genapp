@@ -1,0 +1,19 @@
+# Target deploy properties for zos_brg1008_genapp
+---
+deploy:
+  cics.cicsplex: CICSTS55
+  cics.cmciport: 1491  
+  bind.maxrc: 4
+  bind.confdir: /etc/dbb
+  bind.user: STCDBB
+  bind.package: GENASA1
+  bind.qualifier: GENAPP
+  bind.subsys: DBCG
+  copy.mapping:
+     "DBRM" :  
+       "mode": "BINARY"
+     "LOAD": 
+       "mode": "LOAD" 
+  pds.mapping: |-
+    .*.LOAD,CB12.V51.LOAD
+    .*.DBRM,CB12.V51.DBRMLIB 

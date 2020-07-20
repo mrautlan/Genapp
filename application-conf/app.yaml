@@ -1,0 +1,6 @@
+# Application Definition file template:
+#  - This file will be updated during the DBB Build.
+#  - Schema is in this folder: nazare-demo-sysadmin/Pipeline/zar/schema.json
+---
+name: NAZAREGenApp
+version: 1.0.0
