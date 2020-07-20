@@ -1,19 +1,19 @@
-# Target deploy properties for zos_brg1008_genapp
+# Target deploy properties for zos_tivlp02_imsapp
 ---
 deploy:
-  cics.cicsplex: CICSTS55
-  cics.cmciport: 1491  
-  bind.maxrc: 4
-  bind.confdir: /etc/dbb
-  bind.user: STCDBB
+  cics.cicsplex: CICS01
+  cics.cmciport: 1490
+  bind.maxrc: 0
+  bind.confdir: /u/jyvesb/ispf
+  bind.user: JENKINS
   bind.package: GENASA1
-  bind.qualifier: GENAPP
-  bind.subsys: DBCG
+  bind.qualifier: GENADB0
+  bind.subsys: DBC1
   copy.mapping:
      "DBRM" :  
        "mode": "BINARY"
      "LOAD": 
-       "mode": "LOAD" 
+       "mode": "LOAD"   
   pds.mapping: |-
-    .*.LOAD,CB12.V51.LOAD
-    .*.DBRM,CB12.V51.DBRMLIB 
+    .*.LOAD,NAZARE.GENAPP.LOADLIB
+    .*.DBRM,NAZARE.GENAPP.DBRM    

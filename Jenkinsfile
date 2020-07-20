@@ -3,7 +3,7 @@ def linuxAgent = 'master'
 def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'e2e-pipeline'
 
 // DBB
-def dbbHlq = 'NAZARE.OC'
+def dbbHlq = 'NAZARE.DCD'
 def dbbDaemonPort = null
 def dbbGroovyzOpts= ''
 def dbbBuildType='-i'
@@ -23,10 +23,15 @@ def srcGitBranch = 'openshift'
 def serverId = "ArtifactoryE2EPipeline"
 def server = Artifactory.server serverId
 def artiCredentialsId = 'e2e-sandbox-artifactory'
-def repositoryPath = "sys-nazare-sysadmin-generic-local/genapp/scripted"
+def repositoryPath = "sys-nazare-sysadmin-generic-local/cics-genapp/dcd"
 
 // ZCEE
 zceeCredId= 'e2e-sandbox-zcee'
+
+// DCD
+dcdServer= 'e2e-sandbox-dcd'
+dcdCredId= 'e2e-sandbox-dcd'
+dcdScmClient= '/data/dcd/client/com.ibm.dcd.scmclient-1.0.2/scmclient.sh'
 
 // Verbose
 def verbose = env.VERBOSE && env.VERBOSE == 'true' ? true : false
@@ -163,10 +168,9 @@ pipeline {
         stage('DCD Scan/Update') {
             steps {
                 script {
-                           withCredentials([usernamePassword(credentialsId: zceeCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-								println "${WORKSPACE}"
-                                sh "/data/dcd/client/com.ibm.dcd.scmclient-1.0.2/scmclient.sh --git --project GenApp --user ADMIN --password ADMIN --server https://127.0.0.1:9443/  --verbose '/var/lib/jenkins/workspace/GenAppPipeline@script/base'"
-                            }
+                           withCredentials([usernamePassword(credentialsId: dcdCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                sh "$dcdScmClient --git --project GenApp --user $USERNAME --password $PASSWORD --server $dcdServer  --verbose ${WORKSPACE}@script/base"
+                           }
                }
            }
         }
