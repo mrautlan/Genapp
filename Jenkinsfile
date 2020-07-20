@@ -13,7 +13,7 @@ def dbbBuildExtraOpts=''
 def gitCredId = 'e2e-sandbox-sshsecret'
 def gitOrg = 'IBMZSoftware'
 def gitHost = 'github.ibm.com'
-def srcGitRepo =   'git@'+gitHost+':'+gitOrg+'/nazare-demo-genapp.git'
+def srcGitRepo =   'git@'+gitHost+':'+gitOrg+'/cics-genapp.git'
 def adminGitRepo = 'git@'+gitHost+':'+gitOrg+'/nazare-demo-sysadmin.git'
 def adminGitBranch = 'openshift'
 def srcGitBranch = 'openshift'
@@ -59,8 +59,10 @@ pipeline {
             agent { label zOsAgentLabel }
             steps {
                 script {
-                    srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
-                    srcGitBranch = scm.branches[0].name
+                    catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                        srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
+                        srcGitBranch = scm.branches[0].name
+                    }
                     println "URL is   : $srcGitRepo"
                     println "Branch is: $srcGitBranch"
                     sh(script: "rm -rf ${WORKSPACE}/BUILD-${BUILD_NUMBER}", returnStdout: true)
@@ -70,7 +72,7 @@ pipeline {
                     if ( env.PROJECT_NAME ) {
                       gitCredId = env.PROJECT_NAME + '-sshsecret'
                     }
-                    dir('nazare-demo-genapp') {
+                    dir('cics-genapp') {
                         def scmVars = null
                         // Root location of the groovy script.
                         env.WORKSPACE_ROOT = "${WORKSPACE}".substring(0, "${WORKSPACE}".lastIndexOf('/')) + "/" + gitOrg + "/" + adminGitBranch
@@ -146,7 +148,7 @@ pipeline {
                         }
                         
                         sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/zAppBuild/build.groovy\
-                                --logEncoding UTF-8 -w ${WORKSPACE} --application nazare-demo-genapp --sourceDir ${WORKSPACE}\
+                                --logEncoding UTF-8 -w ${WORKSPACE} --application cics-genapp --sourceDir ${WORKSPACE}\
                                 --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}  --hlq ${dbbHlq}.GENAPP --url $DBB_URL -pw ADMIN $dbbBuildType $dbbBuildExtraOpts $buildVerbose"
                         def files = findFiles(glob: "**BUILD-${BUILD_NUMBER}/**/buildList.txt")
                         // Do not deploy if nothing in the build list
@@ -191,15 +193,15 @@ pipeline {
                                 }
                                 server.credentialsId = artiCredentialsId
                                 sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/Package.groovy\
-                                       -a ${WORKSPACE}/nazare-demo-genapp/application-conf\
-                                       -s ${WORKSPACE}/nazare-demo-genapp\
+                                       -a ${WORKSPACE}/cics-genapp/application-conf\
+                                       -s ${WORKSPACE}/cics-genapp\
                                        -b ${WORKSPACE_ROOT}/nazare-demo-sysadmin\
                                        -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}\
                                        -hl ${dbbHlq}.GENAPP\
                                        -n ${BUILD_NUMBER}\
                                        -r ${server.url}/${repositoryPath}"
                                        
-                                def fileContents = readFile file: "${WORKSPACE}/nazare-demo-genapp/application-conf/app.yaml", encoding: "IBM-1047"
+                                def fileContents = readFile file: "${WORKSPACE}/cics-genapp/application-conf/app.yaml", encoding: "IBM-1047"
                                 def datas = readYaml text: fileContents
                                 appName = datas['name']
                                 appVersion = datas['version']
@@ -234,7 +236,7 @@ pipeline {
                             sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/CicsDeploy.groovy\
                                    -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}\
                                    -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/genapp/scripted/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
-                                   -y ${WORKSPACE}/nazare-demo-genapp/deploy-conf/${deployInputFile} $buildVerbose"
+                                   -y ${WORKSPACE}/cics-genapp/deploy-conf/${deployInputFile} $buildVerbose"
                             
                         }
                     }
