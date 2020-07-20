@@ -6,7 +6,7 @@ def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'e2e-pipeline'
 def dbbHlq = 'NAZARE.OC'
 def dbbDaemonPort = null
 def dbbGroovyzOpts= ''
-def dbbBuildType='-f'
+def dbbBuildType='-i'
 def dbbBuildExtraOpts=''
 
 // GIT
