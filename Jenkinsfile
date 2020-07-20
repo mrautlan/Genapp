@@ -23,7 +23,9 @@ def srcGitBranch = 'openshift'
 def serverId = "ArtifactoryE2EPipeline"
 def server = Artifactory.server serverId
 def artiCredentialsId = 'e2e-sandbox-artifactory'
-def repositoryPath = "sys-nazare-sysadmin-generic-local/cics-genapp/dcd"
+def repository = "sys-nazare-sysadmin-generic-local"
+def repositoryFolder = "cics-genapp/dcd"
+def repositoryPath = repository + "/" + repositoryFolder
 
 // ZCEE
 zceeCredId= 'e2e-sandbox-zcee'
@@ -229,7 +231,7 @@ pipeline {
                             downloadFromArtifactory(server, pattern, target)
                             sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/CicsDeploy.groovy\
                                    -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}\
-                                   -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/genapp/scripted/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
+                                   -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/"+ $repositoryFolder + "/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
                                    -y ${WORKSPACE}/cics-genapp/deploy-conf/${deployInputFile} $buildVerbose"
                             
                         }
