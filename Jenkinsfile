@@ -29,7 +29,7 @@ def repositoryPath = "sys-nazare-sysadmin-generic-local/cics-genapp/dcd"
 zceeCredId= 'e2e-sandbox-zcee'
 
 // DCD
-dcdServer= 'e2e-sandbox-dcd'
+dcdServer= 'https://127.0.0.1:9443'
 dcdCredId= 'e2e-sandbox-dcd'
 dcdScmClient= '/data/dcd/client/com.ibm.dcd.scmclient-1.0.2/scmclient.sh'
 
