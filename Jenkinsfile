@@ -231,7 +231,7 @@ pipeline {
                             downloadFromArtifactory(server, pattern, target)
                             sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/CicsDeploy.groovy\
                                    -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}\
-                                   -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/"+ $repositoryFolder + "/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
+                                   -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/${repositoryFolder}/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
                                    -y ${WORKSPACE}/cics-genapp/deploy-conf/${deployInputFile} $buildVerbose"
                             
                         }
