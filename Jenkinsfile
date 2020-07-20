@@ -1,35 +1,32 @@
-// Agent labels
-def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'e2e-pipeline'
+// Agents Labels
 def linuxAgent = 'master'
-
-// GIT repositories
-def srcGitRepo =  null
-def srcGitBranch = null
-def zAppBuildGitRepo = 'https://github.com/IBM/dbb-zappbuild.git'
-def zAppBuildGitBranch = 'development' // Some important issues are not yet merged into master.
-def dbbGitRepo = 'https://github.com/IBM/dbb'
-def dbbGitBranch = 'master'
+def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'e2e-pipeline'
 
 // DBB
-def dbbHome=null
-def dbbUrl=null
-def dbbHlq=null
-def dbbBuildType='-i'
+def dbbHlq = 'NAZARE.OC'
+def dbbDaemonPort = null
 def dbbGroovyzOpts= ''
+def dbbBuildType='-c'
+def dbbBuildExtraOpts=''
+
+// GIT
+def gitCredId = 'e2e-sandbox-sshsecret'
+def gitOrg = 'IBMZSoftware'
+def gitHost = 'github.ibm.com'
+def srcGitRepo =   'git@'+gitHost+':'+gitOrg+'/nazare-demo-genapp.git'
+def adminGitRepo = 'git@'+gitHost+':'+gitOrg+'/nazare-demo-sysadmin.git'
+def adminGitBranch = 'openshift'
+def srcGitBranch = 'openshift'
+
 
 // Artifactory
-def artiUrl = null
-def repositoryPath = null
-def artiCredentialsId = 'artifactory_id'
+def serverId = "ArtifactoryE2EPipeline"
+def server = Artifactory.server serverId
+def artiCredentialsId = 'e2e-sandbox-artifactory'
+def repositoryPath = "sys-nazare-sysadmin-generic-local/genapp/scripted"
 
-
-// UCD
-def ucdBuztool = null
-def ucdApplication = 'GenApp-Deploy'
-def ucdProcess = 'Deploy'
-def ucdComponent = 'GenAppComponent'
-def ucdEnv = 'Development'
-def ucdSite = 'UrbanCodeE2EPipeline'
+// ZCEE
+zceeCredId= 'e2e-sandbox-zcee'
 
 // Verbose
 def verbose = env.VERBOSE && env.VERBOSE == 'true' ? true : false
@@ -37,6 +34,9 @@ def verbose = env.VERBOSE && env.VERBOSE == 'true' ? true : false
 // Private
 def needDeploy = true
 def buildVerbose = verbose ? '-v' : ''
+def appName = null
+def appVersion = null
+ 
 
 pipeline {
 
@@ -45,54 +45,70 @@ pipeline {
     options { skipDefaultCheckout(true) }
 
     stages {
-        
+        /*stage('Init') {
+            steps {
+                script {
+                    srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
+                    srcGitBranch = scm.branches[0].name
+                    println "URL is   : $srcGitRepo"
+                    println "Branch is: $srcGitBranch"
+               }
+           }
+        }*/
         stage('Git Clone/Refresh') {
             agent { label zOsAgentLabel }
             steps {
                 script {
+                    srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
+                    srcGitBranch = scm.branches[0].name
+                    println "URL is   : $srcGitRepo"
+                    println "Branch is: $srcGitBranch"
+                    sh(script: "rm -rf ${WORKSPACE}/BUILD-${BUILD_NUMBER}", returnStdout: true)
                     if ( verbose ) {
                         echo sh(script: 'env|sort', returnStdout: true)
                     }
-                    
-                    dir('cics-genapp') {
-                        sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
-                        catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
-                            srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
-                            srcGitBranch = scm.branches[0].name
-                        }
+                    if ( env.PROJECT_NAME ) {
+                      gitCredId = env.PROJECT_NAME + '-sshsecret'
+                    }
+                    dir('nazare-demo-genapp') {
                         def scmVars = null
+                        // Root location of the groovy script.
+                        env.WORKSPACE_ROOT = "${WORKSPACE}".substring(0, "${WORKSPACE}".lastIndexOf('/')) + "/" + gitOrg + "/" + adminGitBranch
+                        sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
                         scmVars = checkout([$class: 'GitSCM', branches: [[name: srcGitBranch]],
                                                 doGenerateSubmoduleConfigurations: false,
                                                 submoduleCfg: [],
+                                                extensions: [
+                                                             [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[
+                                                                     [$class:'SparseCheckoutPath', path:'base/src/'],
+                                                                     [$class:'SparseCheckoutPath', path:'application-conf/'],
+                                                                     [$class:'SparseCheckoutPath', path:'deploy-conf/']
+                                                                     ]]
+                                                                     ],
                                                 userRemoteConfigs: [[
-                                                                     // For now GenApp is not public
-                                                                     credentialsId: 'github_id',
+                                                                     credentialsId: gitCredId,
                                                                      url: srcGitRepo,
                                                                      ]]])
+
+                        env.GIT_COMMIT_DEMO_GENAPP =  scmVars.GIT_COMMIT
+                        env.GIT_URL_DEMO_GENAPP =  scmVars.GIT_URL
                     }
                     
-                    dir("dbb-zappbuild") {
-                        sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
-                        def scmVars =
-                            checkout([$class: 'GitSCM', branches: [[name: zAppBuildGitBranch]],
+                    dir("${env.WORKSPACE_ROOT}/nazare-demo-sysadmin") {
+                    sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
+                    def scmVars =
+                        checkout([$class: 'GitSCM', branches: [[name: adminGitBranch]],
                               doGenerateSubmoduleConfigurations: false,
                               submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                url: zAppBuildGitRepo,
-                            ]]])
-                    }
-                    
-                    dir("dbb") {
-                        sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
-                        def scmVars =
-                            checkout([$class: 'GitSCM', branches: [[name: dbbGitBranch]],
-                              doGenerateSubmoduleConfigurations: false,
                               extensions: [
-                                       [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'Pipeline/CreateUCDComponentVersion/']]]
+                                       [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[
+                                                                   [$class:'SparseCheckoutPath', path:'zAppBuild/'],
+                                                                   [$class:'SparseCheckoutPath', path:'Pipeline/']
+                                                                 ]]
                                     ],
-                              submoduleCfg: [],
                             userRemoteConfigs: [[
-                                url: dbbGitRepo,
+                                credentialsId: gitCredId,
+                                url: adminGitRepo,
                             ]]])
                     }
                 }
@@ -103,16 +119,35 @@ pipeline {
             steps {
                 script{
                     node( zOsAgentLabel ) {
+                        if ( env.DBB_BUILD_TYPE != null ) {
+                            dbbBuildType = env.DBB_BUILD_TYPE;
+                        }
                         if ( env.DBB_BUILD_EXTRA_OPTS != null ) {
                            dbbBuildExtraOpts = env.DBB_BUILD_EXTRA_OPTS
                         }
-                        if ( env.DBB_BUILD_TYPE != null ) {
-                            dbbBuildType = env.DBB_BUILD_TYPE
+                        if ( env.GROOVYZ_BUILD_EXTRA_OPTS != null ) {
+                           dbbGroovyzOpts = env.GROOVYZ_BUILD_EXTRA_OPTS
                         }
-                        dbbHome = env.DBB_HOME
-                        dbbUrl = env.DBB_URL
-                        dbbHlq = env.DBB_HLQ
-                        sh "$dbbHome/bin/groovyz $dbbGroovyzOpts ${WORKSPACE}/dbb-zappbuild/build.groovy --logEncoding UTF-8 -w ${WORKSPACE} --application cics-genapp --sourceDir ${WORKSPACE}  --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER} --hlq ${dbbHlq}.GENAPP --url $dbbUrl -pw ADMIN $dbbBuildType $buildVerbose"
+                        if ( env.DBB_DAEMON_PORT != null ) {
+                            dbbDaemonPort = env.DBB_DAEMON_PORT;
+                        }
+                        if ( dbbDaemonPort != null ) {
+                            def r = sh script: "netstat | grep ${dbbDaemonPort}", returnStatus: true
+                            if ( r == 0 ) {
+                                println "DBB Daemon is running.."
+                                dbbGroovyzOpts += " -DBB_DAEMON_PORT ${dbbDaemonPort} -DBB_DAEMON_HOST 127.0.0.1"
+                                sh "mkdir ${WORKSPACE}/BUILD-${BUILD_NUMBER}"
+                                sh "chmod 777 ${WORKSPACE}/BUILD-${BUILD_NUMBER}"
+                            }
+                            else {
+                                println "WARNING: DBB Daemon not running build will be longer.."
+                                currentBuild.result = "UNSTABLE"
+                            }
+                        }
+                        
+                        sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/zAppBuild/build.groovy\
+                                --logEncoding UTF-8 -w ${WORKSPACE} --application nazare-demo-genapp --sourceDir ${WORKSPACE}\
+                                --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}  --hlq ${dbbHlq}.GENAPP --url $DBB_URL -pw ADMIN $dbbBuildType $dbbBuildExtraOpts $buildVerbose"
                         def files = findFiles(glob: "**BUILD-${BUILD_NUMBER}/**/buildList.txt")
                         // Do not deploy if nothing in the build list
                         needDeploy = files.length > 0 && files[0].length > 0
@@ -133,26 +168,45 @@ pipeline {
             }
         }
         
-        stage('UCD Package') {
+        stage('DCD Scan/Update') {
+            steps {
+                script {
+                           withCredentials([usernamePassword(credentialsId: zceeCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+								println "${WORKSPACE}"
+                                sh "/data/dcd/client/com.ibm.dcd.scmclient-1.0.2/scmclient.sh --git --project GenApp --user ADMIN --password ADMIN --server https://127.0.0.1:9443/  --verbose '/var/lib/jenkins/workspace/GenAppPipeline@script/base'"
+                            }
+               }
+           }
+        }
+        
+        stage('Package') {
             steps {
                 script {
                     node( zOsAgentLabel ) { 
                         if ( needDeploy ) {
-                            artiUrl = env.ARTIFACTORY_URL
-                            repositoryPath = env.ARTIFACTORY_REPO_PATH
-                            ucdBuztool = env.UCD_BUZTOOL_PATH
-                            BUILD_OUTPUT_FOLDER = sh (script: "ls ${WORKSPACE}/BUILD-${BUILD_NUMBER}", returnStdout: true).trim()
+                            BUILD_OUTPUT_FOLDER = sh (script: "ls ${WORKSPACE}/BUILD-${BUILD_NUMBER} | grep \"build.*[0-9]\$\" | tail -n 1", returnStdout: true).trim()
                             dir("${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}") {
-                                withCredentials([usernamePassword(credentialsId: artiCredentialsId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                                    writeFile file: "${WORKSPACE}/BUILD-${BUILD_NUMBER}/artifactoy.properties", encoding: "ibm-1047",
-                                       text:"""password=$PASSWORD
-username=$USERNAME
-Repository_type=artifactory
-repository=${repositoryPath}
-url=${artiUrl}
-                                      """
+                                if ( env.PROJECT_NAME ) {
+                                    artiCredentialsId = env.PROJECT_NAME + '-artifactory'
                                 }
-                                sh "$dbbHome/bin/groovyz $dbbGroovyzOpts ${WORKSPACE}/dbb/Pipeline/CreateUCDComponentVersion/dbb-ucd-packaging.groovy --buztool ${ucdBuztool} --component ${ucdComponent} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --artifactRepository ${WORKSPACE}/BUILD-${BUILD_NUMBER}/artifactoy.properties"
+                                server.credentialsId = artiCredentialsId
+                                sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/Package.groovy\
+                                       -a ${WORKSPACE}/nazare-demo-genapp/application-conf\
+                                       -s ${WORKSPACE}/nazare-demo-genapp\
+                                       -b ${WORKSPACE_ROOT}/nazare-demo-sysadmin\
+                                       -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}\
+                                       -hl ${dbbHlq}.GENAPP\
+                                       -n ${BUILD_NUMBER}\
+                                       -r ${server.url}/${repositoryPath}"
+                                       
+                                def fileContents = readFile file: "${WORKSPACE}/nazare-demo-genapp/application-conf/app.yaml", encoding: "IBM-1047"
+                                def datas = readYaml text: fileContents
+                                appName = datas['name']
+                                appVersion = datas['version']
+                                println "Artifactory publish url: ${server.url}/${repositoryPath}/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar"
+                                def pattern = "${appName}-${appVersion}.tar"
+                                def target = "${repositoryPath}/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/"
+                               uploadToArtifactory(server, pattern, target)
                             }
                         }
                     }
@@ -160,25 +214,85 @@ url=${artiUrl}
             }
         }
         
-        stage('UCD Deploy') {
+        stage('Deploy') {
             steps {
                 script{
-                    if ( needDeploy ) {
-                        script{
-                            step(
-                                  [$class: 'UCDeployPublisher',
-                                    deploy: [
-                                        deployApp: ucdApplication,
-                                        deployDesc: 'Requested from Jenkins',
-                                        deployEnv: ucdEnv,
-                                        deployOnlyChanged: false,
-                                        deployProc: ucdProcess,
-                                        deployVersions: ucdComponent + ':latest'],
-                                    siteName: ucdSite])
+                    node( zOsAgentLabel ) { 
+                        if ( needDeploy ) {
+                            if ( env.PROJECT_NAME ) {
+                                    artiCredentialsId = env.PROJECT_NAME + '-artifactory'
+                            }
+                            server.credentialsId = artiCredentialsId
+                            def deployInputFile = "deploy.${zOsAgentLabel}.yaml"
+                            if ( env.DEPLOY_INPUT_FILE ) {
+                                    deployInputFile = env.DEPLOY_INPUT_FILE
+                            }
+                            def pattern = "${repositoryPath}/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/*"
+                            def target = "${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/"
+                            sh "mkdir -p ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload"
+                            downloadFromArtifactory(server, pattern, target)
+                            sh "$DBB_HOME/bin/groovyz $dbbGroovyzOpts ${WORKSPACE_ROOT}/nazare-demo-sysadmin/Pipeline/Zar/CicsDeploy.groovy\
+                                   -w ${WORKSPACE}/BUILD-${BUILD_NUMBER}\
+                                   -t ${WORKSPACE}/BUILD-${BUILD_NUMBER}/tempDownload/genapp/scripted/${appVersion}/${srcGitBranch}/${BUILD_NUMBER}/${appName}-${appVersion}.tar\
+                                   -y ${WORKSPACE}/nazare-demo-genapp/deploy-conf/${deployInputFile} $buildVerbose"
+                            
                         }
                     }
                 }
             }
+            post {
+                always {
+                    node( zOsAgentLabel ) {
+                        dir("${WORKSPACE}/BUILD-${BUILD_NUMBER}") {
+                            archiveArtifacts allowEmptyArchive: true, 
+                                            artifacts: '*_bind.log,*_refresh.log', 
+                                            onlyIfSuccessful: false
+                        }
+                    }
+                }
+            }    
+        }
+        stage ('Integration Tests'){
+             steps {
+                   script{
+                       node( zOsAgentLabel ) {
+                           withCredentials([usernamePassword(credentialsId: zceeCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                // Very basic for now
+                                sh "curl -k -u $USERNAME:$PASSWORD -H 'Content-Type:application/json' -X GET $ZCEE_URL/genapp/motorPolicy/2/1 > ${WORKSPACE}/BUILD-${BUILD_NUMBER}/api.log"
+                                sh "grep '1999-01-01'  ${WORKSPACE}/BUILD-${BUILD_NUMBER}/api.log"
+                            }
+                        }
+                  }
+             }
         }
     }
+}
+
+// Artifactory upload
+void uploadToArtifactory(server, pattern, target){
+    def buildInfo = server.upload  spec:
+            """{
+                "files": [
+                    {
+                        "pattern": "${pattern}",
+                        "target": "${target}"
+                    }
+                    ]
+            }"""
+            
+    // Publish the build info to Artifactory
+    server.publishBuildInfo buildInfo
+}
+
+// Artifactory download
+void downloadFromArtifactory(server, pattern, target){
+    server.download  spec:
+            """{
+                    "files": [
+                            {
+                                "pattern": "${pattern}",
+                                "target": "${target}"
+                            }
+                        ]
+            }"""
 }
