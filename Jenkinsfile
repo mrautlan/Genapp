@@ -6,7 +6,7 @@ def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'e2e-pipeline'
 def dbbHlq = 'NAZARE.OC'
 def dbbDaemonPort = null
 def dbbGroovyzOpts= ''
-def dbbBuildType='-c'
+def dbbBuildType='-f'
 def dbbBuildExtraOpts=''
 
 // GIT
@@ -45,16 +45,6 @@ pipeline {
     options { skipDefaultCheckout(true) }
 
     stages {
-        /*stage('Init') {
-            steps {
-                script {
-                    srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
-                    srcGitBranch = scm.branches[0].name
-                    println "URL is   : $srcGitRepo"
-                    println "Branch is: $srcGitBranch"
-               }
-           }
-        }*/
         stage('Git Clone/Refresh') {
             agent { label zOsAgentLabel }
             steps {
