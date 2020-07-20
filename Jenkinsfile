@@ -33,7 +33,7 @@ zceeCredId= 'e2e-sandbox-zcee'
 // DCD
 dcdServer= 'https://127.0.0.1:9443'
 dcdCredId= 'e2e-sandbox-dcd'
-dcdScmClient= '/data/dcd/client/com.ibm.dcd.scmclient-1.0.2/scmclient.sh'
+dcdScmClient= '/data/dcd/client/com.ibm.dcd.scmclient-1.1.0/scmclient.sh'
 
 // Verbose
 def verbose = env.VERBOSE && env.VERBOSE == 'true' ? true : false
@@ -171,7 +171,7 @@ pipeline {
             steps {
                 script {
                            withCredentials([usernamePassword(credentialsId: dcdCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                                sh "$dcdScmClient --git --project cics-genapp --user $USERNAME --password $PASSWORD --server $dcdServer  --verbose ${WORKSPACE}@script/base"
+                                sh "$dcdScmClient --git --project cics-genapp --user $USERNAME --password $PASSWORD --server $dcdServer  --verbose ${WORKSPACE}@script"
                            }
                }
            }
