@@ -171,7 +171,7 @@ pipeline {
             steps {
                 script {
                            withCredentials([usernamePassword(credentialsId: dcdCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                                sh "$dcdScmClient --git --project GenApp --user $USERNAME --password $PASSWORD --server $dcdServer  --verbose ${WORKSPACE}@script/base"
+                                sh "$dcdScmClient --git --project cics-genapp --user $USERNAME --password $PASSWORD --server $dcdServer  --verbose ${WORKSPACE}@script/base"
                            }
                }
            }
