@@ -98,7 +98,7 @@ pipeline {
                                                 submoduleCfg: [],
                                                 userRemoteConfigs: [[
                                                                      // For now GenApp is not public
-                                                                     credentialsId: 'github_id',
+                                                                     credentialsId: 'ibm_git_hub',
                                                                      url: srcGitRepo,
                                                                      ]]])
                     }
