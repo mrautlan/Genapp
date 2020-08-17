@@ -6,6 +6,8 @@
 	</projects>
 	<buildSpec>
 	</buildSpec>
-	<natures>
+	<natures>		
+		<nature>com.ibm.ftt.dbbz.integration.dbbzprojectnature</nature>
+		<nature>com.ibm.ftt.ui.views.project.navigator.local</nature>		
 	</natures>
 </projectDescription>
