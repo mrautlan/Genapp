@@ -7,7 +7,7 @@ def srcGitRepo =  null
 def srcGitBranch = null
 def zAppBuildGitRepo = 'https://github.com/IBM/dbb-zappbuild.git'
 def zAppBuildGitBranch = 'development' // Some important issues are not yet merged into master.
-def dbbGitRepo = 'https://github.com/IBM/dbb'
+def dbbGitRepo = 'https://github.com/jenkinsjby/dbb.git'
 def dbbGitBranch = 'master'
 
 // DBB
@@ -61,7 +61,7 @@ pipeline {
     options { skipDefaultCheckout(true) }
 
     stages {
-        
+
         stage('Git Clone/Refresh') {
             agent { label zOsAgentLabel }
             steps {
@@ -69,7 +69,7 @@ pipeline {
                     if ( verbose ) {
                         echo sh(script: 'env|sort', returnStdout: true)
                     }
-                    
+
                     if ( env.DBB_HOME == null )
                         error("DBB_HOME is not defined !!!")
                     if ( env.DBB_URL == null )
@@ -82,7 +82,7 @@ pipeline {
                         error("ARTIFACTORY_REPO_PATH is not defined !!!")
                     if ( env.UCD_BUZTOOL_PATH == null )
                         error("UCD_BUZTOOL_PATH is not defined !!!")
-                    
+
                     dir('cics-genapp') {
                         sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
                         srcGitRepo = scm.getUserRemoteConfigs()[0].getUrl()
@@ -92,7 +92,7 @@ pipeline {
                                                 doGenerateSubmoduleConfigurations: false,
                                                 extensions: [
                                                 [$class: 'SparseCheckoutPaths',
-                                                   sparseCheckoutPaths:[[$class:'SparseCheckoutPath', 
+                                                   sparseCheckoutPaths:[[$class:'SparseCheckoutPath',
                                                    path:'cics-genapp/']]]
                                                 ],
                                                 submoduleCfg: [],
@@ -102,7 +102,7 @@ pipeline {
                                                                      url: srcGitRepo,
                                                                      ]]])
                     }
-                    
+
                     dir("dbb-zappbuild") {
                         sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
                         def scmVars =
@@ -113,7 +113,7 @@ pipeline {
                                 url: zAppBuildGitRepo,
                             ]]])
                     }
-                    
+
                     dir("dbb") {
                         sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
                         def scmVars =
@@ -167,7 +167,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('DCD Scan/Update') {
             steps {
                 script {
@@ -176,12 +176,12 @@ pipeline {
                            }
                }
            }
-        }        
-        
+        }
+
         stage('UCD Package') {
             steps {
                 script {
-                    node( zOsAgentLabel ) { 
+                    node( zOsAgentLabel ) {
                         if ( needDeploy ) {
                             def artiUrl = getArtifactoruUrl(env.ARTIFACTORY_URL)
                             def repositoryPath = env.ARTIFACTORY_REPO_PATH
@@ -197,14 +197,14 @@ repository=${repositoryPath}
 url=${artiUrl}
                                       """
                                 }
-                                sh "$dbbHome/bin/groovyz $dbbGroovyzOpts ${WORKSPACE}/dbb/Pipeline/CreateUCDComponentVersion/dbb-ucd-packaging.groovy --buztool ${ucdBuztool} --component ${ucdComponent} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --artifactRepository ${WORKSPACE}/BUILD-${BUILD_NUMBER}/artifactoy.properties"
+                                sh "$dbbHome/bin/groovyz $dbbGroovyzOpts ${WORKSPACE}/dbb/Pipeline/CreateUCDComponentVersion/dbb-ucd-packaging.groovy --buztool ${ucdBuztool} --component ${ucdComponent} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --artifactRepository ${WORKSPACE}/BUILD-${BUILD_NUMBER}/artifactoy.properties  --versionName BUILD-${BUILD_NUMBER}"
                             }
                         }
                     }
                 }
             }
         }
-        
+
         stage('UCD Deploy') {
             steps {
                 script{
