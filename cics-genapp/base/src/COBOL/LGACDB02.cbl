@@ -20,7 +20,7 @@
       *                                                                *
       *                                                                *
       *                                                                *
-      *  MODIF: 01                                                     *
+      *  MODIF: 02                                                     *
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. LGACDB02.
