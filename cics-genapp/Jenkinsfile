@@ -16,6 +16,7 @@ def dbbUrl=null
 def dbbHlq=null
 def dbbBuildType='-i'
 def dbbGroovyzOpts= ''
+def dbbBuildExtraOpts= ''
 
 // Artifactory
 def artiCredentialsId = 'artifactory_id'
