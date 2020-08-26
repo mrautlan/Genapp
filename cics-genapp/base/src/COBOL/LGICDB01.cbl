@@ -16,8 +16,7 @@
       *                    Inquire Customer                            *
       *                                                                *
       * Select customer details from DB2 table                         *
-      *                                                                *
-      *                                                                *
+      * T9                                                             *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -117,6 +116,7 @@
       *----------------------------------------------------------------*
       * Common code                                                    *
       *----------------------------------------------------------------*
+           DISPLAY 'Extended DBB-zAppBuild silly demo'.
       * initialize working storage variables
            INITIALIZE WS-HEADER.
       * set up general variable
