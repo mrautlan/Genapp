@@ -16,7 +16,7 @@
       *                    Inquire Customer                            *
       *                                                                *
       * Select customer details from DB2 table                         *
-      * T12                                                            *
+      * T13                                                            *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
