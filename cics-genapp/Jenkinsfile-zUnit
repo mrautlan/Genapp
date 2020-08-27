@@ -159,7 +159,9 @@ pipeline {
                             println "Process zUnit: $zUnit.path"
                             junitRes = readFile file: zUnit.path
                             node( linuxAgent ) {
-                            	writeFile file: '/tmp/zUnit.log', text:junitRes
+                                writeFile file: '/tmp/zUnit.log', text:junitRes
+                                sh "xsltproc /tmp/test.xsl /tmp/zUnit.log > /tmp/zUnit.xml"
+                                junit "/tmp/zUnit.xml"
                             }
                         }
                     }
