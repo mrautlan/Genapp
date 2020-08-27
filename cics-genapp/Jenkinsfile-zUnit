@@ -156,8 +156,8 @@ pipeline {
                         needDeploy = files.length > 0 && files[0].length > 0
                         def zUnitFiles = findFiles(glob: "**BUILD-${BUILD_NUMBER}/*/*.zunit.report.log")
                         zUnitFiles.each { zUnit ->
-                            println "Process zUnit: $zUnit"
-                            junitRes = readFile file: zUnit.getAbsolutePath()
+                            println "Process zUnit: $zUnit.path"
+                            junitRes = readFile file: zUnit.path
                             node( linuxAgent ) {
                             	writeFile file: '/tmp/zUnit.log', text:junitRes
                             }
