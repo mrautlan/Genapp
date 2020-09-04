@@ -171,7 +171,7 @@ pipeline {
             }
         }
 
-        stage('DCD Scan/Update') {
+        stage('DCD Build') {
             steps {
                 script {
                            withCredentials([usernamePassword(credentialsId: dcdCredId, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
