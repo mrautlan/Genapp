@@ -74,7 +74,7 @@ pipeline {
                         echo "result is" $result
                         if [ $result = "true" ]
                         then
-                          echo "docker is already running"
+                          echo "zD&T is already running"
                         else
                           docker start $Container_ID
                         fi
