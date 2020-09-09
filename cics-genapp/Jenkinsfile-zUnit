@@ -63,6 +63,26 @@ pipeline {
 
     stages {
 
+        stage('zD&T Provisioning') {
+            agent { label 'zdt-docker' }
+            steps {
+                script {
+                    def rc = sh (returnStatus: true, script: """#!/bin/sh
+                        #!/bin/bash
+                        Container_ID=wazi-sandbox
+                        result=$( docker inspect -f {{.State.Running}} $Container_ID)
+                        echo "result is" $result
+                        if [ $result = "true" ]
+                        then
+                          echo "docker is already running"
+                        else
+                          docker start $Container_ID
+                        fi
+                    """)
+                }
+            }
+        }
+
         stage('Git Clone/Refresh') {
             agent { label zOsAgentLabel }
             steps {
