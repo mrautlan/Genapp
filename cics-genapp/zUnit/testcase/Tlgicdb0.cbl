@@ -10,7 +10,7 @@
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
       *| TEST_DEMOTEST                                                 |
-      *|     THIS PROGRAM IS FOR TEST DEMOTEST                         |
+      *|     THIS PROGRAM IS FOR TEST DEMO EST                         |
       *+---------------------------------------------------------------+
        IDENTIFICATION DIVISION.
        PROGRAM-ID. 'TEST_DEMOTEST'.
