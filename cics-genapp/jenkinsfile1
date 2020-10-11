@@ -18,7 +18,7 @@ def ucdApplication = 'GenApp-Deploy'
 def ucdProcess = 'Deploy'
 def ucdComponent = 'GenAppComponent'
 def ucdEnv = 'Test'
-def ucdSite = ''
+def ucdSite = 'UCD Test Server'
 def buztoolLocation = '/u/DMJTA1/ucdagent705/bin/buztool.sh'
 
 // Verbose
@@ -86,4 +86,23 @@ stage("Build") {
 											onlyIfSuccessful: false
 	    }
     }
-}
+        stage('UCD Deploy') {
+                script{
+                    if ( hasBuildFiles ) {
+                        script{
+                            step(
+                                  [$class: 'UCDeployPublisher',
+                                    deploy: [
+                                        deployApp: ucdApplication,
+                                        deployDesc: 'Requested from Jenkins',
+                                        deployEnv: ucdEnv,
+                                        deployOnlyChanged: false,
+                                        deployProc: ucdProcess,
+                                        deployVersions: ucdComponent + ':latest'],
+                                    siteName: ucdSite])
+                        }
+                    }
+                }
+    
+        }
+    }
