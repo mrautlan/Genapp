@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="8435e1da-cfb9-47c1-aeeb-107bc000cd5c">
+<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="eb130c5b-873e-4120-bd28-5e48b25acfc5">
   <runner:options contOnTestCaseError="false" contOnTestCaseFail="true" contOnTestError="false" contOnTestFail="true"/>
   <runner:testCase moduleName="TLGICDB0">
     <test name="DEMOTEST" entry="TEST_DEMOTEST" type="CICS" init="BZU_INIT" term="BZU_TERM" program="LGICDB01" commarea="32500" skipTest="false" resetFile="false" stubCall="true" dummy="false"/>

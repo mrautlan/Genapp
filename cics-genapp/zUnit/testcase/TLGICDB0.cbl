@@ -5,7 +5,7 @@
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
-      *| DATE GENERATED: 10/27/2020 11:32                              |
+      *| DATE GENERATED: 10/28/2020 14:31                              |
       *| ID: 7ccdfbd6-1f73-4680-a48e-298e3e67ff49                      |
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
@@ -380,11 +380,11 @@
              PERFORM THROW-ASSERTION
            END-IF
            IF (CA-RETURN-CODE OF DFHCOMMAREA IS NUMERIC)
-               AND (CA-RETURN-CODE OF DFHCOMMAREA = 01) THEN
+               AND (CA-RETURN-CODE OF DFHCOMMAREA = 02) THEN
              CONTINUE
            ELSE
              MOVE CA-RETURN-CODE OF DFHCOMMAREA TO ZUT0000001E(1)
-             MOVE 01 TO ZUT0000001E(2)
+             MOVE 02 TO ZUT0000001E(2)
              SET AZ-COMPARE-ITEM-NAME-PTR TO ADDRESS OF ZUT0000001D
              MOVE LENGTH OF ZUT0000001D TO AZ-COMPARE-ITEM-NAME-LEN
              SET AZ-COMPARE-ITEM-VALUE-PTR TO ADDRESS OF ZUT0000001E(1)
