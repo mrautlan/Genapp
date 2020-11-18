@@ -1,0 +1,413 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Genapp APIs",
+    "version" : "1.0.1",
+    "title" : "genapp_v1"
+  },
+  "host" : "localhost:8080",
+  "basePath" : "/genapp/v1",
+  "schemes" : [ "https", "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/customers" : {
+      "post" : {
+        "tags" : [ "genapp_v1" ],
+        "operationId" : "postAddCustomer_v1.0.1",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "postAddCustomer_v1.0.1_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/postAddCustomer_v1.0.1_request"
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/postAddCustomer_v1.0.1_response_500"
+            }
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/postAddCustomer_v1.0.1_response_200"
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerNumber}" : {
+      "get" : {
+        "tags" : [ "genapp_v1" ],
+        "operationId" : "getInquireCustomer_v1.0.1",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "customerNumber",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "404" : {
+            "description" : "Not Found",
+            "schema" : {
+              "$ref" : "#/definitions/getInquireCustomer_v1.0.1_response_404"
+            }
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/getInquireCustomer_v1.0.1_response_200"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "genapp_v1" ],
+        "operationId" : "putUpdateCustomer_v1.0.1",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "customerNumber",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "putUpdateCustomer_v1.0.1_request",
+          "description" : "request body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/putUpdateCustomer_v1.0.1_request"
+          }
+        } ],
+        "responses" : {
+          "500" : {
+            "description" : "Internal Server Error",
+            "schema" : {
+              "$ref" : "#/definitions/putUpdateCustomer_v1.0.1_response_500"
+            }
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/putUpdateCustomer_v1.0.1_response_200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "getInquireCustomer_v1.0.1_response_404" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            },
+            "customerDetails" : {
+              "type" : "object",
+              "properties" : {
+                "firstName" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "dateOfBirth" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "houseName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "houseNumber" : {
+                  "type" : "string",
+                  "maxLength" : 4
+                },
+                "postcode" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "numberOfPolicies" : {
+                  "type" : "integer",
+                  "minimum" : 0,
+                  "maximum" : 999
+                },
+                "mobilePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "homePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "emailAddress" : {
+                  "type" : "string",
+                  "maxLength" : 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getInquireCustomer_v1.0.1_response_200" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            },
+            "customerDetails" : {
+              "type" : "object",
+              "properties" : {
+                "firstName" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "dateOfBirth" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "houseName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "houseNumber" : {
+                  "type" : "string",
+                  "maxLength" : 4
+                },
+                "postcode" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "numberOfPolicies" : {
+                  "type" : "integer",
+                  "minimum" : 0,
+                  "maximum" : 999
+                },
+                "mobilePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "homePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "emailAddress" : {
+                  "type" : "string",
+                  "maxLength" : 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "putUpdateCustomer_v1.0.1_request" : {
+      "type" : "object",
+      "properties" : {
+        "request" : {
+          "type" : "object",
+          "properties" : {
+            "customerDetails" : {
+              "type" : "object",
+              "properties" : {
+                "firstname" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "dateOfBirth" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "houseName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "houseNumber" : {
+                  "type" : "string",
+                  "maxLength" : 4
+                },
+                "postcode" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "mobilePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "homePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "emailAddress" : {
+                  "type" : "string",
+                  "maxLength" : 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "putUpdateCustomer_v1.0.1_response_500" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            }
+          }
+        }
+      }
+    },
+    "putUpdateCustomer_v1.0.1_response_200" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            }
+          }
+        }
+      }
+    },
+    "postAddCustomer_v1.0.1_request" : {
+      "type" : "object",
+      "properties" : {
+        "request" : {
+          "type" : "object",
+          "properties" : {
+            "customerDetails" : {
+              "type" : "object",
+              "properties" : {
+                "firstName" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "lastName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "dateOfBirth" : {
+                  "type" : "string",
+                  "maxLength" : 10
+                },
+                "houseName" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "houseNumber" : {
+                  "type" : "string",
+                  "maxLength" : 4
+                },
+                "postcode" : {
+                  "type" : "string",
+                  "maxLength" : 8
+                },
+                "mobilePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "homePhoneNumber" : {
+                  "type" : "string",
+                  "maxLength" : 20
+                },
+                "emailAddress" : {
+                  "type" : "string",
+                  "maxLength" : 100
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "postAddCustomer_v1.0.1_response_500" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            },
+            "customerNumber" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 9999999999
+            }
+          }
+        }
+      }
+    },
+    "postAddCustomer_v1.0.1_response_200" : {
+      "type" : "object",
+      "properties" : {
+        "response" : {
+          "type" : "object",
+          "properties" : {
+            "returnCode" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 99
+            },
+            "customerNumber" : {
+              "type" : "integer",
+              "minimum" : 0,
+              "maximum" : 9999999999
+            }
+          }
+        }
+      }
+    }
+  }
+}

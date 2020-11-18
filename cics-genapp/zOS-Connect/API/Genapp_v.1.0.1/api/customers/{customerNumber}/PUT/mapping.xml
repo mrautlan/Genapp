@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:ZosConnectServiceMapping xmlns:ns2="http://www.ibm.com/zosConnect/2.0/zosConnectServiceMapping" mappingSpecVersion="1.0">
+    <mappingContext basePath="/genapp/v1" relativePath="/customers/{customerNumber}" method="PUT" serviceName="updateCustomer_v1.0.1" defaultResponseCode="200"/>
+    <requestMessage>
+        <mappingRootModel type="MSL" location="api/customers/{customerNumber}/PUT/request.map"/>
+    </requestMessage>
+    <responseMessages code="500" description="Internal Server Error">
+        <booleanExpression id="Rule 1" op="NOT_EQUAL">
+            <left>response/returnCode</left>
+            <right>0</right>
+        </booleanExpression>
+    </responseMessages>
+    <responseMessages code="200" description="OK">
+        <mappingRootModel type="MSL" location="api/customers/{customerNumber}/PUT/response.map"/>
+    </responseMessages>
+</ns2:ZosConnectServiceMapping>
