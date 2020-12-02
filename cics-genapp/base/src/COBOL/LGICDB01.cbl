@@ -6,7 +6,7 @@
       *                                                                *
       * CB12.                                                          *
       *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
+      * (C) COPYRIGHT IBM CORP. 2011,2013 ALL RIGHTS RESERVED          *
       *                                                                *
       * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
       * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
