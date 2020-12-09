@@ -8,7 +8,7 @@
 //*
 //*If the change is disruptive, then use DD BZUNEXT to update test pack
 //*
-//*//BZUNEXT   DD  DSN=<Feature Regression Test Pack>
+//*//BZUNEXT   DD  DSN=<TESTPACK PLAYBACK/RECORDING FILE NEW>
 //*//             DISP=(NEW,CATLG,DELETE),
 //*//             SPACE=(TRK,5),
 //*//             DCB=(RECFM=VB,LRECL=32756,BLKSIZE=32760,DSORG=PS)
