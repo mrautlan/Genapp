@@ -1,0 +1,20 @@
+{
+  "type" : "object",
+  "properties" : {
+    "response" : {
+      "type" : "object",
+      "properties" : {
+        "returnCode" : {
+          "minimum" : 0,
+          "maximum" : 99,
+          "type" : "integer"
+        },
+        "customerNumber" : {
+          "minimum" : 0,
+          "maximum" : 9999999999,
+          "type" : "integer"
+        }
+      }
+    }
+  }
+}

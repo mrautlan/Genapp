@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <service xmlns:ns2="http://www.ibm.com/ims/Transaction">
     <shallow>true</shallow>
-    <serviceName>updateCustomer_v1.0.1</serviceName>
+    <serviceName>addCustomer</serviceName>
     <serviceType>ims-rest</serviceType>
     <resourceType>TRAN</resourceType>
     <status>1</status>
     <conversionType>3</conversionType>
     <dataProtocol>0</dataProtocol>
     <serviceInputInterface>
-        <metadataName>updateCustomer-input.si</metadataName>
+        <metadataName>addCustomer-input.si</metadataName>
         <serviceInterface>
             <interface>
                 <segment segmentName="COMMAREA">
                     <interfaceField included="Y" fieldName="request">
-                        <field included="N" fieldName="requestId" defaultValue="01UCUS" isHex="false"/>
+                        <field included="N" fieldName="CA_REQUEST_ID"/>
                         <field included="N" fieldName="CA_RETURN_CODE"/>
-                        <field included="Y" fieldName="customerNumber" isHex="false"/>
+                        <field included="N" fieldName="CA_CUSTOMER_NUM"/>
                         <field included="N" fieldName="CA_REQUEST_SPECIFIC"/>
                         <field included="Y" fieldName="customerDetails">
-                            <field included="Y" fieldName="firstname" isHex="false"/>
+                            <field included="Y" fieldName="firstName" isHex="false"/>
                             <field included="Y" fieldName="lastName" isHex="false"/>
                             <field included="Y" fieldName="dateOfBirth" isHex="false"/>
                             <field included="Y" fieldName="houseName" isHex="false"/>
@@ -114,14 +114,14 @@
         <version>0</version>
     </serviceInputInterface>
     <serviceOutputInterface>
-        <metadataName>updateCustomer-output.si</metadataName>
+        <metadataName>addCustomer-output.si</metadataName>
         <serviceInterface>
             <interface>
                 <segment segmentName="COMMAREA">
                     <interfaceField included="Y" fieldName="response">
                         <field included="N" fieldName="CA_REQUEST_ID"/>
                         <field included="Y" fieldName="returnCode" isHex="false"/>
-                        <field included="N" fieldName="CA_CUSTOMER_NUM"/>
+                        <field included="Y" fieldName="customerNumber" isHex="false"/>
                         <field included="N" fieldName="CA_REQUEST_SPECIFIC"/>
                         <field included="N" fieldName="CA_CUSTOMER_REQUEST">
                             <field included="N" fieldName="CA_FIRST_NAME"/>
@@ -224,7 +224,7 @@
     <ccsid>IBM037</ccsid>
     <totalExecCount>0</totalExecCount>
     <failedCount>0</failedCount>
-    <trancodeOverride>LGUCUS01</trancodeOverride>
+    <trancodeOverride>LGACUS01</trancodeOverride>
     <trimOutputLeadingWhitespace>false</trimOutputLeadingWhitespace>
     <trimOutputTrailingWhitespace>true</trimOutputTrailingWhitespace>
     <escapeOutputControlCharacters>false</escapeOutputControlCharacters>
@@ -234,6 +234,4 @@
     <omitOutputEmptyTags>false</omitOutputEmptyTags>
     <enforceMinArrayOccurrence>false</enforceMinArrayOccurrence>
     <enforceMinArrayOccurrenceResponse>false</enforceMinArrayOccurrenceResponse>
-    <ldsStartsWithLLZZTRANCODE>false</ldsStartsWithLLZZTRANCODE>
-    <ldsStartsWithLLZZ>false</ldsStartsWithLLZZ>
 </service>
