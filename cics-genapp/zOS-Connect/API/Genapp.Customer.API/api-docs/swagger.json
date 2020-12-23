@@ -2,18 +2,18 @@
   "swagger" : "2.0",
   "info" : {
     "description" : "Genapp APIs",
-    "version" : "1.0.1",
-    "title" : "genapp_v1"
+    "version" : "1.1.0",
+    "title" : "genapp"
   },
   "host" : "localhost:8080",
-  "basePath" : "/genapp/v1",
+  "basePath" : "/genapp",
   "schemes" : [ "https", "http" ],
   "consumes" : [ "application/json" ],
   "produces" : [ "application/json" ],
   "paths" : {
     "/customers" : {
       "post" : {
-        "tags" : [ "genapp_v1" ],
+        "tags" : [ "genapp" ],
         "operationId" : "postAddCustomer_v1.0.1",
         "parameters" : [ {
           "name" : "Authorization",
@@ -47,7 +47,7 @@
     },
     "/customers/{customerNumber}" : {
       "get" : {
-        "tags" : [ "genapp_v1" ],
+        "tags" : [ "genapp" ],
         "operationId" : "getInquireCustomer_v1.0.1",
         "parameters" : [ {
           "name" : "Authorization",
@@ -76,7 +76,7 @@
         }
       },
       "put" : {
-        "tags" : [ "genapp_v1" ],
+        "tags" : [ "genapp" ],
         "operationId" : "putUpdateCustomer_v1.0.1",
         "parameters" : [ {
           "name" : "Authorization",

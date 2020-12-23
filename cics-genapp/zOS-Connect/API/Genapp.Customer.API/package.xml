@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<zosConnectApi xmlns="http://www.ibm.com/zosConnect/2.0/zosConnectApi" id="genapp_v1">
-    <apiSpec title="genapp_v1" basePath="/genapp/v1" description="Genapp APIs" version="1.0.1">
+<zosConnectApi xmlns="http://www.ibm.com/zosConnect/2.0/zosConnectApi" id="genapp">
+    <apiSpec title="genapp" basePath="/genapp" description="Genapp APIs" version="1.1.0">
         <path relativePath="/customers/{customerNumber}">
             <method type="GET" zosConnectServiceRef="inquireCustomer" httpXformFile="api/customers/{customerNumber}/GET/mapping.xml" operationId="getInquireCustomer_v1.0.1"/>
             <method type="PUT" zosConnectServiceRef="updateCustomer" httpXformFile="api/customers/{customerNumber}/PUT/mapping.xml" operationId="putUpdateCustomer_v1.0.1"/>
