@@ -1,0 +1,22 @@
+{
+   "folders": [
+      {
+         "path": "file:///projects"
+      },
+      {
+         "path": ""
+      }
+   ],
+"settings": {
+    "zopeneditor.propertygroups": [
+        {
+            "name": "local-cobol-files",
+            "type": "local",
+            "language": "cobol",
+            "syslib": [
+                "cics-genapp/cics-genapp/base/src/COPY"
+            ]
+        }
+    ]
+}
+}
