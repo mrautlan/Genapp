@@ -1,7 +1,7 @@
  "zopeneditor.userbuild.workspaceSettings": {
     "dbb": {
         "command": "$DBB_HOME/bin/groovyz",
-        "buildScriptPath": "/u/DMJTA1/dbb-zappbuild/build.groovy",
+        "buildScriptPath": "/u/<userID>/dbb-zappbuild/build.groovy",
         "buildScriptArgs": [
             "--userBuild",
             "--workspace ${zopeneditor.userbuild.userSettings.dbbWorkspace}",
@@ -15,9 +15,9 @@
     }
 },
     "zopeneditor.userbuild.userSettings": {
-        "dbbWorkspace": "/u/DMJTA1/USERBUILD",
-        "dbbHlq": "DMJTA1",
-        "dbbLogDir": "/u/DMJTA1/USERBUILD/logs",
+        "dbbWorkspace": "/u/<userID>/USERBUILD",
+        "dbbHlq": "<userID>",
+        "dbbLogDir": "/u/<userID>/USERBUILD/logs",
         "localWorkspacePath": "/projects/cics-genapp"
     }
 }
