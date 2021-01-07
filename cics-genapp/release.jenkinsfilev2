@@ -1,8 +1,10 @@
 def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'SC47-agent'
-
+//
+// change the pipeline options before running
+//
 // GIT repositories
 def srcGitRepo =  'git@github.ibm.com:Jt-atkins/GenappJTA.git'
-def srcGitBranch = 'master'
+def srcGitBranch = 'next_release'
 
 
 // DBB
@@ -17,6 +19,7 @@ def dbbBuildExtraOpts= ''
 def ucdApplication = 'GenApp-Deploy'
 def ucdProcess = 'Deploy'
 def ucdComponent = 'GenAppComponent'
+def ucdAPIComponent1 = 'Genapp.Customer.API.InquireCustomer'
 def ucdEnv = 'Test'
 def ucdSite = 'UCD Test Server'
 def buztoolLocation = '/u/DMJTA1/ucdagent705/bin/buztool.sh'
@@ -53,18 +56,18 @@ node (label: zOsAgentLabel ) {
                                        [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'cics-genapp/']]]
                                     ],
                               submoduleCfg: [],
-                            userRemoteConfigs: [[credentialsId: 'SC47SSH', 
+                            userRemoteConfigs: [[credentialsId: 'SC47SSH',
                                 url: srcGitRepo,
                             ]]])
                     }
 	}
 
-stage("Build") {
+stage("Build & Optimise") {
 
 	    sh "${groovyz}  ${zAppBuild}/build.groovy --workspace ${WORKSPACE}/cics-genapp --hlq DMJTA1 --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER} --application ${zApp} --logEncoding UTF-8 --${BuildType} --verbose"
-	    
+	
 	    //calculating the Buildoutput folder name
-	    
+	
 	    BUILD_OUTPUT_FOLDER = sh (script: "ls ${WORKSPACE}/BUILD-${BUILD_NUMBER}", returnStdout: true).trim()
 		
 		dir ("${WORKSPACE}/cics-genapp/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}") {
@@ -77,7 +80,7 @@ stage("Build") {
 	}
 	
 		stage("Package") {
-        sh "${groovyz} ${zAppBuild}/dbb-ucd-packaging.groovy --buztool ${buztoolLocation} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --component ${ucdComponent} --versionName Hotfix${BUILD_NUMBER}"
+        sh "${groovyz} ${zAppBuild}/dbb-ucd-packaging.groovy --buztool ${buztoolLocation} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --component ${ucdComponent} --versionName Release.Candidate${BUILD_NUMBER}"
 
 		dir ("${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}") {
 	    archiveArtifacts allowEmptyArchive: true,
@@ -98,11 +101,11 @@ stage("Build") {
                                         deployEnv: ucdEnv,
                                         deployOnlyChanged: false,
                                         deployProc: ucdProcess,
-                                        deployVersions: ucdComponent + ':latest'],
+                                        deployVersions: "${ucdComponent}:latest \n${ucdAPIComponent1}:latest"],
                                     siteName: ucdSite])
                         }
                     }
                 }
-    
+
         }
     }

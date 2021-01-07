@@ -1,0 +1,111 @@
+def zOsAgentLabel = env.ZOS_AGENT_LABEL ? env.ZOS_AGENT_LABEL : 'SC47-agent'
+//
+// change the pipeline options before running
+//
+// GIT repositories
+def srcGitRepo =  'git@github.ibm.com:Jt-atkins/GenappJTA.git'
+def srcGitBranch = 'next_release'
+
+
+// DBB
+def dbbHome='/u/DMJTA1/dbb109fix'
+def dbbUrl1='https://9.76.61.221:9443/dbb'
+def dbbHlq='DMJTA1'
+def dbbBuildType='--fullBuild'
+def dbbGroovyzOpts= ''
+def dbbBuildExtraOpts= ''
+
+// UCD
+def ucdApplication = 'GenApp-Deploy'
+def ucdProcess = 'Deploy'
+def ucdComponent = 'GenAppComponent'
+def ucdAPIComponent1 = 'Genapp.Customer.API.InquireCustomer'
+def ucdEnv = 'Test'
+def ucdSite = 'UCD Test Server'
+def buztoolLocation = '/u/DMJTA1/ucdagent705/bin/buztool.sh'
+
+// Verbose
+def verbose = env.VERBOSE && env.VERBOSE == 'true' ? true : false
+
+// Private
+def hasBuildFiles = true
+def buildVerbose = verbose ? '-v' : ''
+
+// Groovyz
+def groovyz = '/u/DMJTA1/dbb109fix/bin/groovyz'
+def zAppBuild = '/u/DMJTA1/dbb-zappbuild'
+def zApp = 'cics-genapp'
+def BuildType = 'fullBuild'
+
+node (label: zOsAgentLabel ) {
+
+    def workOutoutDir = "${WORKSPACE}/work"
+
+    stage ('Cleanup') {
+        // rm
+        dir("${WORKSPACE}/work"){deleteDir()}
+    }
+
+	stage('Git Checkout') {
+		dir("cics-genapp") {
+                    sh(script: 'rm -f .git/info/sparse-checkout', returnStdout: true)
+                        def scmVars =
+                            checkout([$class: 'GitSCM', branches: [[name: srcGitBranch]],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [
+                                       [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'cics-genapp/']]]
+                                    ],
+                              submoduleCfg: [],
+                            userRemoteConfigs: [[credentialsId: 'SC47SSH',
+                                url: srcGitRepo,
+                            ]]])
+                    }
+	}
+
+stage("Build & Optimise") {
+
+	    sh "${groovyz}  ${zAppBuild}/build.groovy --workspace ${WORKSPACE}/cics-genapp --hlq DMJTA1 --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER} --application ${zApp} --logEncoding UTF-8 --${BuildType} --verbose"
+	
+	    //calculating the Buildoutput folder name
+	
+	    BUILD_OUTPUT_FOLDER = sh (script: "ls ${WORKSPACE}/BUILD-${BUILD_NUMBER}", returnStdout: true).trim()
+		
+		dir ("${WORKSPACE}/cics-genapp/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}") {
+	    archiveArtifacts allowEmptyArchive: true,
+											artifacts: '*.log,*.json,*.html',
+											excludes: '*clist',
+											onlyIfSuccessful: false
+	    }
+		
+	}
+	
+		stage("Package") {
+        sh "${groovyz} ${zAppBuild}/dbb-ucd-packaging.groovy --buztool ${buztoolLocation} --workDir ${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER} --component ${ucdComponent} --versionName HotFix.${BUILD_NUMBER}"
+
+		dir ("${WORKSPACE}/BUILD-${BUILD_NUMBER}/${BUILD_OUTPUT_FOLDER}") {
+	    archiveArtifacts allowEmptyArchive: true,
+											artifacts: 'shiplist.xml',
+											excludes: '*clist',
+											onlyIfSuccessful: false
+	    }
+    }
+        stage('UCD Deploy') {
+                script{
+                    if ( hasBuildFiles ) {
+                        script{
+                            step(
+                                  [$class: 'UCDeployPublisher',
+                                    deploy: [
+                                        deployApp: ucdApplication,
+                                        deployDesc: 'Requested from Jenkins',
+                                        deployEnv: ucdEnv,
+                                        deployOnlyChanged: false,
+                                        deployProc: ucdProcess,
+                                        deployVersions: "${ucdComponent}:latest \n${ucdAPIComponent1}:latest"],
+                                    siteName: ucdSite])
+                        }
+                    }
+                }
+
+        }
+    }
