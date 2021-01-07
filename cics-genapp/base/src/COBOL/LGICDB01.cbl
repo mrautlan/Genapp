@@ -4,11 +4,11 @@
       *                                                                *
       * "RESTRICTED MATERIALS OF IBM"                                  *
       *                                                                *
-      * CB12                                                           *
+      * CB12.                                                          *
       *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
+      * (C) COPYRIGHT IBM CORP. 2011,2013 ALL RIGHTS RESERVED          *
       *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
+      * US GOVERNMENT USERS RESTRICTED RIGHTS- USE, DUPLICATION,       *
       * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
       * CONTRACT WITH IBM CORPORATION                                  *
       *                                                                *
@@ -17,7 +17,7 @@
       *                                                                *
       * Select customer details from DB2 table                         *
       *                                                                *
-      * TEST: 01                                                       *
+      * TEST: 02                                                       *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
