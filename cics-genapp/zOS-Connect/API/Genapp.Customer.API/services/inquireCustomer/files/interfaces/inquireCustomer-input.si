@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:message xmlns:ns2="http://www.ibm.com/ims/Transaction" transactionCode="" messageName="inquireCustomer-input" direction="0" serviceType="CICS_COMM_AREA">
+    <message id="1" name="inquireCustomer-input">
+        <segment id="1" name="COMMAREA" originalName="COMMAREA">
+            <field name="request" originalName="LGCMAREA" included="Y" path="request">
+                <startPos>1</startPos>
+                <bytes>32500</bytes>
+                <maxBytes>32500</maxBytes>
+                <remarks></remarks>
+                <applicationDatatype datatype="STRUCT"/>
+                <field name="requestId" originalName="CA_REQUEST_ID" included="N" defaultValue="" isHex="false" path="request.requestId" codepageConversion="Y">
+                    <startPos>1</startPos>
+                    <bytes>6</bytes>
+                    <maxBytes>6</maxBytes>
+                    <remarks></remarks>
+                    <applicationDatatype datatype="CHAR"/>
+                </field>
+                <field name="CA_RETURN_CODE" originalName="CA_RETURN_CODE" included="N" path="request.CA_RETURN_CODE">
+                    <startPos>7</startPos>
+                    <bytes>2</bytes>
+                    <maxBytes>2</maxBytes>
+                    <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+                        <typeConverter>ZONEDDECIMAL</typeConverter>
+                    </marshaller>
+                    <applicationDatatype datatype="DECIMAL" precision="2" scale="0"/>
+                </field>
+                <field name="customerNumber" originalName="CA_CUSTOMER_NUM" included="Y" defaultValue="" isHex="false" path="request.customerNumber" codepageConversion="Y">
+                    <startPos>9</startPos>
+                    <bytes>10</bytes>
+                    <maxBytes>10</maxBytes>
+                    <remarks></remarks>
+                    <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+                        <typeConverter>ZONEDDECIMAL</typeConverter>
+                    </marshaller>
+                    <applicationDatatype datatype="DECIMAL" precision="10" scale="0"/>
+                </field>
+                <field name="CA_REQUEST_SPECIFIC" originalName="CA_REQUEST_SPECIFIC" included="N" path="request.CA_REQUEST_SPECIFIC">
+                    <startPos>19</startPos>
+                    <bytes>32482</bytes>
+                    <maxBytes>32482</maxBytes>
+                    <applicationDatatype datatype="CHAR"/>
+                </field>
+                <field name="CA_CUSTOMER_REQUEST" originalName="CA_CUSTOMER_REQUEST" included="N" path="request.CA_CUSTOMER_REQUEST" redefines="CA_REQUEST_SPECIFIC">
+                    <startPos>19</startPos>
+                    <bytes>32482</bytes>
+                    <maxBytes>32482</maxBytes>
+                    <applicationDatatype datatype="STRUCT"/>
+                    <field name="CA_FIRST_NAME" originalName="CA_FIRST_NAME" included="N" path="request.CA_CUSTOMER_REQUEST.CA_FIRST_NAME">
+                        <startPos>19</startPos>
+                        <bytes>10</bytes>
+                        <maxBytes>10</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_LAST_NAME" originalName="CA_LAST_NAME" included="N" path="request.CA_CUSTOMER_REQUEST.CA_LAST_NAME">
+                        <startPos>29</startPos>
+                        <bytes>20</bytes>
+                        <maxBytes>20</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_DOB" originalName="CA_DOB" included="N" path="request.CA_CUSTOMER_REQUEST.CA_DOB">
+                        <startPos>49</startPos>
+                        <bytes>10</bytes>
+                        <maxBytes>10</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_HOUSE_NAME" originalName="CA_HOUSE_NAME" included="N" path="request.CA_CUSTOMER_REQUEST.CA_HOUSE_NAME">
+                        <startPos>59</startPos>
+                        <bytes>20</bytes>
+                        <maxBytes>20</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_HOUSE_NUM" originalName="CA_HOUSE_NUM" included="N" path="request.CA_CUSTOMER_REQUEST.CA_HOUSE_NUM">
+                        <startPos>79</startPos>
+                        <bytes>4</bytes>
+                        <maxBytes>4</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_POSTCODE" originalName="CA_POSTCODE" included="N" path="request.CA_CUSTOMER_REQUEST.CA_POSTCODE">
+                        <startPos>83</startPos>
+                        <bytes>8</bytes>
+                        <maxBytes>8</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_NUM_POLICIES" originalName="CA_NUM_POLICIES" included="N" path="request.CA_CUSTOMER_REQUEST.CA_NUM_POLICIES">
+                        <startPos>91</startPos>
+                        <bytes>3</bytes>
+                        <maxBytes>3</maxBytes>
+                        <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+                            <typeConverter>ZONEDDECIMAL</typeConverter>
+                        </marshaller>
+                        <applicationDatatype datatype="DECIMAL" precision="3" scale="0"/>
+                    </field>
+                    <field name="CA_PHONE_MOBILE" originalName="CA_PHONE_MOBILE" included="N" path="request.CA_CUSTOMER_REQUEST.CA_PHONE_MOBILE">
+                        <startPos>94</startPos>
+                        <bytes>20</bytes>
+                        <maxBytes>20</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_PHONE_HOME" originalName="CA_PHONE_HOME" included="N" path="request.CA_CUSTOMER_REQUEST.CA_PHONE_HOME">
+                        <startPos>114</startPos>
+                        <bytes>20</bytes>
+                        <maxBytes>20</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_EMAIL_ADDRESS" originalName="CA_EMAIL_ADDRESS" included="N" path="request.CA_CUSTOMER_REQUEST.CA_EMAIL_ADDRESS">
+                        <startPos>134</startPos>
+                        <bytes>100</bytes>
+                        <maxBytes>100</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_POLICY_DATA" originalName="CA_POLICY_DATA" included="N" path="request.CA_CUSTOMER_REQUEST.CA_POLICY_DATA">
+                        <startPos>234</startPos>
+                        <bytes>32267</bytes>
+                        <maxBytes>32267</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                </field>
+                <field name="CA_CUSTSECR_REQUEST" originalName="CA_CUSTSECR_REQUEST" included="N" path="request.CA_CUSTSECR_REQUEST" redefines="CA_REQUEST_SPECIFIC">
+                    <startPos>19</startPos>
+                    <bytes>32482</bytes>
+                    <maxBytes>32482</maxBytes>
+                    <applicationDatatype datatype="STRUCT"/>
+                    <field name="CA_CUSTSECR_PASS" originalName="CA_CUSTSECR_PASS" included="N" path="request.CA_CUSTSECR_REQUEST.CA_CUSTSECR_PASS">
+                        <startPos>19</startPos>
+                        <bytes>32</bytes>
+                        <maxBytes>32</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_CUSTSECR_COUNT" originalName="CA_CUSTSECR_COUNT" included="N" path="request.CA_CUSTSECR_REQUEST.CA_CUSTSECR_COUNT">
+                        <startPos>51</startPos>
+                        <bytes>4</bytes>
+                        <maxBytes>4</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_CUSTSECR_STATE" originalName="CA_CUSTSECR_STATE" included="N" path="request.CA_CUSTSECR_REQUEST.CA_CUSTSECR_STATE">
+                        <startPos>55</startPos>
+                        <bytes>1</bytes>
+                        <maxBytes>1</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_CUSTSECR_DATA" originalName="CA_CUSTSECR_DATA" included="N" path="request.CA_CUSTSECR_REQUEST.CA_CUSTSECR_DATA">
+                        <startPos>56</startPos>
+                        <bytes>32445</bytes>
+                        <maxBytes>32445</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                </field>
+                <field name="CA_POLICY_REQUEST" originalName="CA_POLICY_REQUEST" included="N" path="request.CA_POLICY_REQUEST" redefines="CA_REQUEST_SPECIFIC">
+                    <startPos>19</startPos>
+                    <bytes>32482</bytes>
+                    <maxBytes>32482</maxBytes>
+                    <applicationDatatype datatype="STRUCT"/>
+                    <field name="CA_POLICY_NUM" originalName="CA_POLICY_NUM" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_NUM">
+                        <startPos>19</startPos>
+                        <bytes>10</bytes>
+                        <maxBytes>10</maxBytes>
+                        <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+                            <typeConverter>ZONEDDECIMAL</typeConverter>
+                        </marshaller>
+                        <applicationDatatype datatype="DECIMAL" precision="10" scale="0"/>
+                    </field>
+                    <field name="CA_POLICY_COMMON" originalName="CA_POLICY_COMMON" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON">
+                        <startPos>29</startPos>
+                        <bytes>72</bytes>
+                        <maxBytes>72</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_ISSUE_DATE" originalName="CA_ISSUE_DATE" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_ISSUE_DATE">
+                            <startPos>29</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_EXPIRY_DATE" originalName="CA_EXPIRY_DATE" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_EXPIRY_DATE">
+                            <startPos>39</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_LASTCHANGED" originalName="CA_LASTCHANGED" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_LASTCHANGED">
+                            <startPos>49</startPos>
+                            <bytes>26</bytes>
+                            <maxBytes>26</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_BROKERID" originalName="CA_BROKERID" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_BROKERID">
+                            <startPos>75</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="10" scale="0"/>
+                        </field>
+                        <field name="CA_BROKERSREF" originalName="CA_BROKERSREF" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_BROKERSREF">
+                            <startPos>85</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_PAYMENT" originalName="CA_PAYMENT" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_COMMON.CA_PAYMENT">
+                            <startPos>95</startPos>
+                            <bytes>6</bytes>
+                            <maxBytes>6</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="6" scale="0"/>
+                        </field>
+                    </field>
+                    <field name="CA_POLICY_SPECIFIC" originalName="CA_POLICY_SPECIFIC" included="N" path="request.CA_POLICY_REQUEST.CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="CHAR"/>
+                    </field>
+                    <field name="CA_ENDOWMENT" originalName="CA_ENDOWMENT" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT" redefines="CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_E_WITH_PROFITS" originalName="CA_E_WITH_PROFITS" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_WITH_PROFITS">
+                            <startPos>101</startPos>
+                            <bytes>1</bytes>
+                            <maxBytes>1</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_E_EQUITIES" originalName="CA_E_EQUITIES" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_EQUITIES">
+                            <startPos>102</startPos>
+                            <bytes>1</bytes>
+                            <maxBytes>1</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_E_MANAGED_FUND" originalName="CA_E_MANAGED_FUND" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_MANAGED_FUND">
+                            <startPos>103</startPos>
+                            <bytes>1</bytes>
+                            <maxBytes>1</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_E_FUND_NAME" originalName="CA_E_FUND_NAME" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_FUND_NAME">
+                            <startPos>104</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_E_TERM" originalName="CA_E_TERM" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_TERM">
+                            <startPos>114</startPos>
+                            <bytes>2</bytes>
+                            <maxBytes>2</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="2" scale="0"/>
+                        </field>
+                        <field name="CA_E_SUM_ASSURED" originalName="CA_E_SUM_ASSURED" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_SUM_ASSURED">
+                            <startPos>116</startPos>
+                            <bytes>6</bytes>
+                            <maxBytes>6</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="6" scale="0"/>
+                        </field>
+                        <field name="CA_E_LIFE_ASSURED" originalName="CA_E_LIFE_ASSURED" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_LIFE_ASSURED">
+                            <startPos>122</startPos>
+                            <bytes>31</bytes>
+                            <maxBytes>31</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_E_PADDING_DATA" originalName="CA_E_PADDING_DATA" included="N" path="request.CA_POLICY_REQUEST.CA_ENDOWMENT.CA_E_PADDING_DATA">
+                            <startPos>153</startPos>
+                            <bytes>32348</bytes>
+                            <maxBytes>32348</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                    </field>
+                    <field name="CA_HOUSE" originalName="CA_HOUSE" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE" redefines="CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_H_PROPERTY_TYPE" originalName="CA_H_PROPERTY_TYPE" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_PROPERTY_TYPE">
+                            <startPos>101</startPos>
+                            <bytes>15</bytes>
+                            <maxBytes>15</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_H_BEDROOMS" originalName="CA_H_BEDROOMS" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_BEDROOMS">
+                            <startPos>116</startPos>
+                            <bytes>3</bytes>
+                            <maxBytes>3</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="3" scale="0"/>
+                        </field>
+                        <field name="CA_H_VALUE" originalName="CA_H_VALUE" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_VALUE">
+                            <startPos>119</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_H_HOUSE_NAME" originalName="CA_H_HOUSE_NAME" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_HOUSE_NAME">
+                            <startPos>127</startPos>
+                            <bytes>20</bytes>
+                            <maxBytes>20</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_H_HOUSE_NUMBER" originalName="CA_H_HOUSE_NUMBER" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_HOUSE_NUMBER">
+                            <startPos>147</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_H_POSTCODE" originalName="CA_H_POSTCODE" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_POSTCODE">
+                            <startPos>151</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_H_FILLER" originalName="CA_H_FILLER" included="N" path="request.CA_POLICY_REQUEST.CA_HOUSE.CA_H_FILLER">
+                            <startPos>159</startPos>
+                            <bytes>32342</bytes>
+                            <maxBytes>32342</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                    </field>
+                    <field name="CA_MOTOR" originalName="CA_MOTOR" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR" redefines="CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_M_MAKE" originalName="CA_M_MAKE" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_MAKE">
+                            <startPos>101</startPos>
+                            <bytes>15</bytes>
+                            <maxBytes>15</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_M_MODEL" originalName="CA_M_MODEL" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_MODEL">
+                            <startPos>116</startPos>
+                            <bytes>15</bytes>
+                            <maxBytes>15</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_M_VALUE" originalName="CA_M_VALUE" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_VALUE">
+                            <startPos>131</startPos>
+                            <bytes>6</bytes>
+                            <maxBytes>6</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="6" scale="0"/>
+                        </field>
+                        <field name="CA_M_REGNUMBER" originalName="CA_M_REGNUMBER" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_REGNUMBER">
+                            <startPos>137</startPos>
+                            <bytes>7</bytes>
+                            <maxBytes>7</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_M_COLOUR" originalName="CA_M_COLOUR" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_COLOUR">
+                            <startPos>144</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_M_CC" originalName="CA_M_CC" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_CC">
+                            <startPos>152</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_M_MANUFACTURED" originalName="CA_M_MANUFACTURED" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_MANUFACTURED">
+                            <startPos>156</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_M_PREMIUM" originalName="CA_M_PREMIUM" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_PREMIUM">
+                            <startPos>166</startPos>
+                            <bytes>6</bytes>
+                            <maxBytes>6</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="6" scale="0"/>
+                        </field>
+                        <field name="CA_M_ACCIDENTS" originalName="CA_M_ACCIDENTS" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_ACCIDENTS">
+                            <startPos>172</startPos>
+                            <bytes>6</bytes>
+                            <maxBytes>6</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="6" scale="0"/>
+                        </field>
+                        <field name="CA_M_FILLER" originalName="CA_M_FILLER" included="N" path="request.CA_POLICY_REQUEST.CA_MOTOR.CA_M_FILLER">
+                            <startPos>178</startPos>
+                            <bytes>32323</bytes>
+                            <maxBytes>32323</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                    </field>
+                    <field name="CA_COMMERCIAL" originalName="CA_COMMERCIAL" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL" redefines="CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_B_ADDRESS" originalName="CA_B_ADDRESS" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_ADDRESS">
+                            <startPos>101</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_POSTCODE" originalName="CA_B_POSTCODE" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_POSTCODE">
+                            <startPos>356</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_LATITUDE" originalName="CA_B_LATITUDE" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_LATITUDE">
+                            <startPos>364</startPos>
+                            <bytes>11</bytes>
+                            <maxBytes>11</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_LONGITUDE" originalName="CA_B_LONGITUDE" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_LONGITUDE">
+                            <startPos>375</startPos>
+                            <bytes>11</bytes>
+                            <maxBytes>11</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_CUSTOMER" originalName="CA_B_CUSTOMER" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_CUSTOMER">
+                            <startPos>386</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_PROPTYPE" originalName="CA_B_PROPTYPE" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_PROPTYPE">
+                            <startPos>641</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_FIREPERIL" originalName="CA_B_FIREPERIL" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_FIREPERIL">
+                            <startPos>896</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_B_FIREPREMIUM" originalName="CA_B_FIREPREMIUM" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_FIREPREMIUM">
+                            <startPos>900</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_B_CRIMEPERIL" originalName="CA_B_CRIMEPERIL" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_CRIMEPERIL">
+                            <startPos>908</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_B_CRIMEPREMIUM" originalName="CA_B_CRIMEPREMIUM" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_CRIMEPREMIUM">
+                            <startPos>912</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_B_FLOODPERIL" originalName="CA_B_FLOODPERIL" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_FLOODPERIL">
+                            <startPos>920</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_B_FLOODPREMIUM" originalName="CA_B_FLOODPREMIUM" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_FLOODPREMIUM">
+                            <startPos>924</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_B_WEATHERPERIL" originalName="CA_B_WEATHERPERIL" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_WEATHERPERIL">
+                            <startPos>932</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_B_WEATHERPREMIUM" originalName="CA_B_WEATHERPREMIUM" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_WEATHERPREMIUM">
+                            <startPos>936</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_B_STATUS" originalName="CA_B_STATUS" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_STATUS">
+                            <startPos>944</startPos>
+                            <bytes>4</bytes>
+                            <maxBytes>4</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="4" scale="0"/>
+                        </field>
+                        <field name="CA_B_REJECTREASON" originalName="CA_B_REJECTREASON" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_REJECTREASON">
+                            <startPos>948</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_B_FILLER" originalName="CA_B_FILLER" included="N" path="request.CA_POLICY_REQUEST.CA_COMMERCIAL.CA_B_FILLER">
+                            <startPos>1203</startPos>
+                            <bytes>31298</bytes>
+                            <maxBytes>31298</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                    </field>
+                    <field name="CA_CLAIM" originalName="CA_CLAIM" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM" redefines="CA_POLICY_SPECIFIC">
+                        <startPos>101</startPos>
+                        <bytes>32400</bytes>
+                        <maxBytes>32400</maxBytes>
+                        <applicationDatatype datatype="STRUCT"/>
+                        <field name="CA_C_NUM" originalName="CA_C_NUM" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_NUM">
+                            <startPos>101</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="10" scale="0"/>
+                        </field>
+                        <field name="CA_C_DATE" originalName="CA_C_DATE" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_DATE">
+                            <startPos>111</startPos>
+                            <bytes>10</bytes>
+                            <maxBytes>10</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_C_PAID" originalName="CA_C_PAID" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_PAID">
+                            <startPos>121</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_C_VALUE" originalName="CA_C_VALUE" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_VALUE">
+                            <startPos>129</startPos>
+                            <bytes>8</bytes>
+                            <maxBytes>8</maxBytes>
+                            <marshaller isSigned="N" isSignLeading="N" isSignSeparate="N" isWCHAROnly="N">
+<typeConverter>ZONEDDECIMAL</typeConverter>
+                            </marshaller>
+                            <applicationDatatype datatype="DECIMAL" precision="8" scale="0"/>
+                        </field>
+                        <field name="CA_C_CAUSE" originalName="CA_C_CAUSE" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_CAUSE">
+                            <startPos>137</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_C_OBSERVATIONS" originalName="CA_C_OBSERVATIONS" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_OBSERVATIONS">
+                            <startPos>392</startPos>
+                            <bytes>255</bytes>
+                            <maxBytes>255</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                        <field name="CA_C_FILLER" originalName="CA_C_FILLER" included="N" path="request.CA_POLICY_REQUEST.CA_CLAIM.CA_C_FILLER">
+                            <startPos>647</startPos>
+                            <bytes>31854</bytes>
+                            <maxBytes>31854</maxBytes>
+                            <applicationDatatype datatype="CHAR"/>
+                        </field>
+                    </field>
+                </field>
+            </field>
+        </segment>
+    </message>
+</ns2:message>
