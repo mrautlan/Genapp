@@ -1,0 +1,35 @@
+metadata:
+  name: waziclient-ydhvw
+projects:
+  - name: projects
+    source:
+      location: 'git@github.ibm.com:Jt-atkins/GenappJTA.git'
+      type: git
+      branch: ZPROJ-42
+  - name: build
+    source:
+      location: 'git@github.ibm.com:Jt-atkins/Jt-atkins-dbb-zappbuild1.git'
+      type: git
+      branch: development
+components:
+  - id: ibm/wazi-developer/1.1.0
+    type: chePlugin
+    alias: wazi-developer
+  - id: ibm/wazi-debug/1.1.0
+    type: chePlugin
+    alias: wazi-debug
+  - id: redhat/vscode-yaml/0.8.0
+    type: chePlugin
+    alias: vscode-yaml
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    volumes:
+      - name: wazi
+        containerPath: /home/wazi/.zowe
+      - name: m2
+        containerPath: /home/wazi/.m2
+    image: >-
+      docker.io/ibmcom/wazi-code-codeready@sha256:fde1b1dc4117058f6e7d6f05876fb398c1f8b0b3291eea8c67134f6ea2688d26
+    alias: wazi
+apiVersion: 1.0.0

@@ -1,0 +1,115 @@
+Cloud Z Development README
+
+1. Select Wazi Code and Sandbox in Openshift
+
+2. Start RSEAPI and RSED
+
+For Theia:
+
+3. Create Profile in Terminal using:
+
+zowe profiles create rse JTA.Wazi.Sandbox --host 169.61.209.247 --port <RSE API PORT> --user ibmuser --pass sys1 --base-path rseapi --protocol https --reject-unauthorized false --overwrite
+
+3b. Create SSH Profile:
+zowe profiles create ssh-profile JTA.ssh --host 169.61.209.247 --port <SSH Port> --user <your TSO id> --pass <your password>
+
+3c. 'Add Folder to Workspace' to add .theia folder
+
+4.Replace <userID> with your RACF ID in the Redhat CodeReady Workspace Settings and place them under .theia folder in Theia IDE
+
+5. Apply the DevFile to your environment
+
+6. Git Clone zAppBuild directory to your Wazi Sandbox to here:
+/u/<userID>/dbb-zappbuild/build.groovy
+
+6a. ssh IBMUSER@169.61.209.247 -p30013
+6b. ls -al ~/.ssh
+6c. cd ~/.ssh
+6d. cat id_rsa.pub
+6e. Copy and paste into GHE
+
+zAppBuild Directory: git@github.ibm.com:Jt-atkins/Jt-atkins-dbb-zappbuild1.git
+Repo location: https://github.ibm.com/Jt-atkins/Jt-atkins-dbb-zappbuild1
+Branch: Sandbox
+
+8. Run User Build with:
+
+Program Build:
+$DBB_HOME/bin/groovyz /u/DMJTA1/dbb-zappbuild-dev/build.groovy --sourceDir /u/DMJTA1/DevUserBuild --workDir /u/DMJTA1/DevUserBuild/work --hlq DMJTA1 --a cics-genapp --errPrefix U7687303 --userBuild  cics-genapp/base/src/COBOL/LGICDB01.cbl
+
+Z Unit:
+/bin/groovyz /u/DMJTA1/dbb-zappbuild-dev/build.groovy --sourceDir /u/DMJTA1/DevUserBuild --workDir /u/DMJTA1/DevUserBuild/work --hlq DMJTA1 --a cics-genapp -cc --userBuild  cics-genapp/zUnit/testcfg/LGICDB01.bzucfg
+
+
+For Eclipse:
+
+3. Create a connection to Dev LPAR or Wazi Sandbox or RSED port
+
+Dev LPAR:
+WTSC47.CPOLAB.IBM.COM
+Port: 4041
+
+4.Eclipse prefereneces will to workstation via IBM Push to Client
+
+5. Apply the DevFile (developer services/environment as code) to your environment workspace
+
+6. zAppBuild is locataed here /u/DMJTA1/dbb-zappbuild/build.groovy
+
+zAppBuild Directory: git@github.ibm.com:Jt-atkins/Jt-atkins-dbb-zappbuild1.git
+Repo location: https://github.ibm.com/Jt-atkins/Jt-atkins-dbb-zappbuild1
+Branch: Sandbox
+
+8. Run User Build with:
+
+Program Build:
+$DBB_HOME/bin/groovyz /u/DMJTA1/dbb-zappbuild-dev/build.groovy --sourceDir /u/DMJTA1/DevUserBuild --workDir /u/DMJTA1/DevUserBuild/work --hlq DMJTA1 --a cics-genapp --errPrefix U7687303 --userBuild  cics-genapp/base/src/COBOL/LGICDB01.cbl
+
+Z Unit:
+/bin/groovyz /u/DMJTA1/dbb-zappbuild-dev/build.groovy --sourceDir /u/DMJTA1/DevUserBuild --workDir /u/DMJTA1/DevUserBuild/work --hlq DMJTA1 --a cics-genapp -cc --userBuild  cics-genapp/zUnit/testcfg/LGICDB01.bzucfg
+
+
+
+
+
+
+Wazi Sandbox tips (if you are using it):
+
+to improve performance -
+
+In ADCD.Z24B.TCPPARMS(GLBTDATA) Remove:
+SEARCH FOR CANLAB.IBM.COM
+'NSINTERADDR 9.26.4.5'
+'NSINTERADDR 9.26.4.6'
+Then run the following commands
+SDSF
+/F RESOLVER,REFRESH
+PRE RSE*
+ /S RSED (edited)
+
+to IPL -
+from ibmsys1 : awsstop
+ in zdt/zvolumes : awsstart #devicemap(should be devmap.txt or aprof1)
+ipl a80 parm 0a82au
+
+Recover MSTCON -
+
+#1 : The following series of commands can be entered from an alternate TSO console :
+
+/v 700,offline
+/v 700,online
+/v 700,console
+
+( The / is required when entering commands via the SYSLOG )
+
+#2 : The mstcon can also be recovered by entering the following oprmsg commands on your Linux hardware console.
+The oprmsg command is documented in the RedBook : IBM System z Personal Development Tool: Volume 1 Introduction and Reference SG24-7721-02,
+
+$ oprmsg 'v cn(*),activate' (activate the "hardware console" for commands)
+$ oprmsg 'v 700,offline'
+$ oprmsg 'v 700,offline,force' (if the simple vary offline fails)
+$ oprmsg 'v 700,online,uncond'
+$ oprmsg 'v 700,console'
+
+from ibmsys1 : awsstop
+ in zdt/zvolumes : awsstart #devicemap(should be devmap.txt or aprof1)
+ipl a80 parm 0a82au

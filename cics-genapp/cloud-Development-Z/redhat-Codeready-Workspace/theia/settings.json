@@ -1,3 +1,5 @@
+,
+
  "zopeneditor.userbuild.workspaceSettings": {
     "dbb": {
         "command": "$DBB_HOME/bin/groovyz",
@@ -21,3 +23,7 @@
         "localWorkspacePath": "/projects/cics-genapp"
     }
 }
+
+for sandbox, change path for DBB to:
+/usr/lpp/IBM/DBB/
+
