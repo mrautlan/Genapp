@@ -2,7 +2,7 @@
       *+---------------------------------------------------------------+
       *| TLGICDB0                                                      |
       *| PRODUCT: IBM DEVELOPER FOR Z/OS                               |
-      *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
+      *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTINGS RAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
       *| DATE GENERATED: 01/31/2021 01:31                              |
