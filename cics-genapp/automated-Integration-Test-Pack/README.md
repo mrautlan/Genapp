@@ -1,10 +1,10 @@
 # **Virtualised Integration Testcase Creation Description** 
 Powered by IBM Wazi Virtual Test Platform
 
-## Record The Following Tests to Run a VTP Ingration Test This Application
+## Record The Following Tests to Run a VTP Integration Test This Application
 
 ### INQUIRE CUSTOMER
-> customer record 1 with full data
+> customer record 1 with full data returned
 
 > customer record 20 with only required fields 
 
