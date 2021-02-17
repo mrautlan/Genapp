@@ -208,7 +208,7 @@
              When 100
                MOVE '01' TO CA-RETURN-CODE
              When -913
-               MOVE '01' TO CA-RETURN-CODE
+               MOVE '02' TO CA-RETURN-CODE
              When Other
                MOVE '90' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
