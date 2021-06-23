@@ -202,14 +202,14 @@
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
       *    MOVE '2' TO CA-DOB(1:1).
-      
+
            Evaluate SQLCODE
              When 0
                MOVE '00' TO CA-RETURN-CODE
              When 100
                MOVE '01' TO CA-RETURN-CODE
              When -913
-               MOVE '01' TO CA-RETURN-CODE
+               MOVE '02' TO CA-RETURN-CODE
              When Other
                MOVE '90' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
