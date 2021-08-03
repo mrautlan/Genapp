@@ -2,7 +2,7 @@
       *                                                                *
       * LICENSED MATERIALS - PRO ERTY OF IBM                           *
       *                                                                *
-      * "RESTRICTED MATERIALS OF IBMd"                                 *
+      * "RESTRICTED MATERIALS OF IBM"                                 *
       *                                                                *
       * CB122.                                                         *
       *                                                                *
