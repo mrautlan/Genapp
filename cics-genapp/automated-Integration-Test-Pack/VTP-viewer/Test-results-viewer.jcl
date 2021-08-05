@@ -3,12 +3,13 @@
 //*//***************************************************************
 //*//***************************************************************
 //* Covert into format for VTP Viewer
-//***************************************************************
+//******************************************************************
+// SET TESTNAME=<JIRA-ID>
 //CPYJSON EXEC PGM=BZUPLAY,COND=(4,LT),REGION=0M,
 // PARM='RUN=BZURCP'
 //STEPLIB  DD DISP=SHR,DSN=BZU.SBZULOAD      Test Runner common
 //BZUMETA DD DISP=SHR,DSN=<USERID>.FEATURE.METAT1
-//BZUJSON DD PATH='/u/<USERID>/vtp/R&TESTNAME..vtptc',
+//BZUJSON DD PATH='/u/<USERID>/vtp/&<JIRA-ID>..vtptc',
 //           PATHDISP=(KEEP,DELETE),
 //           PATHOPTS=(OCREAT,ORDWR),
 //           PATHMODE=(SIRUSR,SIWUSR),
