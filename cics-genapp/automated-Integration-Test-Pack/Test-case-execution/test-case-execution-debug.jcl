@@ -7,7 +7,7 @@
 //*
 //RUNNER EXEC PROC=BZUPPLAY,
 //        PRM='TRACE=N',
-//        BZULOD2=DMJTA1.LOAD,
+//        BZULOD2=<User Application Load Modules>
 //        BZULOD=DMJTA1.GENAPP.APP.LOAD,
 //        BZUPLAY=DMJTA1.DOB.DEFECT
 //STEPLIB  DD DISP=SHR,DSN=&BZU..SBZULOAD
