@@ -1,4 +1,4 @@
-//CREATET JOB ,
+//VTPEXEC JOB ,
 // MSGCLASS=H,MSGLEVEL=(1,1),TIME=(,4),REGION=144M,COND=(16,LT)
 //*
 //* Action: Run Test Case...
