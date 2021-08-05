@@ -5,10 +5,11 @@
 //* Covert into format for VTP Viewer
 //******************************************************************
 // SET TESTNAME=<JIRA-ID>
+// SET TESTNAME=<META-DSN>
 //CPYJSON EXEC PGM=BZUPLAY,COND=(4,LT),REGION=0M,
 // PARM='RUN=BZURCP'
 //STEPLIB  DD DISP=SHR,DSN=BZU.SBZULOAD      Test Runner common
-//BZUMETA DD DISP=SHR,DSN=<USERID>.FEATURE.METAT1
+//BZUMETA DD DISP=SHR,DSN=<META-DSN>
 //BZUJSON DD PATH='/u/<USERID>/vtp/&<JIRA-ID>..vtptc',
 //           PATHDISP=(KEEP,DELETE),
 //           PATHOPTS=(OCREAT,ORDWR),
