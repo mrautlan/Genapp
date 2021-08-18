@@ -4,7 +4,7 @@
       *                                                                *
       * "RESTRICTED MATERIALS OF IBM                                   *
       *                                                                *
-      * CB122.                                                         *
+      * CB122..                                                        *
       *                                                                *
       * (C) COPYRIGHT IBM CORP. 2011,2013 ALL RIGHTS RESERVED          *
       *                                                                *
