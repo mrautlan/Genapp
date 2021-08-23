@@ -2,7 +2,7 @@
 //PLAYBK   EXEC PGM=BZUPLAY,PARM='TRACE=N'
 //STEPLIB  DD DISP=SHR,DSN=BZU.SBZULOAD
 //         DD DISP=SHR,DSN=DMJTA1.LOAD
-//BZUPLAY  DD DISP=SHR,DSN=DMJTA1.DEFECT.DOB
+//BZUPLAY  DD DISP=SHR,DSN=DMJTA1.FEATURE.T240821
 //SYSOUT   DD SYSOUT=*       (this keeps LE output in one spool file)
 //BZUMSG  DD SYSOUT=*        (optional, can be a VB output dataset)
 //*
