@@ -13,7 +13,7 @@
       * CONTRACT WITH IBM CORPORATION                                  *
       *                                                                *
       *                                                                *
-      *                    Inquire Customer                           **
+      *                    Inquire Customer                            *
       *                                                                *
       * Select customer details from DB2 table                         *
       *                                                                *
