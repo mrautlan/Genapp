@@ -5,5 +5,7 @@ COPY devsource /home/wazianalyze/data/project/source/
 RUN wa-scan.sh	
 EXPOSE 5000
 
-# docker build -t developername:5 .
+# Run your local container with these docker commands 
+# docker build -t developername:5 .<location of this file>
 # docker run -it -p 5000:5000 developername:3
+# wa-startup.sh
