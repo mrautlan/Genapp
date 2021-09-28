@@ -1,0 +1,35 @@
+{
+   "testCases":[
+      {
+         "id":"",
+         "type":"CICS",
+         "name":"DEFECT ITEM: ZPROJ-112",
+         "description":"RECORDINGS:\nSSC1 TRANSACTION - RECORDED PRODUCTION ISSUE FOR INQUIRE CUSTOMER FUNCTION",
+         "dataset":"DMJTA1.DEFECT.DOB",
+         "dateRecorded":"2021222092757000",
+         "transactions":[
+            {
+               "name":"SSC1",
+               "maps":[
+                  "SSMAPC1"
+               ],
+               "mapSets":[
+                  "SSMAP  "
+               ],
+               "db2Subsystems":[
+                  "DSN0"
+               ],
+               "programs":[
+                  "LGTESTC1",
+                  "LGICUS01",
+                  "LGICDB01"
+               ],
+               "transactions":[
+                  "SSC1"
+               ]
+            }
+         ],
+         "createdBy":"TK"
+      }
+   ]
+}
