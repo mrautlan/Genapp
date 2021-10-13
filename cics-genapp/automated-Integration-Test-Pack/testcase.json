@@ -3,8 +3,8 @@
       {
          "id":"",
          "type":"CICS",
-         "name":"DEFECT ITEM: ZPROJ-112",
-         "description":"RECORDINGS:\nSSC1 TRANSACTION - RECORDED PRODUCTION ISSUE FOR INQUIRE CUSTOMER FUNCTION",
+         "name":"DEFECT ITEM: ZPROJ-167",
+         "description":"SSC1 TRANSACTION - RECORDED INQUIRE CUSTOMER FUNCTION",
          "dataset":"DMJTA1.DEFECT.DOB",
          "dateRecorded":"2021222092757000",
          "transactions":[
