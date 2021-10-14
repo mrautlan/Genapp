@@ -1,0 +1,56 @@
+{
+  "type" : "object",
+  "properties" : {
+    "request" : {
+      "type" : "object",
+      "properties" : {
+        "customerNumber" : {
+          "minimum" : 0,
+          "maximum" : 9999999999,
+          "type" : "integer"
+        },
+        "customerDetails" : {
+          "type" : "object",
+          "properties" : {
+            "firstname" : {
+              "maxLength" : 10,
+              "type" : "string"
+            },
+            "lastName" : {
+              "maxLength" : 20,
+              "type" : "string"
+            },
+            "dateOfBirth" : {
+              "maxLength" : 10,
+              "type" : "string"
+            },
+            "houseName" : {
+              "maxLength" : 20,
+              "type" : "string"
+            },
+            "houseNumber" : {
+              "maxLength" : 4,
+              "type" : "string"
+            },
+            "postcode" : {
+              "maxLength" : 8,
+              "type" : "string"
+            },
+            "mobilePhoneNumber" : {
+              "maxLength" : 20,
+              "type" : "string"
+            },
+            "homePhoneNumber" : {
+              "maxLength" : 20,
+              "type" : "string"
+            },
+            "emailAddress" : {
+              "maxLength" : 100,
+              "type" : "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
