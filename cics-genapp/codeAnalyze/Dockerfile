@@ -1,11 +1,11 @@
 # FROM looks for Docker images locally first, then trys to 'pull from' the registry
-FROM jta/wazianalyze:latest
+FROM ibmcom/wazianalyze:latest
 MAINTAINER Joe Taffe-Atkins Genapp Build Admin <Jt-atkins@uk.ibm.com>
-COPY devsource /home/wazianalyze/data/project/source/
+COPY <local Git branch> /home/wazianalyze/data/project/source/
 RUN wa-scan.sh	
 EXPOSE 5000
+EXPOSE 4680
+CMD wa-startup.sh
 
-# Run your local container with these docker commands 
-# docker build -t developername:5 .<location of this file>
-# docker run -it -p 5000:5000 developername:3
-# wa-startup.sh
+# docker build -t jtawa:latest .
+# docker run -p 5000:5000 -p 4680:4680 -t jtawa:latest
