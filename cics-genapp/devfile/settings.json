@@ -1,0 +1,177 @@
+{
+   "Zowe-USS-Persistent": {
+    "persistence": true,
+    "favorites": [],
+    "history": [],
+    "sessions": [
+        "Feature.Wazi.Sandbox"
+    ],
+    "fileHistory": [
+        "[FEATURE.WAZI.SANDBOX]: /U/IBMUSER/.PROFILE"
+    ],
+    "searchHistory": [
+        "/u/ibmuser"
+    ]
+},
+   "Zowe-Jobs-Persistent": {
+    "persistence": true,
+    "favorites": [],
+    "history": [],
+    "sessions": [
+        "Feature.Wazi.Sandbox"
+    ],
+    "fileHistory": [],
+    "searchHistory": [
+        "Owner:* Prefix:GENA*",
+        "Owner:IBMUSER Prefix:VTP*"
+    ]
+},
+   "files.associations": {
+    "*.COBOL*": "cobol",
+    "*.COB*": "cobol",
+    "*.COBCOPY*": "cobol",
+    "*.COPYBOOK*": "cobol",
+    "*.COPY*": "cobol",
+    "*.PL1*": "pl1",
+    "*.PLI*": "pl1",
+    "*.INC*": "pl1",
+    "*.INCLUDE*": "pl1",
+    "*.JCL*": "jcl",
+    "*.ASM*": "hlasm",
+    "*.ASSEMBLE*": "hlasm",
+    "*.HLASM*": "hlasm",
+    "*.HLA*": "hlasm"
+},
+   "yaml.schemas": {
+    "file:///tmp/vscode-unpacked/ibm.wazi-developer.latest.wdtjgjvgmx.zopeneditor.vsix/extension/resources/zapp-schema-0.0.2.json": [
+        "zapp.yaml"
+    ]
+},
+   "json.schemas": [
+    {
+        "fileMatch": [
+            "/projects/zopeneditor-sample/zapp.json"
+        ],
+        "url": "file:///tmp/vscode-unpacked/ibm.wazi-developer.latest.bxpexftqcv.zopeneditor.vsix/extension/resources/zapp-schema-0.0.2.json"
+    },
+    {
+        "fileMatch": [
+            "/zapp.json"
+        ],
+        "url": "file:///tmp/vscode-unpacked/ibm.wazi-developer.latest.wdtjgjvgmx.zopeneditor.vsix/extension/resources/zapp-schema-0.0.2.json"
+    }
+],
+   "Zowe-DS-Persistent": {
+      "persistence": true,
+      "favorites": [
+         "[JTA.Wazi.Sandbox]: IBMUSER.CNTL{pds}",
+         "[JTA.Wazi.Sandbox]: IBMUSER.TEST.LOAD{pds}"
+      ],
+      "history": [],
+      "sessions": [
+         "169.61.209.247",
+         "JTA.Wazi.Sandbox"
+      ],
+      "fileHistory": [
+         "[FEATURE.WAZI.SANDBOX]: IBMUSER.CNTL(EXECTEST)",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPXEXEC)",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC2)",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC3)",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.DEFECT.DOB",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(RUNHELLO)",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.VTP.TEST",
+         "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(XMITDSN)"
+      ],
+      "searchHistory": [
+         "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.DEFECT.DOB",
+         "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.TEST.LOAD, IBMUSER.VTP.*"
+      ]
+   },
+   "zopeneditor.userbuild.workspaceSettings": {
+      "dbb": {
+         "command": "/usr/lpp/IBM/dbb/bin/groovyz",
+         "commandArgs": [],
+         "buildScriptPath": "/u/ibmuser/projects/dbb-zappbuild/Jt-atkins-dbb-zappbuild1/build.groovy",
+         "buildScriptArgs": [
+            "--userBuild",
+            "--workspace ${zopeneditor.userbuild.userSettings.dbbWorkspace}",
+            "--application cics-genapp",
+            "--hlq ${zopeneditor.userbuild.userSettings.dbbHlq}",
+            "--outDir ${zopeneditor.userbuild.userSettings.dbbWorkspace}/logs",
+            "--debug"
+         ],
+         "additionalDependencies": [
+            "application-conf"
+         ]
+      }
+   },
+   "zopeneditor.userbuild.userSettings": {
+      "dbbWorkspace": "/u/ibmuser/USERBUILD",
+      "dbbHlq": "IBMUSER",
+      "dbbLogDir": "/u/ibmuser/USERBUILD/logs",
+      "localWorkspacePath": "/projects/GenappJTA/cics-genapp"
+   },
+   "git.autofetch": true,
+   "editor.minimap.enabled": true,
+   "zopendebug.connection.userName": "IBMUSER",
+   "zopendebug.connection.connectionPort": 31982,
+   "zopendebug.connection.connectionName": "169.63.249.124"
+}
+ 
+{
+    "Zowe-Temp-Folder-Location": {
+        "folderPath": "/projects"
+    },
+    "zopeneditor.userbuild.userSettings": {
+        "dbb": {
+            "command": "/usr/lpp/IBM/dbb/bin/groovyz",
+            "buildScriptPath": "/u/ibmuser/projects/dbb-zappbuild,    Jt-atkins-dbb-zappbuild1/build.groovy",
+            "buildScriptArgs": [
+                "--userBuild",
+                "--workspace ${zopeneditor.userbuild.userSettings.dbbWorkspace}",
+                "--application cics-genapp",
+                "--hlq ${zopeneditor.userbuild.userSettings.dbbHlq}",
+                "--outDir ${zopeneditor.userbuild.userSettings.dbbWorkspace}/logs",
+                "--debug"
+            ],
+            "additionalDependencies": [
+                "application-conf"
+            ]
+        }
+    },
+    "zopeneditor.propertygroups": [
+        {
+            "name": "local-cobol-files",
+            "type": "local",
+            "language": "cobol",
+            "syslib": [
+                "/projects/GenappJTA/cics-genapp/base/src/COPY"
+            ]
+        }
+    ],
+    "Zowe-DS-Persistent": {
+        "persistence": true,
+        "favorites": [
+            "[JTA.Wazi.Sandbox]: IBMUSER.CNTL{pds}",
+            "[JTA.Wazi.Sandbox]: IBMUSER.TEST.LOAD{pds}"
+        ],
+        "history": [],
+        "sessions": [
+            "169.61.209.247",
+            "JTA.Wazi.Sandbox"
+        ],
+        "fileHistory": [
+            "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPXEXEC)",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC2)",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC3)",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.DEFECT.DOB",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(RUNHELLO)",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.VTP.TEST",
+            "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(XMITDSN)"
+        ],
+        "searchHistory": [
+            "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.DEFECT.DOB",
+            "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.TEST.LOAD, IBMUSER.VTP.*"
+        ]
+    }
+}

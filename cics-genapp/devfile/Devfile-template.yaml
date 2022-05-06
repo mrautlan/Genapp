@@ -1,0 +1,47 @@
+apiVersion: 1.0.0
+metadata:
+  name: ZPROJ-191
+projects:
+  - name: GenappJTA
+    source:
+      location: 'git@github.ibm.com:Jt-atkins/GenappJTA.git'
+      type: git
+      branch: ZPROJ-191
+  - name: gen-app
+    source:
+      location: 'git@github.ibm.com:Jt-atkins/gen-app.git'
+      type: git
+      branch: master
+components:
+  - id: ibm/wazi-developer/latest
+    preferences:
+      zopeneditor.userbuild.userSettings: '{ "dbb": { "command": "/usr/lpp/IBM/dbb/bin/groovyz", "buildScriptPath": "/u/ibmuser/projects/dbb-zappbuild,    Jt-atkins-dbb-zappbuild1/build.groovy", "buildScriptArgs": [ "--userBuild", "--workspace ${zopeneditor.userbuild.userSettings.dbbWorkspace}", "--application cics-genapp", "--hlq ${zopeneditor.userbuild.userSettings.dbbHlq}", "--outDir ${zopeneditor.userbuild.userSettings.dbbWorkspace}/logs", "--debug" ], "additionalDependencies": [ "application-conf" ] } }'
+      Zowe-Temp-Folder-Location: '{"folderPath": "/projects"}'
+      zopeneditor.propertygroups: '[ { "name": "local-cobol-files", "type": "local", "language": "cobol", "syslib": [ "/projects/GenappJTA/cics-genapp/base/src/COPY" ] }]'
+      Zowe-DS-Persistent: '{ "persistence": true, "favorites": [ "[JTA.Wazi.Sandbox]: IBMUSER.CNTL{pds}", "[JTA.Wazi.Sandbox]: IBMUSER.TEST.LOAD{pds}" ], "history": [], "sessions": [ "169.61.209.247", "JTA.Wazi.Sandbox" ], "fileHistory": [ "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPXEXEC)", "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC2)", "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(VTPEXEC3)", "[JTA.WAZI.SANDBOX]: IBMUSER.DEFECT.DOB", "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(RUNHELLO)", "[JTA.WAZI.SANDBOX]: IBMUSER.VTP.TEST", "[JTA.WAZI.SANDBOX]: IBMUSER.CNTL(XMITDSN)" ], "searchHistory": [ "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.DEFECT.DOB", "IBMUSER.CNTL, IBMUSER.LOAD, IBMUSER.TEST.LOAD, IBMUSER.VTP.*" ] }'
+    type: chePlugin
+    alias: wazi-developer
+  - id: ibm/wazi-debug/latest
+    type: chePlugin
+    alias: wazi-debug
+  - id: redhat/vscode-yaml/latest
+    type: chePlugin
+    alias: vscode-yaml
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    volumes:
+      - name: zowe
+        containerPath: /home/wazi/.zowe
+      - name: m2
+        containerPath: /home/wazi/.m2
+    alias: wazi-terminal
+    image: 'docker.io/ibmcom/wazi-code-codeready@sha256:9894c02388f3b624730fe67ec7b376ffe498305b005d68423b0ef74db618c4a4'
+  - id: ms-python/python/latest
+    type: chePlugin
+  - id: ms-vscode/node-debug2/latest
+    type: chePlugin
+  - id: vscode/typescript-language-features/latest
+    type: chePlugin
+  - id: redhat/vscode-xml/latest
+    type: chePlugin

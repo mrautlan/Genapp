@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "zOpenDebug",
+            "request": "launch",
+            "name": "Connect to parked IBM Z Open Debug session",
+            "useConnectionDetailsFromSettings": false,
+            "ignoreCertificateErrors": true,
+            "host": "169.63.249.124",
+            "port": 31100,
+            "secure": true,
+            "user": "IBMUSER",
+            "password": "${command:AskForPassword}"
+        },
+        {
+            "type": "zOpenDebug",
+            "request": "attach",
+            "name": "List all parked IBM Z Open Debug sessions",
+            "allSessions": true,
+            "useConnectionDetailsFromSettings": false,
+            "ignoreCertificateErrors": true,
+            "host": "169.63.249.124",
+            "port": 31100,
+            "secure": true
+        }
+    ]
+}
