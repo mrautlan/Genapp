@@ -5,7 +5,7 @@
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
-      *| DATE GENERATED: 05/05/2022 15:29                              |
+      *| DATE GENERATED: 05/06/2022 19:57                              |
       *| ID: 7ccdfbd6-1f73-4680-a48e-298e3e67ff49                      |
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
@@ -3502,7 +3502,7 @@
            MOVE AZU00000008 TO ZUT000000BA OF AZU00000021
            MOVE AZU00000009 TO ZUT00000076 OF ZUT00000075
            MOVE 136 TO ZUT00000077 OF ZUT00000075
-           MOVE -913 TO ZUT00000078 OF ZUT00000075
+           MOVE 100 TO ZUT00000078 OF ZUT00000075
            MOVE 0 TO ZUT0000007A OF ZUT00000079 OF ZUT00000075
            MOVE AZU0000000A TO ZUT0000007B OF ZUT00000079 OF ZUT00000075
            MOVE AZU0000000B TO ZUT0000007C OF ZUT00000075
