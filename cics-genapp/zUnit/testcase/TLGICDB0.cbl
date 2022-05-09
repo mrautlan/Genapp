@@ -5,7 +5,7 @@
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
-      *| DATE GENERATED: 05/06/2022 19:57                              |
+      *| DATE GENERATED: 05/09/2022 08:29                              |
       *| ID: 7ccdfbd6-1f73-4680-a48e-298e3e67ff49                      |
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
@@ -381,11 +381,11 @@
       * EVALUATE OUTPUT VALUE
            MOVE 0 TO RETURN-CODE
            IF (ZUT000000AD OF ZUT000000AB IS NUMERIC)
-               AND (ZUT000000AD OF ZUT000000AB = 01) THEN
+               AND (ZUT000000AD OF ZUT000000AB = 02) THEN
              CONTINUE
            ELSE
              MOVE ZUT000000AD OF ZUT000000AB TO AZU00000011(1)
-             MOVE 01 TO AZU00000011(2)
+             MOVE 02 TO AZU00000011(2)
              SET AZ-COMPARE-ITEM-NAME-PTR TO ADDRESS OF AZU00000010
              MOVE LENGTH OF AZU00000010 TO AZ-COMPARE-ITEM-NAME-LEN
              SET AZ-COMPARE-ITEM-VALUE-PTR TO ADDRESS OF AZU00000011(1)
