@@ -2,7 +2,7 @@
       *                                                                *
       * LICENSED MATERIALS - PROPERTY OF IBM                           *
       *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
+      * "RESTRICTED MATERIALS OF IBM.                                  *
       *                                                                *
       * CB12                                                           *
       *                                                                *
@@ -187,7 +187,7 @@
            IF SQLCODE NOT EQUAL 0
       *      Non-zero SQLCODE from UPDATE statement
              IF SQLCODE EQUAL 100
-               MOVE '01' TO CA-RETURN-CODE
+               MOVE '02' TO CA-RETURN-CODE
              ELSE
                MOVE '90' TO CA-RETURN-CODE
       *        Write error message to TD QUEUE(CSMT)
