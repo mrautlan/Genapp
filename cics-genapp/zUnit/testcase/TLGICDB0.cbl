@@ -1,7 +1,7 @@
        PROCESS NODLL,NODYNAM,TEST(NOSEP),NOCICS,NOSQL,PGMN(LU)
       *+---------------------------------------------------------------+
       *| TLGICDB0                                                      |
-      *| PRODUCT: IBM DEVELOPER FOR Z/OS                               |
+      *| PRODUCT: IBM DEVELOPER FOR Z/OS.                              |
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
