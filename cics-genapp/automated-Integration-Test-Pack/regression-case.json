@@ -1,0 +1,35 @@
+{
+   "testCases":[
+      {
+         "id":"",
+         "type":"CICS",
+         "name":"Regression Test 1",
+         "description":"Expected outcome should be all values for customer 1. If outcome is not correct, then a code change has broken core functionality",
+         "dataset":"DMJTA1.DEFECT.DOB",
+         "dateRecorded":"2021222092757000",
+         "transactions":[
+            {
+               "name":"SSC1",
+               "maps":[
+                  "SSMAPC1"
+               ],
+               "mapSets":[
+                  "SSMAP  "
+               ],
+               "db2Subsystems":[
+                  "DSN0"
+               ],
+               "programs":[
+                  "LGTESTC1",
+                  "LGICUS01",
+                  "LGICDB01"
+               ],
+               "transactions":[
+                  "SSC1"
+               ]
+            }
+         ],
+         "createdBy":"JTA"
+      }
+   ]
+}
