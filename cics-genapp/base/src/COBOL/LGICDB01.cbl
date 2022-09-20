@@ -8,7 +8,7 @@
       *                                                                *
       * (C) COPYRIGHT IBM CORP. 2011,2013 ALL RIGHTS RESERVED          *
       *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS- USE, DUPLICATIONs       *
+      * US GOVERNMENT USERS RESTRICTED RIGHTS- USE, DUPLICATION        *
       * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
       * CONTRACT WITH IBM CORPORATION                                  *
       *                                                                *
@@ -201,7 +201,7 @@
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
-      *     MOVE '2' TO CA-DOB(1:1).
+
 
            Evaluate SQLCODE
              When 0
