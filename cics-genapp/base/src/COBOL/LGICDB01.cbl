@@ -201,7 +201,7 @@
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
-     
+
 
            Evaluate SQLCODE
              When 0
