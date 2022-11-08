@@ -5,8 +5,8 @@
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
-      *| DATE GENERATED: 11/08/2022 21:15                              |
-      *| ID: 4                                                         |
+      *| DATE GENERATED: 11/08/2022 22:18                              |
+      *| ID: e5436c7b-cf41-481b-9e67-1da95cdc48ca                      |
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
       *| TEST_TEST2                                                    |
@@ -955,8 +955,8 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AZ-TEST-NAME-LEN      PIC S9(9) COMP-5.
-       01 AZ-TESTCASE-ID        PIC X(1)
-           VALUE '4'.
+       01 AZ-TESTCASE-ID        PIC X(36)
+           VALUE 'e5436c7b-cf41-481b-9e67-1da95cdc48ca'.
        LINKAGE SECTION.
        01 AZ-TEST               PIC X(80).
        01 AZ-TEST-ID            PIC X(80).
