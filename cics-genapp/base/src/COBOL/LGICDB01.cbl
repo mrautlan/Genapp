@@ -201,7 +201,7 @@
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
-           MOVE 'A' TO CA-DOB(1:1).
+      *     MOVE 'A' TO CA-DOB(1:1).
 
            Evaluate SQLCODE
              When 0
