@@ -5,15 +5,15 @@
       *| COMPONENT: IBM Z/OS AUTOMATED UNIT TESTING FRAMEWORK (ZUNIT)  |
       *|   FOR ENTERPRISE COBOL AND PL/I                               |
       *| PROGRAM: ENTERPRISE COBOL ZUNIT TEST CASE FOR DYNAMIC RUNNER  |
-      *| DATE GENERATED: 11/08/2022 22:18                              |
-      *| ID: e5436c7b-cf41-481b-9e67-1da95cdc48ca                      |
+      *| DATE GENERATED: 11/10/2022 08:14                              |
+      *| ID: 6                                                         |
       *+---------------------------------------------------------------+
       *+---------------------------------------------------------------+
-      *| TEST_TEST2                                                    |
-      *|     THIS PROGRAM IS FOR TEST TEST2                            |
+      *| TEST_SQL0                                                     |
+      *|     THIS PROGRAM IS FOR TEST SQL0                             |
       *+---------------------------------------------------------------+
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. 'TEST_TEST2'.
+       PROGRAM-ID. 'TEST_SQL0'.
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 PROGRAM-NAME   PIC X(8)  VALUE 'LGICDB01'.
@@ -58,9 +58,16 @@
             5 PIC X(12) DISPLAY VALUE '01962 811234'.
             5 PIC X(8) DISPLAY VALUE SPACES.
           3 AZU00000008.
-            5 PIC X(20) DISPLAY VALUE 'A.Pandy@beebhouse.co'.
-            5 PIC X(1) DISPLAY VALUE 'm'.
-            5 PIC X(79) DISPLAY VALUE SPACES.
+            5 PIC X(10) VALUE X'94404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'40404040404040404040'.
+            5 PIC X(10) VALUE X'00000000000000000000'.
+            5 PIC X(10) VALUE X'00000000000000000000'.
        01 AZ-COMPARE.
          03 AZ-COMPARE-ITEM-NAME-PTR  POINTER.
          03 AZ-COMPARE-ITEM-NAME-LEN  PIC S9(9) COMP-5.
@@ -128,7 +135,22 @@
           3 AZU0000001A PIC 9(3) OCCURS 2.
           3 AZU0000001C PIC X(20) OCCURS 2.
           3 AZU0000001E PIC X(20) OCCURS 2.
-          3 AZU00000020 PIC X(100) OCCURS 2.
+          3 AZU00000020 PIC X(200) OCCURS 2.
+       01 AZ-CONVERT.
+         03 AZ-CONVERT-HEXIN  PIC X(1).
+         03 AZ-CONVERT-HEXVAL PIC X(2).
+         03 AZ-HEXSTR PIC X(16) VALUE "0123456789ABCDEF".
+         03 AZ-DEC  PIC S9(4) COMP VALUE 0.
+         03 FILLER REDEFINES AZ-DEC.
+           05 FILLER PIC X.
+           05 AZ-DECBYTE PIC X.
+         03 AZ-I PIC S9(8) COMP.
+         03 AZ-J PIC S9(8) COMP.
+         03 AZ-K PIC S9(8) COMP.
+         03 AZ-Q PIC S9(8) COMP.
+         03 AZ-R PIC S9(8) COMP.
+         03 AZ-Q1 PIC S9(8) COMP.
+         03 AZ-R1 PIC S9(8) COMP.
        LINKAGE SECTION.
        01 AZ-TEST                   PIC X(80).
        01 AZ-ARG-LIST.
@@ -233,6 +255,8 @@
          5 ZUT000000B9 PIC X(20).
       *    *** CA-EMAIL-ADDRESS : ZUT000000BA
          5 ZUT000000BA PIC X(100).
+          5 ZUT000000BA-AZ REDEFINES ZUT000000BA.
+          6 PIC X(100) DISPLAY.
       *    *** CA-POLICY-DATA : ZUT000000BB
          5 ZUT000000BB PIC X(32267).
       *    *** CA-CUSTSECR-REQUEST : ZUT000000BC
@@ -376,7 +400,7 @@
        PROCEDURE DIVISION USING AZ-TEST
            ZUT0000008B ZUT000000AB.
       * START
-           DISPLAY 'TEST_TEST2 STARTED...'
+           DISPLAY 'TEST_SQL0 STARTED...'
            MOVE 0 TO AZ-TEST-NAME-LEN.
            INSPECT AZ-TEST TALLYING AZ-TEST-NAME-LEN FOR
            CHARACTERS BEFORE INITIAL SPACE.
@@ -566,26 +590,44 @@
              MOVE 20 TO AZ-COMPARE-ITEM-EXP-VALUE-LEN
              PERFORM THROW-ASSERTION
            END-IF
-           IF ZUT000000BA OF ZUT000000B0 OF ZUT000000AB = AZU00000008
-           THEN
+           IF ZUT000000BA-AZ OF ZUT000000B0 OF ZUT000000AB =
+           AZU00000008 THEN
              CONTINUE
            ELSE
-             MOVE ZUT000000BA OF ZUT000000B0 OF ZUT000000AB TO
-           AZU00000020(1)
-             MOVE AZU00000008 TO AZU00000020(2)
+             PERFORM VARYING AZ-I FROM 1 BY 1 UNTIL AZ-I > 100
+               MOVE ZUT000000BA-AZ OF ZUT000000B0 OF
+           ZUT000000AB(AZ-I:1) TO AZ-CONVERT-HEXIN
+               PERFORM CONVERT
+               COMPUTE AZ-J = AZ-I * 2 - 1
+               MOVE AZ-CONVERT-HEXVAL TO AZU00000020(1)(AZ-J:2)
+             END-PERFORM
+             PERFORM VARYING AZ-I FROM 1 BY 1 UNTIL AZ-I > 100
+               MOVE AZU00000008(AZ-I:1) TO AZ-CONVERT-HEXIN
+               PERFORM CONVERT
+               COMPUTE AZ-J = AZ-I * 2 - 1
+               MOVE AZ-CONVERT-HEXVAL TO AZU00000020(2)(AZ-J:2)
+             END-PERFORM
              SET AZ-COMPARE-ITEM-NAME-PTR TO ADDRESS OF AZU0000001F
              MOVE LENGTH OF AZU0000001F TO AZ-COMPARE-ITEM-NAME-LEN
              SET AZ-COMPARE-ITEM-VALUE-PTR TO ADDRESS OF AZU00000020(1)
-             MOVE 100 TO AZ-COMPARE-ITEM-VALUE-LEN
+             MOVE 200 TO AZ-COMPARE-ITEM-VALUE-LEN
              SET AZ-COMPARE-ITEM-EXP-VALUE-PTR TO ADDRESS OF
            AZU00000020(2)
-             MOVE 100 TO AZ-COMPARE-ITEM-EXP-VALUE-LEN
+             MOVE 200 TO AZ-COMPARE-ITEM-EXP-VALUE-LEN
              PERFORM THROW-ASSERTION
            END-IF
       * END
-           DISPLAY 'TEST_TEST2 SUCCESSFUL.'
+           DISPLAY 'TEST_SQL0 SUCCESSFUL.'
            GOBACK.
        INITIALIZE-PARM.
+           EXIT.
+       CONVERT.
+           MOVE AZ-CONVERT-HEXIN TO AZ-DECBYTE
+           DIVIDE AZ-DEC BY 16 GIVING AZ-Q REMAINDER AZ-R
+           COMPUTE AZ-Q1 = AZ-Q + 1
+           COMPUTE AZ-R1 = AZ-R + 1
+           MOVE AZ-HEXSTR(AZ-Q1:1) TO AZ-CONVERT-HEXVAL(1:1)
+           MOVE AZ-HEXSTR(AZ-R1:1) TO AZ-CONVERT-HEXVAL(2:1)
            EXIT.
        THROW-ASSERTION.
            MOVE 1 TO MESSAGE-LEN OF BZ-ASSERT
@@ -641,7 +683,7 @@
            SUBTRACT 1 FROM TRACE-LEN OF BZ-TRACE
            CALL BZUTRACE USING BZ-TRACE
            EXIT.
-       END PROGRAM TEST_TEST2.
+       END PROGRAM TEST_SQL0.
       *+---------------------------------------------------------------+
       *| BZU_TEST                                                      |
       *|     THIS PROGRAM IS CALLBACK DEFINITION FOR TEST              |
@@ -771,6 +813,8 @@
          5 ZUT000000B9 PIC X(20).
       *    *** CA-EMAIL-ADDRESS : ZUT000000BA
          5 ZUT000000BA PIC X(100).
+          5 ZUT000000BA-AZ REDEFINES ZUT000000BA.
+          6 PIC X(100) DISPLAY.
       *    *** CA-POLICY-DATA : ZUT000000BB
          5 ZUT000000BB PIC X(32267).
       *    *** CA-CUSTSECR-REQUEST : ZUT000000BC
@@ -936,7 +980,7 @@
            EVALUATE AZ-TEST(1:AZ-TEST-NAME-LEN)
            WHEN SPACE
              CONTINUE
-           WHEN 'TEST2'
+           WHEN 'SQL0'
              MOVE 0 TO RETURN-CODE
            WHEN OTHER
              CONTINUE
@@ -955,8 +999,8 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        01 AZ-TEST-NAME-LEN      PIC S9(9) COMP-5.
-       01 AZ-TESTCASE-ID        PIC X(36)
-           VALUE 'e5436c7b-cf41-481b-9e67-1da95cdc48ca'.
+       01 AZ-TESTCASE-ID        PIC X(1)
+           VALUE '6'.
        LINKAGE SECTION.
        01 AZ-TEST               PIC X(80).
        01 AZ-TEST-ID            PIC X(80).
@@ -1321,8 +1365,8 @@
                EVALUATE AZ-TEST(1:AZ-TEST-LEN)
                  WHEN SPACE
                    CONTINUE
-                 WHEN 'TEST2'
-                   PERFORM O0E080-TEST2
+                 WHEN 'SQL0'
+                   PERFORM O0E080-SQL0
                    CONTINUE
                  WHEN OTHER
                    CONTINUE
@@ -1368,7 +1412,7 @@
                EVALUATE AZ-TEST(1:AZ-TEST-LEN)
                  WHEN SPACE
                    CONTINUE
-                 WHEN 'TEST2'
+                 WHEN 'SQL0'
                    CONTINUE
                  WHEN OTHER
                    CONTINUE
@@ -1376,7 +1420,7 @@
              END-IF
            END-IF.
            PERFORM TEARDOWN.
-       O0E080-TEST2.
+       O0E080-SQL0.
            MOVE 0 TO RETURN-CODE
            IF AZ-RECORD-COUNT-OT(1) = 0 THEN
              CONTINUE
