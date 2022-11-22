@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="e469b3f4-ae87-44fb-bef7-f5f55e20265d">
+<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="a651d3f2-0958-44fb-8fe7-4feb54350772">
   <runner:options contOnTestCaseError="false" contOnTestCaseFail="true" contOnTestError="false" contOnTestFail="true"/>
   <runner:testCase moduleName="TLGICDB0">
     <test name="SQL0" entry="TEST_SQL0" type="CICS" init="BZU_INIT" term="BZU_TERM" program="LGICDB01" skipTest="false" resetFile="true" stubCall="true" dummy="false"/>
+    <test name="dummy" entry="dummy" type="CICS" init="dummy" term="dummy" program="LGICDB01" commarea="32500" skipTest="true" resetFile="false" stubCall="true" dummy="true"/>
+    <test name="SQL100" entry="TEST_SQL100" type="CICS" init="BZU_INIT" term="BZU_TERM" program="LGICDB01" skipTest="false" resetFile="true" stubCall="true" dummy="false"/>
+    <test name="dummy" entry="dummy" type="CICS" init="dummy" term="dummy" program="LGICDB01" commarea="32500" skipTest="true" resetFile="false" stubCall="true" dummy="true"/>
+    <test name="SQL913" entry="TEST_SQL913" type="CICS" init="BZU_INIT" term="BZU_TERM" program="LGICDB01" skipTest="false" resetFile="true" stubCall="true" dummy="false"/>
+    <test name="dummy" entry="dummy" type="CICS" init="dummy" term="dummy" program="LGICDB01" commarea="32500" skipTest="true" resetFile="false" stubCall="true" dummy="true"/>
   </runner:testCase>
   <runner:playback moduleName="LGICDB01">
     <playbackFile name="&lt;HLQ>.ZUNIT.PB.LGICDB01" localName="LGICDB01.plbck"/>

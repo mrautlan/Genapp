@@ -176,7 +176,8 @@
        MAINLINE-EXIT.
            EXIT.
       *----------------------------------------------------------------*
-
+      *                       COVID-TEST,
+      *                     :CA-COVID-TEST,
        GET-CUSTOMER-INFO.
 
            EXEC SQL
@@ -188,6 +189,7 @@
                       POSTCODE,
                       PHONEMOBILE,
                       PHONEHOME,
+                      COVID-TEST,
                       EMAILADDRESS
                INTO  :CA-FIRST-NAME,
                      :CA-LAST-NAME,
@@ -197,6 +199,7 @@
                      :CA-POSTCODE,
                      :CA-PHONE-MOBILE,
                      :CA-PHONE-HOME,
+                     :CA-COVID-TEST,
                      :CA-EMAIL-ADDRESS
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
@@ -209,7 +212,7 @@
              When 100
                MOVE '01' TO CA-RETURN-CODE
              When -913
-               MOVE '01' TO CA-RETURN-CODE
+               MOVE '02' TO CA-RETURN-CODE
              When Other
                MOVE '90' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
