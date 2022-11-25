@@ -1,7 +1,7 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM.....                      *
-      *                                                                *
+      * LICENSED MATERIALSS - PROPERTY OF IBM.....                     *
+      *                    JAGAN                                       *
       * "RESTRICTED MATERIALS OF IBM"                                  *
       *                                                                *
       * CB12        test4 a                                       *
