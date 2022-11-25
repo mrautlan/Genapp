@@ -2,7 +2,7 @@
       *                                                                *
       * LICENSED MATERIALS - PROPERTY OF IBM                           *
       *                                                                *
-      * "RESTRICTED MATERIALS OF IBMl                                  *
+      * "RESTRICTED MATERIALS OF IBM.                                  *
       *                                                                *
       * CB12                                                           *
       *                                                                *
