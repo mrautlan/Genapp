@@ -1,6 +1,6 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALSS - PROPERTY OF IBM.....                     *
+      * LICENSED MATERIALSS - PROPERTY OF IBM..... JAGAN               *
       *                    JAGAN                                       *
       * "RESTRICTED MATERIALS OF IBM"                                  *
       *                                                                *
