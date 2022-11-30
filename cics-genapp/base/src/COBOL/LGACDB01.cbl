@@ -1,7 +1,12 @@
       ******************************************************************
       *                                                                *
+<<<<<<< HEAD
       * LICENSED MATERIALSS - PROPERTY OF IBM..... JAGAN               *
       *                    JAGAN                                       *
+=======
+      * LICENSED MATERIALS - PROPERTY OF IBM....                      *
+      *                                                                *
+>>>>>>> branch 'BH-release-group' of git@github.ibm.com:Jt-atkins/GenappML.git
       * "RESTRICTED MATERIALS OF IBM"                                  *
       *                                                                *
       * CB12        test4 a                                       *
