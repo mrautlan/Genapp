@@ -35,8 +35,8 @@
               05 CA-NUM-POLICIES       PIC 9(3).
               05 CA-PHONE-MOBILE       PIC X(20).
               05 CA-PHONE-HOME         PIC X(20).
-              05 CA-COVID-TEST        PIC X(1).
               05 CA-EMAIL-ADDRESS      PIC X(100).
+      *       05 CA-COVID-TEST        PIC X(1).
               05 CA-POLICY-DATA        PIC X(32267).
       *    Fields used in Customer security call
            03 CA-CUSTSECR-REQUEST REDEFINES CA-REQUEST-SPECIFIC.

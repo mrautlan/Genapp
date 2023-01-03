@@ -15,7 +15,7 @@
       *                                                                *
       *                    Update Policy - VSAM                        *
       *                                                                *
-      * VSAM KSDS Policy record Update                                 *
+      * VSAM KSDS Policy record Update   d                              *
       *                                                                *
       *                                                                *
       *                                                                *

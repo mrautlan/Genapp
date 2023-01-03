@@ -176,8 +176,8 @@
        MAINLINE-EXIT.
            EXIT.
       *----------------------------------------------------------------*
-      *                       COVID-TEST,
-      *                     :CA-COVID-TEST,
+      *                       COVID-TEST, after EMAIL
+      *                     :CA-COVID-TEST, after EMAIL
        GET-CUSTOMER-INFO.
 
            EXEC SQL
@@ -189,7 +189,6 @@
                       POSTCODE,
                       PHONEMOBILE,
                       PHONEHOME,
-                      COVID-TEST,
                       EMAILADDRESS
                INTO  :CA-FIRST-NAME,
                      :CA-LAST-NAME,
@@ -199,12 +198,11 @@
                      :CA-POSTCODE,
                      :CA-PHONE-MOBILE,
                      :CA-PHONE-HOME,
-                     :CA-COVID-TEST,
                      :CA-EMAIL-ADDRESS
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
-      *     MOVE '2' TO CA-DOB(1:1).
+          MOVE '2' TO CA-DOB(1:1).
 
            Evaluate SQLCODE
              When 0
