@@ -17,7 +17,7 @@
 //*//             SPACE=(TRK,5),
 //* DEBUG
 //*//CEEOPTS  DD  *
-//*TEST(ALL,,PROMPT,TCPIP&9.171.58.79%8001:*)
+//*TEST(ALL,,PROMPT,TCPIP&9.171.40.186%8001:*)
 //* DEBUG
 //* CC
 //*//CEEOPTS  DD  *
