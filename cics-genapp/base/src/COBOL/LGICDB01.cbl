@@ -4,7 +4,7 @@
       *                                                                *
       * "RESTRICTED MATERIALS OF IBM.                                  *
       *                                                                *
-      * CB12                                                           *
+      * CB12.                                                          *
       *                                                                *
       * (C) COPYRIGHT IBM CORP. 2011,2013 ALL RIGHTS RESERVED          *
       *                                                                *
@@ -202,7 +202,7 @@
                FROM CUSTOMER
                WHERE CUSTOMERNUMBER = :DB2-CUSTOMERNUMBER-INT
            END-EXEC.
-      *    MOVE '2' TO CA-DOB(1:1).
+           MOVE '2' TO CA-DOB(1:1).
 
            Evaluate SQLCODE
              When 0
