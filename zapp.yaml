@@ -1,0 +1,33 @@
+name: sam
+description: For IBM Z Open Editor 3.0.0 or newer. Wazi's code samples with COBOL, PL/I, and HLASM applications
+version: 3.0.0
+author:
+  name: IBM CORPORATION
+
+propertyGroups:
+  - name: cobol-copybooks
+    language: cobol
+    libraries:
+      - name: syslib
+        type: local
+        locations:
+          - "**/COPY"
+          
+profiles:
+  - name: dbb-userbuild
+    type: dbb
+    settings:
+      application: cics-genapp
+      command: "/u/DMJTA1/dbb113/bin/groovyz"
+      buildScriptPath: "/u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/build.groovy"
+      buildScriptArgs:
+        - "--userBuild"
+        - "--workspace ${zopeneditor.userbuild.userSettings.dbbWorkspace}"
+        - "--application ${application}"
+        - "--hlq ${zopeneditor.userbuild.userSettings.dbbHlq}"
+        - "--outDir log"
+      additionalDependencies:
+        - "application-conf"
+      logFilePatterns:
+        - "${buildFile.basename}.log"
+        - "BuildReport.*"
