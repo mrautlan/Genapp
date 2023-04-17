@@ -1,4 +1,4 @@
-# Build a pipeline with Jenkins, Dependency Based Build and UrbanCode Deploy
+# Build a pipeline with Jenkins, Dependency Based Build and UrbanCode Deploy.
 
 This folder contains the DBB application configuration folder and the Jenkins pipeline file related to this tutorial FIXME LINK. It shows how to build the pipeline with all the products installed on premises.
 
