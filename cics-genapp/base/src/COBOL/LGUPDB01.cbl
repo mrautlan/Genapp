@@ -2,7 +2,7 @@
       *                                                                *
       * LICENSED MATERIALS - PROPERTY OF IBM                           *
       *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
+      * "RESTRICTED MATERIALS OF IBM".                                 *
       *                                                                *
       * CB12                                                           *
       *                                                                *
@@ -274,7 +274,7 @@
              When 0
                MOVE '00' TO CA-RETURN-CODE
              When -913
-               MOVE '02' TO CA-RETURN-CODE
+               MOVE '01' TO CA-RETURN-CODE
                PERFORM WRITE-ERROR-MESSAGE
                EXEC CICS RETURN END-EXEC
              When Other
