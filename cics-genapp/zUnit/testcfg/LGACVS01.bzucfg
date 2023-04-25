@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="eb211e9f-e5ef-4d26-9334-93b4b8c4e3cb">
+<runner:RunnerConfiguration xmlns:runner="http://www.ibm.com/zUnit/3.0.0.0/TestRunner" id="a695de1e-fa26-43c8-a169-fb87e34c1a86">
   <runner:options contOnTestCaseError="false" contOnTestCaseFail="true" contOnTestError="false" contOnTestFail="true" fileIOCapture="enable"/>
   <runner:testCase moduleName="TLGACVS0">
     <test name="T1" entry="TEST_T1" type="CICS" init="BZU_INIT" term="BZU_TERM" program="LGACVS01" skipTest="false" resetFile="true" stubCall="true" dummy="false"/>
