@@ -31,7 +31,9 @@ jobs:
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
           shell: cmd 
+          
         - uses: actions/upload-artifact@v3
           name: my-artifact
-          path: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/**/*.*
+          with:
+            path: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/**/*.*
           
