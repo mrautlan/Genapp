@@ -30,3 +30,4 @@ jobs:
           
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild
+          shell: cmd 
