@@ -19,7 +19,7 @@ jobs:
         # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
         MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
         MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
-        MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2/work # Absolute path to directory for storing the clone and build outputs
+        MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
         MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
