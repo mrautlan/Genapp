@@ -34,7 +34,7 @@ jobs:
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} test  GenAppComponent ${{ env.MyWorkSpace }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} test  GenAppComponent ${{ env.MyWorkSpace }}
           shell: cmd 
           
         
