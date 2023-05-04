@@ -8,6 +8,7 @@ env:
   # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
   Clone: '/u/DMJTA1/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
   DBB_Build: '/u/DMJTA1/dbb-build.sh' # Script to perform the DBB build on z/OS
+  UCD_Package: '/u/DMJTA1/PublishUCD.sh ' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
 on: workflow_dispatch
@@ -33,7 +34,7 @@ jobs:
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} /u/DMJTA1/dbb113/bin/groovyz /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/dbb-ucd-packaging.groovy --buztool /var/ucdagent/v705/bin/buztool.sh --workDir /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} --component GenAppComponent --versionName dev.${{ github.run_number }}
-          shell: cmd
+          run: ${{ env.DBB_Host }} test  GenAppComponent ${{ env.MyWorkSpace }}
+          shell: cmd 
           
         
