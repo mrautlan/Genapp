@@ -39,7 +39,7 @@ jobs:
           shell: cmd 
           
         - name: Deploy
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://9.76.61.222:8443 ${{ env.MyWorkDir }} GenAppComponent:${{ env.MyBranch }}.${{ github.run_number }} -k
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://9.76.61.222:8443 GenAppComponent:${{ env.MyBranch }}.${{ github.run_number }}  Deploy
           shell: cmd 
           
         
