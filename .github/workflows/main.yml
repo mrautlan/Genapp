@@ -15,8 +15,6 @@ env:
 on: workflow_dispatch
 
 jobs:
-  powershell:
-    runs-on: windows-latest
   DBB_Build_on_zOS:
     runs-on: self-hosted
     env:
