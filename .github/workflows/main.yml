@@ -15,6 +15,8 @@ env:
 on: workflow_dispatch
 
 jobs:
+  powershell:
+    runs-on: windows-latest
   DBB_Build_on_zOS:
     runs-on: self-hosted
     env:
@@ -38,12 +40,19 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
-        - name: Deploytest
-          uses: Amadevus/pwsh-script@v2
-          id: my-script
-          with:
-            script: '1 + 1' 
-        - run: echo "${{ steps.my-script.outputs.result }}"
+        - name: Execute PowerShell command
+          run: |
+          [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} 
+          
+          Invoke-RestMethod -Method 'Put' -Uri https://9.76.61.222:8443/cli/applicationProcessRequest/request -Body '{
+              "application":"APP_ZSEARCH",
+              "applicationProcess":"DEPLOY_PARTIAL_COMP",
+              "environment":"APP-DEV",
+              "versions":[{
+                  "version":"pds_ps_de_dir",
+                  "component":"COMP_ZSEARCH"
+              }]
+          }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"}
 
           
         
