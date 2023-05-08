@@ -38,8 +38,12 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
-        - name: Deploy
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://9.76.61.222:8443 GenAppComponent:${{ env.MyBranch }}.${{ github.run_number }}  Deploy
-          shell: cmd 
+        - name: Deploytest
+          uses: Amadevus/pwsh-script@v2
+          id: my-script
+          with:
+            script: '1 + 1' 
+        - run: echo "${{ steps.my-script.outputs.result }}"
+
           
         
