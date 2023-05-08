@@ -42,17 +42,18 @@ jobs:
           
         - name: Execute PowerShell command
           run: |
-          [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true} 
-          
-          Invoke-RestMethod -Method 'Put' -Uri https://9.76.61.222:8443/cli/applicationProcessRequest/request -Body '{
-              "application":"APP_ZSEARCH",
-              "applicationProcess":"DEPLOY_PARTIAL_COMP",
-              "environment":"APP-DEV",
-              "versions":[{
-                  "version":"pds_ps_de_dir",
-                  "component":"COMP_ZSEARCH"
-              }]
-          }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"}
-
+           curl -k --request PUT \
+            --url 'https://9.76.61.222:8443/cli/applicationProcessRequest/request' \
+            --header 'Content-Type: application/json' \
+            --user user:password \
+            --data '{
+            "application":"GenApp-Deploy2",
+            "applicationProcess":"Deploy",
+            "environment":"DEV",
+            "versions":[ {
+            "version":"latest",
+            "component":"GenAppComponent" }]
+            }
+            ' 
           
         
