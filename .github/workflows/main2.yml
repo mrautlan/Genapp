@@ -32,7 +32,7 @@ jobs:
           
         - name: Get first 4 characters of string
           run: |
-              build_input="${{ env.MyBranch }}"
+              build_input="1234567890ZUNIT"
               build_HLQ=${build_input:10:18}
               echo $build_HLQ
           
