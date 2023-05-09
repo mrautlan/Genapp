@@ -30,12 +30,12 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
           
-        - name: substring-action
-          uses: bhowell2/github-substring-action@1.0.1
-          with: 
-            value: ${{ env.MyBranch }}
-            output_name: build_HLQ=${build_input:10:18}
-            run: echo $output_name    
+        - uses: bhowell2/github-substring-action@v1.0.0
+          name: Capture Build HLQ
+          with:
+            value: "refs/heads/ZUNIT"
+            index_of_str: "refs/heads/"
+            length_from_start: 8
           
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
