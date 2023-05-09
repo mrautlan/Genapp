@@ -39,7 +39,7 @@ jobs:
           shell: cmd 
           
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:${{ env.MyBranch }}.${{ github.run_number }}  Deploy
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
           shell: cmd 
           
 
