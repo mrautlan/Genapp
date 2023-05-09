@@ -30,6 +30,12 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
           
+        - name: Get first 4 characters of string
+          run: |
+              build_input=${{ env.MyBranch }}
+              build_HLQ=${build_input:10:18}
+              echo $build_HLQ
+          
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
           shell: cmd 
