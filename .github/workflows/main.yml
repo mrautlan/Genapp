@@ -38,20 +38,19 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
-        - name: Execute PowerShell command
-          run: |
-           curl -k --request PUT \
-            --url 'https://9.76.61.222:8443/cli/applicationProcessRequest/request' \
-            --header 'Content-Type: application/json' \
-            --user user:password \
-            --data '{
-            "application":"GenApp-Deploy2",
-            "applicationProcess":"Deploy",
-            "environment":"DEV",
-            "versions":[ {
-            "version":"latest",
-            "component":"GenAppComponent" }]
-            }
-            ' 
-          
+        - name: call REST
+          run: | 
+                $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
+                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
+                    "application":"GenApp-Deploy2",
+                    "applicationProcess":"Deploy",
+                    "environment":"DEV",
+                      "versions":[ {
+                      "version":"latest",
+                      "component":"GenAppComponent" 
+                    }]
+                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+
+
         
