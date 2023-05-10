@@ -37,7 +37,8 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
           
-        - uses: bhowell2/github-substring-action@v1.0.0
+        - name: Collect Feature Branch name for Build Datasets
+          uses: bhowell2/github-substring-action@v1.0.0
           id: one
           with:
             value: "${{ github.ref }}"
@@ -52,7 +53,7 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
-        - name: call REST
+        - name: Deploy to Dev
           run: | 
                 $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
                 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
