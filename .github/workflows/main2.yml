@@ -41,7 +41,7 @@ jobs:
             length_from_start: 5
           
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ DMJTA1.steps.one.outputs.substring }} --impactBuild --verbose
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.one.outputs.substring }} --impactBuild --verbose
           shell: cmd 
           
         - name: Package
