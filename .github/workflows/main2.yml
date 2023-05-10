@@ -36,7 +36,7 @@ jobs:
         - uses: bhowell2/github-substring-action@v1.0.0
           id: one
           with:
-            value: "refs/heads/ZUNIT"
+            value: "${{ github.ref }}"
             index_of_str: "refs/heads/"
             length_from_start: 5
           
