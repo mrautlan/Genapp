@@ -9,7 +9,7 @@ env:
   Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
   DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
   UCD_Package: '/u/DMJTA1/GitHubWS/scripts/PublishUCD.sh' # Script to perform the DBB build on z/OS
-  UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
+  UCD_Deploy: '-Djdk.internal.httpclient.disableHostnameVerification=true /u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
 on: 
