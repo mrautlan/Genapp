@@ -35,17 +35,9 @@ jobs:
         - name: Clone repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
-          
-        - name: Collect Feature Branch name for Build Datasets
-          uses: bhowell2/github-substring-action@v1.0.0
-          id: one
-          with:
-            value: "${{ github.ref }}"
-            index_of_str: "refs/heads/"
-            length_from_start: 8
-          
+        
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.one.outputs.substring }} --impactBuild 
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.GENAPP --impactBuild 
           shell: cmd 
           
         - name: Package
@@ -60,10 +52,16 @@ jobs:
                     "application":"GenApp-Deploy2",
                     "applicationProcess":"Deploy",
                     "environment":"TEST",
-                      "versions":[ {
+                      "versions":[ 
+                      {
                       "version":"latest",
                       "component":"GenAppComponent" 
-                    }]
+                      }
+                      {
+                      "version":"latest",
+                      "component":"Genapp.Customer.API.InquireCustomer" 
+                      }
+                  ]
                 }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
 
 
