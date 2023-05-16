@@ -61,10 +61,27 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd
                     
-        - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} GenApp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
-          shell: cmd 
-          
+        - name: Deploy to Dev
+          run: | 
+                $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
+                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
+                    "application":"GenApp-Deploy2",
+                    "applicationProcess":"Deploy",
+                    "environment":"TEST",
+                      "versions":[ 
+                      {
+                      "version":"latest",
+                      "component":"GenAppComponent" 
+                      }
+                      {
+                      "version":"latest",
+                      "component":"Genapp.Customer.API.InquireCustomer" 
+                      }
+                  ]
+                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+
+
 
 
 
