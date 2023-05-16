@@ -63,15 +63,15 @@ jobs:
                     
         - name: Deploy to Dev
           run: | 
-                $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
+                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
                 [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
                 Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
-                    "application":"GenApp-Deploy2",
+                    "application":"General-Insurance",
                     "applicationProcess":"Deploy",
                     "environment":"DEV",
                       "versions":[{
                         "version":"latest",
-                        "component":"GenAppComponent" 
+                        "component":"GeneralsBackendComponent" 
                       }]
                 }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
 
