@@ -53,7 +53,7 @@ jobs:
             replace: ''
 
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.filteredVariable }} --impactBuild 
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.value }} --impactBuild 
           shell: cmd 
           
         - name: Package
