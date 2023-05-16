@@ -45,7 +45,8 @@ jobs:
             index_of_str: "refs/heads/"
             length_from_start: 8
             
-        - uses: mad9000/actions-find-and-replace-string@2
+        - name: Remove - and / from HLQ
+          uses: mad9000/actions-find-and-replace-string@2
           id: removeChars
           with:
             source: ${{ steps.one.outputs.substring }}
@@ -57,11 +58,11 @@ jobs:
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}..${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd
                     
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} GenApp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
           shell: cmd 
           
 
