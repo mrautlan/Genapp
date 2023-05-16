@@ -68,17 +68,11 @@ jobs:
                 Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
                     "application":"GenApp-Deploy2",
                     "applicationProcess":"Deploy",
-                    "environment":"TEST",
-                      "versions":[ 
-                      {
-                      "version":"latest",
-                      "component":"GenAppComponent" 
-                      }
-                      {
-                      "version":"latest",
-                      "component":"Genapp.Customer.API.InquireCustomer" 
-                      }
-                  ]
+                    "environment":"DEV",
+                      "versions":[{
+                        "version":"latest",
+                        "component":"GenAppComponent" 
+                      }]
                 }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
 
 
