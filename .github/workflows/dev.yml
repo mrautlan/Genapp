@@ -43,16 +43,24 @@ jobs:
           with:
             value: "${{ github.ref }}"
             index_of_str: "refs/heads/"
-            length_from_start: 5
-          
+            length_from_start: 8
+            
+        - name: Remove - and / from HLQ
+          uses: mad9000/actions-find-and-replace-string@2
+          id: removeChars
+          with:
+            source: ${{ steps.one.outputs.substring }}
+            find: '-'        
+            replace: ''
+
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.one.outputs.substring }} --impactBuild 
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.value }} --impactBuild 
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
-          shell: cmd 
-          
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}....${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
+          shell: cmd
+                    
         - name: Deploy to Dev
           run: | 
                 $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
@@ -61,11 +69,13 @@ jobs:
                     "application":"GenApp-Deploy2",
                     "applicationProcess":"Deploy",
                     "environment":"DEV",
-                      "versions":[ {
-                      "version":"latest",
-                      "component":"GenAppComponent" 
-                    }]
+                      "versions":[{
+                        "version":"latest",
+                        "component":"GenAppComponent" 
+                      }]
                 }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+
+
 
 
 
