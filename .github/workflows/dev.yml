@@ -48,7 +48,7 @@ jobs:
         - uses: mad9000/actions-find-and-replace-string@2
           id: removeChars
           with:
-            source: ${{ github.ref }}
+            source: ${{ steps.one.outputs.substring }}
             find: '-'        
             replace: ''
 
