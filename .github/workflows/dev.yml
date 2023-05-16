@@ -43,13 +43,12 @@ jobs:
           with:
             value: "${{ github.ref }}"
             index_of_str: "refs/heads/"
-            length_from_start: 5
+            length_from_start: 8
             
         - name: Remove "-" and "/" from Build Datasets HLQ
           id: removeChars
           run: |
-              myVariable="${{ steps.one.outputs.substring }}"
-              filteredVariable=$(echo "$myVariable" | sed 's/[-\/]//g')
+              filteredVariable=$(echo "${{ steps.one.outputs.substring }}" | sed 's/[-\/]//g')
               echo "::set-output name=filteredVariable::$filteredVariable"
           
         - name: DBB Impact Build
