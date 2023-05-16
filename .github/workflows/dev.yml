@@ -58,7 +58,7 @@ jobs:
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}....${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd
                     
         - name: Deploy to Dev
