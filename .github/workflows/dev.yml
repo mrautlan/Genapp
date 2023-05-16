@@ -45,12 +45,13 @@ jobs:
             index_of_str: "refs/heads/"
             length_from_start: 8
             
-        - name: Remove "-" and "/" from Build Datasets HLQ
+        - uses: mad9000/actions-find-and-replace-string@2
           id: removeChars
-          run: |
-              filteredVariable=$(echo "${{ steps.one.outputs.substring }}" | sed 's/[-\/]//g')
-              echo "::set-output name=filteredVariable::$filteredVariable"
-          
+          with:
+            source: ${{ github.ref }}
+            find: '-'        
+            replace: ''
+
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.filteredVariable }} --impactBuild 
           shell: cmd 
