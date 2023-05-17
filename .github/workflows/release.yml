@@ -44,18 +44,24 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
-        - name: Deploy to Dev
-          run: | 
-                $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
-                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
-                    "application":"GenApp-Deploy2",
-                    "applicationProcess":"Deploy",
-                    "environment":"DEV",
-                      "versions":[{
-                        "version":"latest",
-                        "component":"GenAppComponent" 
-                      }]
-                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
-
-
+        - name: Deploy  
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest\nGeneralsAPIComponent:latest Deploy
+          shell: cmd 
+          
+                    
+#        - name: Deploy to Dev
+#          run: | 
+#                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
+#                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+#                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
+#                    "application":"General-Insurance",
+#                    "applicationProcess":"Deploy",
+#                    "environment":"DEV",
+#                      "versions":[{
+#                        "version":"latest",
+#                        "component":"GeneralsBackendComponent" 
+#                      }]
+#                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+#
+#
+#

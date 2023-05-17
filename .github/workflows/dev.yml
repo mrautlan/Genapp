@@ -16,6 +16,7 @@ on:
     push:
        branches:
         - '**ZUNIT**'
+        - '**TEST**'
         - '**ZPROJ**'
        paths:
         - '**.cbl'
@@ -47,36 +48,38 @@ jobs:
             
         - name: Remove - and / from HLQ
           uses: mad9000/actions-find-and-replace-string@2
-          id: removeChars
+          id: removedChars
           with:
             source: ${{ steps.one.outputs.substring }}
             find: '-'        
             replace: ''
 
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.value }} --impactBuild 
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removedChars.outputs.value }} --impactBuild 
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}....${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
           shell: cmd
+          
+        - name: Deploy  
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
+          shell: cmd 
+          
                     
-        - name: Deploy to Dev
-          run: | 
-                $uri = 'https://9.76.61.222:8443/cli/applicationProcessRequest/request'
-                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
-                    "application":"GenApp-Deploy2",
-                    "applicationProcess":"Deploy",
-                    "environment":"DEV",
-                      "versions":[{
-                        "version":"latest",
-                        "component":"GenAppComponent" 
-                      }]
-                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
-
-
-
-
-
-        
+#        - name: Deploy to Dev
+#          run: | 
+#                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
+#                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+#                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
+#                    "application":"General-Insurance",
+#                    "applicationProcess":"Deploy",
+#                    "environment":"DEV",
+#                      "versions":[{
+#                        "version":"latest",
+#                        "component":"GeneralsBackendComponent" 
+#                      }]
+#                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+#
+#
+#
