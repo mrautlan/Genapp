@@ -21,7 +21,7 @@ jobs:
     runs-on: self-hosted
     env:
         # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
-        MyRepo: git@github.com:jt-atkins/GenappJTA.git # Source code repository URL (SSH)
+        MyRepo: git@github.ibm.com:Jt-atkins/GenappML2.git # Source code repository URL (SSH)
         MyBranch: main # Branch on which to run the GHA pipeline
         MyWorkDir: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
         MyWorkSpace: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }}/GenappJTA  # Absolute path to workspace (root) directory containing all required source directories
