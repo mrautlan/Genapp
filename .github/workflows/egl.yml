@@ -35,34 +35,3 @@ jobs:
              chmod +x ./c/Users/JosephTaffe-Atkins/egltogit4.sh
              /c/Users/JosephTaffe-Atkins/egltogit4.sh "git@github.com:jt-atkins/GenappJTA.git" "main" "/c/rbd"
           shell: bash
-          
-        - name: Clone repository
-          run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
-          shell: cmd 
-          
-        - name: Collect Feature Branch name for Build Datasets
-          uses: bhowell2/github-substring-action@v1.0.0
-          id: one
-          with:
-            value: "${{ github.ref }}"
-            index_of_str: "refs/heads/"
-            length_from_start: 8
-            
-        - name: Remove - and / from HLQ
-          uses: mad9000/actions-find-and-replace-string@2
-          id: removeChars
-          with:
-            source: ${{ steps.one.outputs.substring }}
-            find: '-'        
-            replace: ''
-
-        - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.value }} --impactBuild 
-          shell: cmd 
-          
-        - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  EGLBackendComponent ${{ env.MyWorkDir }}
-          shell: cmd
-                    
-
-
