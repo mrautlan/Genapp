@@ -29,9 +29,7 @@ jobs:
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
      
-        - uses: actions/checkout@v2
-        - name: Move Generated Code to Cobol Repo
+        - name: Run PowerShell script
           run: |
-             chmod +x ./c/Users/JosephTaffe-Atkins/egltogit4.sh
-             /c/Users/JosephTaffe-Atkins/egltogit4.sh "git@github.com:jt-atkins/GenappJTA.git" "main" "/c/rbd"
-          shell: bash
+            powershell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
+            powershell -File  /c/Users/JosephTaffe-Atkins/script.ps1
