@@ -32,4 +32,4 @@ jobs:
         - name: Run PowerShell script
           run: |
             powershell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
-            powershell -File  /c/Users/JosephTaffe-Atkins/script.ps1
+            powershell -File  C:\Users\JosephTaffe-Atkins\script.ps1
