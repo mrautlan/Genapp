@@ -36,3 +36,18 @@ jobs:
             Set-Variable -name 'copy_directory' -value 'C:\rbd'
             powershell -File C:\Users\JosephTaffe-Atkins\script1.ps1 -repository_url $repository_url -checkout_branch $checkout_branch -copy_directory $copy_directory
 
+        - name: Clone Cobol repository
+          run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+          shell: cmd 
+          
+        - name: DBB Impact Build
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
+          shell: cmd 
+          
+        - name: Package
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
+          shell: cmd 
+          
+        - name: Deploy  
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
+          shell: cmd 
