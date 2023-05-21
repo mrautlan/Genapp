@@ -28,8 +28,11 @@ jobs:
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
-     
+    
         - name: Run PowerShell script
           run: |
-            powershell -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
-            powershell -File  C:\Users\JosephTaffe-Atkins\script.ps1
+            Set-Variable -name 'repository_url' -value 'git@github.com:jt-atkins/GenappJTA.git'
+            Set-Variable -name 'checkout_branch' -value 'main'
+            Set-Variable -name 'copy_directory' -value 'C:\rbd'
+            powershell -File C:\Users\JosephTaffe-Atkins\script1.ps1 -repository_url $repository_url -checkout_branch $checkout_branch -copy_directory $copy_directory
+
