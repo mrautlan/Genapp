@@ -1,0 +1,75 @@
+name: EGL-Build-Pipeline
+## Notes:
+# A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
+# Global vars
+env:
+  # SSH connection information
+  DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+  # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
+  Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
+  DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
+  UCD_Package: '/u/DMJTA1/GitHubWS/scripts/PublishUCD.sh' # Script to perform the DBB build on z/OS
+  UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
+# "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
+# see https://docs.github.com/en/actions/learn-github-actions/contexts
+on: 
+    push:
+       branches:
+        - '**EGL**'
+       paths:
+        - '**.cbl'
+      
+jobs:
+  DBB_Build_on_zOS:
+    runs-on: self-hosted
+    env:
+        # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
+        MyRepo: git@github.com:jt-atkins/GenappJTA.git # Source code repository URL (SSH)
+        MyBranch: main # Branch on which to run the GHA pipeline
+        MyWorkDir: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
+        MyWorkSpace: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
+        MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+        MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+    steps:
+        - name: egl to cobol conversion 
+          run: |
+             cat done
+          shell: bash
+      
+        - uses: actions/checkout@v2
+        - name: Move Generated Code to Cobol Repo
+          run: |
+             chmod +x ./c/Users/JosephTaffe-Atkins/egltogit4.sh
+             /c/Users/JosephTaffe-Atkins/egltogit4.sh "git@github.com:jt-atkins/GenappJTA.git" "main" "/c/rbd"
+          shell: bash
+          
+        - name: Clone repository
+          run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+          shell: cmd 
+          
+        - name: Collect Feature Branch name for Build Datasets
+          uses: bhowell2/github-substring-action@v1.0.0
+          id: one
+          with:
+            value: "${{ github.ref }}"
+            index_of_str: "refs/heads/"
+            length_from_start: 8
+            
+        - name: Remove - and / from HLQ
+          uses: mad9000/actions-find-and-replace-string@2
+          id: removeChars
+          with:
+            source: ${{ steps.one.outputs.substring }}
+            find: '-'        
+            replace: ''
+
+        - name: DBB Impact Build
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removeChars.outputs.value }} --impactBuild 
+          shell: cmd 
+          
+        - name: Package
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  EGLBackendComponent ${{ env.MyWorkDir }}
+          shell: cmd
+                    
+
+
