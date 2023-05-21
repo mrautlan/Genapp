@@ -13,11 +13,8 @@ env:
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
 on: 
-    push:
-       branches:
-        - '**EGL**'
-       paths:
-        - '**.cbl'
+    workflow_dispatch:
+    
       
 jobs:
   DBB_Build_on_zOS:
