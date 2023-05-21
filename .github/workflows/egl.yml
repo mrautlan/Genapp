@@ -28,11 +28,7 @@ jobs:
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
-        - name: egl to cobol conversion 
-          run: |
-             cat done
-          shell: bash
-      
+     
         - uses: actions/checkout@v2
         - name: Move Generated Code to Cobol Repo
           run: |
