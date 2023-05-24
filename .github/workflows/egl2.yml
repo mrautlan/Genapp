@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: bash
         shell: bash
-        run: /c/rbd/test.sh
+        run: sh c:\rbd\test.sh
         
       - name: Run Shell Script1
         run: |
