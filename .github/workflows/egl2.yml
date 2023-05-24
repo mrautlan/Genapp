@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: bash
         shell: bash
-        run: sh c:\rbd\test.sh
+        run: sh ${GITHUB_ACTION_PATH//\\//}/test.sh
         
       - name: Run Shell Script1
         run: |
