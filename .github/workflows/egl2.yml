@@ -22,4 +22,9 @@ jobs:
 
     steps:
     - name: Run Shell Script
+      run: |
+        echo "Executing shell script"
+        pwsh -Command "./c/rbd/test.sh"
+        
+    - name: Run Shell Script
       run: /c/rbd/test.sh
