@@ -21,10 +21,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Run Shell Script1
-      run: |
-        echo "Executing shell script"
-        pwsh -Command "sh /c/rbd/test.sh"
+      - name: bash
+        shell: bash
+        run: /c/rbd/test.sh
         
-    - name: Run Shell Script2
-      run: sh c:\rbd\test.sh
+      - name: Run Shell Script1
+        run: |
+          echo "Executing shell script"
+          pwsh -Command "sh /c/rbd/test.sh"
+
+      - name: Run Shell Script2
+        run: sh c:\rbd\test.sh
