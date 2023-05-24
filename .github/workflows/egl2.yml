@@ -31,4 +31,4 @@ jobs:
     - name: Run Shell Script
       run: |
         echo "Executing shell script"
-        bash C:\rbd\test.sh
+        sh C:\rbd\test.sh
