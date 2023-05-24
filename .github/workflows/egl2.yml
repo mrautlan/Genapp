@@ -29,6 +29,6 @@ jobs:
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
         - name: Call a Bash Script
-          run:  /c/rbd/test.sh
+          run:  ${{ github.action_path }}/test.sh
           shell: bash
           
