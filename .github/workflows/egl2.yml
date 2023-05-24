@@ -21,8 +21,5 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Run Shell Script
       run: /c/rbd/test.sh
