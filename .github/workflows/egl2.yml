@@ -25,4 +25,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run Shell Script
-      run: sh your_script.sh
+      run: sh /c/rbd/test.sh
