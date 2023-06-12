@@ -39,7 +39,7 @@ jobs:
           shell: cmd 
           
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://rdbkucd1.cpolab.ibm.com:8443 GeneralsBackendComponent:latest Deploy
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
           shell: cmd 
           
 
