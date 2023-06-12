@@ -46,7 +46,7 @@ jobs:
             applicationProcess: 'Deploy'
             environment: 'DEV'
             versions: '${{ env.MyBranch }}.${{ github.run_number }}'
-            component: 'General-Insurance'
+            component: 'GeneralsBackendComponent'
             hostname: '9.76.61.223'
             username: 'admin'
             password: 'admin'
