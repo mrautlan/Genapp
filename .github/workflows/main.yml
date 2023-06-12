@@ -37,10 +37,20 @@ jobs:
         - name: Package
           run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
           shell: cmd 
-          
-        - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
-          shell: cmd 
-          
 
-        
+        - name: Deploy UCD application
+          id: Deploy_MYAPP
+          uses: kblogin123456/hello-world-javascript-action@v1.16
+          with:
+            application: 'General-Insurance'
+            applicationProcess: 'Deploy'
+            environment: 'DEV'
+            versions: '${{ env.MyBranch }}.${{ github.run_number }}'
+            component: 'General-Insurance'
+            hostname: '9.76.61.223'
+            username: 'admin'
+            password: 'admin'
+ 
+
+
+
