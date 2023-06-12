@@ -35,11 +35,11 @@ jobs:
           shell: cmd 
           
         - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GenAppComponent ${{ env.MyWorkDir }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
           shell: cmd 
           
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://rdbkucd1.cpolab.ibm.com:8443 GeneralsBackendComponent:latest Deploy
           shell: cmd 
           
 
