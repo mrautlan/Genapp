@@ -18,6 +18,8 @@ on:
       - opened
     branches:
       - 'Rel*'
+      - 'main'
+      - 'ZUNIT'
     paths:
       - '**'
 
