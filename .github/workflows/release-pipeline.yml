@@ -17,7 +17,7 @@ on:
     types:
       - opened
     branches:
-      - 'release*'
+      - 'Rel*'
     paths:
       - '**'
 
