@@ -16,13 +16,7 @@ on:
   pull_request:
     types:
       - opened
-    branches:
-      - 'Rel*'
-      - 'main'
-      - 'ZUNIT'
-    paths:
-      - '**'
-
+      
 jobs:
   DBB_Build_on_zOS:
     runs-on: self-hosted
