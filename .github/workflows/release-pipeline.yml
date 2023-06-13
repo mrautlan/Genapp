@@ -1,4 +1,4 @@
-name: ReleaseBuildPipeline
+name: ReleaseBuildPipelineTest
 ## Notes:
 # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
 # Global vars
