@@ -1,0 +1,49 @@
+name: ReleaseBuildPipeline
+## Notes:
+# A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
+# Global vars
+env:
+  # SSH connection information
+  DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+  # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
+  Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
+  DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
+  UCD_Package: '/u/DMJTA1/GitHubWS/scripts/PublishUCD.sh' # Script to perform the DBB build on z/OS
+  UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
+# "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
+# see https://docs.github.com/en/actions/learn-github-actions/contexts
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'release*'
+    paths:
+      - '**'
+
+jobs:
+  DBB_Build_on_zOS:
+    runs-on: self-hosted
+    env:
+        # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
+        MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
+        MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
+        MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
+        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
+        MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+        MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+    steps:
+    
+      - name: Extract pull request number
+        id: extract_pr_number
+        run: echo "PR_NUMBER=$(echo ${GITHUB_REF#refs/pull/} | cut -d/ -f1)" >> $GITHUB_ENV
+
+      - name: Store pull request link
+        id: store_pr_link
+        run: echo "PR_LINK=https://github.com/${{ github.repository }}/pull/${{ steps.extract_pr_number.outputs.PR_NUMBER }}" >> $GITHUB_ENV
+
+      - name: Use pull request link
+        run: |
+          echo "The pull request link is $PR_LINK"
+          
+
