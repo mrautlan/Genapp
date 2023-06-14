@@ -36,7 +36,8 @@ jobs:
       
       - name: Use pull request link
         run: |
-          PR_LINK="${{ PR_LINK }}"
-          echo "The pull request link is $PR_LINK"
-          
+          PR_LINK=$PR_LINK
+          echo "The pull request link is ${{ PR_LINK }}"
+      
+ 
 
