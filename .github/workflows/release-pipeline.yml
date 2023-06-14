@@ -36,7 +36,7 @@ jobs:
 
       - name: Store pull request link
         id: store_pr_link
-        run: echo "PR_LINK=https://github.com/${{ github.repository }}/pull/${{ steps.extract_pr_number.outputs.PR_NUMBER }}" >> $GITHUB_ENV
+        run: echo "PR_LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_ENV
 
       - name: Use pull request link
         run: |
