@@ -10,12 +10,23 @@ env:
   DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
   UCD_Package: '/u/DMJTA1/GitHubWS/scripts/PublishUCD.sh' # Script to perform the DBB build on z/OS
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
+  UCD_Dev_LPAR: 'DEV'
+  UCD_Test_LPAR: 'TEST'
+  UCD_Prod_LPAR: 'PROD'
+  UCD_Server_URL: 'https://9.76.61.223:8443'
+  UCD_backendComponent: 'GeneralsBackendComponent'
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
 on:
   pull_request:
     types:
       - reopened
+  workflow_dispatch:
+    inputs:
+      Deploy:
+        description: 'Run Deploy to Dev'
+        required: true
+
       
 jobs:
   DBB_Build_on_zOS:
@@ -27,20 +38,28 @@ jobs:
         MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
         MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+        MyPR: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+        UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/GenappRepositoryProps.properties
+        UCD_AppDeployProcess: 'Deploy'
     steps:
-    
-      - name: Set variable
-        id: set_variable
-        run: echo MY_VARIABLE=my value >> $GITHUB_ENV
+      - name: Clone repository
+        run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+        shell: cmd 
+        
+      - name: DBB Impact Build
+        run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
+        shell: cmd 
 
-      - name: Use variable in Step 2
-        run: |
-         echo The value of MY_VARIABLE is $MY_VARIABLE
+      - name: Package
+        run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }} ${{ env.UCD_AppProps }}
+        shell: cmd 
 
-      - name: Use variable in Step 3
-        run: |
-         echo The value of MY_VARIABLE is $MY_VARIABLE
-    
+      - name: Deploy  
+        run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }} ${{ UCD_AppDeployProcess }}
+        shell: cmd 
+
+      
+ 
   
 
