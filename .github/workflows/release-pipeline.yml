@@ -15,7 +15,7 @@ env:
 on:
   pull_request:
     types:
-      - opened
+      - reopened
       
 jobs:
   DBB_Build_on_zOS:
@@ -30,13 +30,17 @@ jobs:
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
     
-      - name: Store pull request link
-        id: store_pr_link
-        run: |
-          PR_LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-          echo "The pull request link is ${{ PR_LINK }}"
-          
+      - name: Set variable
+        id: set_variable
+        run: echo "MY_VARIABLE=my value" >> $GITHUB_ENV
 
-      
- 
+      - name: Use variable in Step 2
+        run: |
+         echo "The value of MY_VARIABLE is $MY_VARIABLE"
+
+      - name: Use variable in Step 3
+        run: |
+         echo "The value of MY_VARIABLE is $MY_VARIABLE"
+    
+  
 
