@@ -36,10 +36,7 @@ jobs:
           PR_LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_ENV
           echo "The pull request link is ${{ PR_LINK }}"
           
-      - name: Use pull request link
-        run: |
-          PR_LINK=$PR_LINK
-          echo "The pull request link is ${{ PR_LINK }}"
+
       
  
 
