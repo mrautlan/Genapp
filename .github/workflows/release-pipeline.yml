@@ -32,15 +32,15 @@ jobs:
     
       - name: Set variable
         id: set_variable
-        run: echo "MY_VARIABLE=my value" >> $GITHUB_ENV
+        run: echo MY_VARIABLE=my value >> $GITHUB_ENV
 
       - name: Use variable in Step 2
         run: |
-         echo "The value of MY_VARIABLE is $MY_VARIABLE"
+         echo The value of MY_VARIABLE is $MY_VARIABLE
 
       - name: Use variable in Step 3
         run: |
-         echo "The value of MY_VARIABLE is $MY_VARIABLE"
+         echo The value of MY_VARIABLE is $MY_VARIABLE
     
   
 
