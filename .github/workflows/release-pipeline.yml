@@ -30,16 +30,13 @@ jobs:
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
     
-      - name: Extract pull request number
-        id: extract_pr_number
-        run: echo "PR_NUMBER=$(echo ${GITHUB_REF#refs/pull/} | cut -d/ -f1)" >> $GITHUB_ENV
-
       - name: Store pull request link
         id: store_pr_link
         run: echo "PR_LINK=https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-
+      
       - name: Use pull request link
         run: |
+          PR_LINK="${{ env.PR_LINK }}"
           echo "The pull request link is $PR_LINK"
           
 
