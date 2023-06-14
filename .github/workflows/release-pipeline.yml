@@ -15,7 +15,7 @@ env:
 on:
   pull_request:
     types:
-      - opened
+      - opened, reopened]
       
 jobs:
   DBB_Build_on_zOS:
