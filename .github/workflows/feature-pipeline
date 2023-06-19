@@ -1,4 +1,4 @@
-name: Dev-Feature-Pipeline
+name: Dev-Feature-Pipeline-Test
 ## Notes:
 # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
 # Global vars
