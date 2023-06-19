@@ -1,4 +1,4 @@
-name: Dev-Build-Pipeline
+name: Dev-Feature-Pipeline
 ## Notes:
 # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
 # Global vars
@@ -12,7 +12,7 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
-# on: 
+#on: 
 #    push:
  #      branches:
   #      - '**ZUNIT**'
@@ -21,9 +21,7 @@ env:
      #  paths:
       #  - '**.cbl'
        # - '**.cpy'
-
 on: workflow_dispatch
-
       
 jobs:
   DBB_Build_on_zOS:
@@ -69,23 +67,20 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
           shell: cmd 
           
-
-        - name: Deploy to Dev
-          run: | 
-                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
-                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
-                    "application":"General-Insurance",
-                    "applicationProcess":"Deploy",
-                    "environment":"DEV",
-                      "versions":[{
-                        "version":"latest",
-                        "component":"GeneralsBackendComponent" 
-                      }]
-                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
-
-
-
-
-
-        
+                    
+#        - name: Deploy to Dev
+#          run: | 
+#                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
+#                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
+#                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
+#                    "application":"General-Insurance",
+#                    "applicationProcess":"Deploy",
+#                    "environment":"DEV",
+#                      "versions":[{
+#                        "version":"latest",
+#                        "component":"GeneralsBackendComponent" 
+#                      }]
+#                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
+#
+#
+#
