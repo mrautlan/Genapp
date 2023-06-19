@@ -12,16 +12,14 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
-#on: 
-#    push:
- #      branches:
-  #      - '**ZUNIT**'
-   #     - '**TEST**'
-    #    - '**ZPROJ**'
-     #  paths:
-      #  - '**.cbl'
-       # - '**.cpy'
-on: workflow_dispatch
+on: 
+    push:
+       branches:
+        - '**main**'
+        - '**ZPROJ**'
+       paths:
+        - '**.cbl'
+        - '**.cpy'
       
 jobs:
   DBB_Build_on_zOS:
@@ -59,15 +57,15 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} DMJTA1.${{ steps.removedChars.outputs.value }} --impactBuild 
           shell: cmd 
           
-        - name: Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
-          shell: cmd
-          
-        - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
-          shell: cmd 
-          
-                    
+#        - name: Package
+#          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  GeneralsBackendComponent ${{ env.MyWorkDir }}
+#          shell: cmd
+#          
+#        - name: Deploy  
+#          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest Deploy
+#          shell: cmd 
+#          
+#                    
 #        - name: Deploy to Dev
 #          run: | 
 #                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
