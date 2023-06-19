@@ -1,10 +1,10 @@
-name: Release-Build-Pipeline
+name: DevBuildPipeline
 ## Notes:
 # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
 # Global vars
 env:
   # SSH connection information
-  DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+  DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw SZNTQC11' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
   # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
   Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
   DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
@@ -12,14 +12,8 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
-on: 
-    push:
-       branches:
-        - '**Rel**'
-       paths:
-        - '**.cbl'
-        - '**.cpy'
-      
+on: workflow_dispatch
+
 jobs:
   DBB_Build_on_zOS:
     runs-on: self-hosted
@@ -35,9 +29,9 @@ jobs:
         - name: Clone repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
-        
+          
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild 
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
           shell: cmd 
           
         - name: Package
@@ -45,23 +39,8 @@ jobs:
           shell: cmd 
           
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance DEV https://9.76.61.223:8443 GeneralsBackendComponent:latest\nGeneralsAPIComponent:latest Deploy
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} Genapp-Deploy2 DEV https://rdbkucd1.cpolab.ibm.com:8443 GenAppComponent:latest Deploy
           shell: cmd 
           
-                    
-#        - name: Deploy to Dev
-#          run: | 
-#                $uri = 'https://9.76.61.223:8443/cli/applicationProcessRequest/request'
-#                [System.Net.ServicePointManager]::ServerCertificateValidationCallback = {$true}
-#                Invoke-RestMethod -Method 'Put' -Uri $uri -Body '{
-#                    "application":"General-Insurance",
-#                    "applicationProcess":"Deploy",
-#                    "environment":"DEV",
-#                      "versions":[{
-#                        "version":"latest",
-#                        "component":"GeneralsBackendComponent" 
-#                      }]
-#                }' -UseBasicParsing -Headers @{"Authorization" = "Basic $( [System.Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("admin:admin")))"} 
-#
-#
-#
+
+        

@@ -1,6 +1,6 @@
       ******************************************************************
       *                                                                *
-      * "RESTRICTED MATERIALS OF IBM".                                 *
+      * "RESTRICTED MATERIALS OF IBM"                                  *
       *                                                                *
       * CB12        test4 a                                            *
       *                                                                *
