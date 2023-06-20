@@ -20,12 +20,12 @@ env:
 on:
   pull_request:
     types:
-      - reopened
-  workflow_dispatch:
-    inputs:
-      Deploy:
-        description: 'Run Deploy to Dev'
-        required: true
+      - opened
+ # workflow_dispatch:
+ #   inputs:
+ #     Deploy:
+ #       description: 'Run Deploy to Dev'
+ #       required: true
 
       
 jobs:
@@ -39,7 +39,7 @@ jobs:
         MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyPR: https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
-        MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+        AppHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
         UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/GenappRepositoryProps.properties
         UCD_AppDeployProcess: 'Deploy'
     steps:
@@ -48,7 +48,7 @@ jobs:
         shell: cmd 
         
       - name: DBB Impact Build
-        run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
+        run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.AppHlq }} --impactBuild --verbose
         shell: cmd 
 
       - name: Package
