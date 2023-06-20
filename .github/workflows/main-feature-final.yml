@@ -17,7 +17,11 @@ on:
     push:
        branches:
         - '**TASK**'
-
+       paths:
+        - '**.cbl'
+        - '**.bms'
+        - '**.cpy'
+        
 jobs:
   DBB_Build_on_zOS:
     runs-on: self-hosted
