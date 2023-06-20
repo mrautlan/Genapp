@@ -21,6 +21,8 @@ on:
   pull_request:
     types:
       - opened
+    branches:
+      - '**Release**'
  # workflow_dispatch:
  #   inputs:
  #     Deploy:
