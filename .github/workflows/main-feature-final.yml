@@ -16,7 +16,7 @@ env:
 on: 
     push:
        branches:
-        - '**ZPROJ**'
+        - '**TASK**'
 
 jobs:
   DBB_Build_on_zOS:
