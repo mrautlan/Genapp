@@ -23,38 +23,42 @@ jobs:
         MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
         MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
         MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
-        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/${{ env.AppName }}  # Absolute path to workspace (root) directory containing all required source directories
+        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
     
-        - name: Cleanup repository
-          run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkSpace }}  
-          shell: cmd 
-          
-        - name: Collect Feature Branch name for Build Datasets
-          uses: bhowell2/github-substring-action@v1.0.0
-          id: one
+        - name: Retrieve branch name
+          uses: mad9000/actions-find-and-replace-string@3
+          id: getBranch
           with:
-            value: "${{ github.ref }}"
-            index_of_str: "refs/heads/"
-            length_from_start: 8
+            source: "${{ github.ref }}"
+            find: 'refs/heads/'        
+            replace: ''
             
-        - name: Remove - and / from HLQ
-          uses: mad9000/actions-find-and-replace-string@2
-          id: removedChars
+        - name: Remove - from build HLQ
+          uses: mad9000/actions-find-and-replace-string@3
+          id: removeChars
           with:
-            source: ${{ steps.one.outputs.substring }}
+            source: "${{ steps.getBranch.outputs.value }}"
             find: '-'        
             replace: ''
-          
+        
+        - name: Capture build HLQ for DBB
+          uses: bhowell2/github-substring-action@1.0.2
+          id: hlq
+          with: 
+            value: "${{ steps.removeChars.outputs.value }}"
+            length_from_start: 8
+                    
         - name: Clone repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
           
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.removedChars.outputs.value }} --impactBuild --verbose
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
           shell: cmd 
           
-
-
+        - name: Cleanup repository
+          run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkSpace }}  
+          shell: cmd 
