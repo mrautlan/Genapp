@@ -12,14 +12,8 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
-on: 
-    push:
-       branches:
-        - '**Rel**'
-       paths:
-        - '**.cbl'
-        - '**.cpy'
-      
+on:
+  workflow_dispatch:
 jobs:
   DBB_Build_on_zOS:
     runs-on: self-hosted
