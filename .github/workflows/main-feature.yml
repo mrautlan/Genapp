@@ -4,6 +4,7 @@ name: FeatureBuildPipelineTest
 # Global vars
 env:
   # SSH connection information
+  AppName: 'GenappML2'
   DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
   # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
   Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
@@ -22,10 +23,15 @@ jobs:
         MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
         MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
         MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
-        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
+        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/${{ env.AppName }}  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
+    
+        - name: Cleanup repository
+          run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkSpace }}  
+          shell: cmd 
+          
         - name: Clone repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
