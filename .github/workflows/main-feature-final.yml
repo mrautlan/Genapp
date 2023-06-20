@@ -1,4 +1,4 @@
-name: FeatureBuildPipelineTest
+name: FeaturePipelineFinal
 ## Notes:
 # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
 # Global vars
@@ -13,7 +13,10 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
-on: workflow_dispatch
+on: 
+    push:
+       branches:
+        - '**ZPROJ**'
 
 jobs:
   DBB_Build_on_zOS:
