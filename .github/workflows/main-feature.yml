@@ -32,12 +32,28 @@ jobs:
           run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkSpace }}  
           shell: cmd 
           
+        - name: Collect Feature Branch name for Build Datasets
+          uses: bhowell2/github-substring-action@v1.0.0
+          id: one
+          with:
+            value: "${{ github.ref }}"
+            index_of_str: "refs/heads/"
+            length_from_start: 8
+            
+        - name: Remove - and / from HLQ
+          uses: mad9000/actions-find-and-replace-string@2
+          id: removedChars
+          with:
+            source: ${{ steps.one.outputs.substring }}
+            find: '-'        
+            replace: ''
+          
         - name: Clone repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: cmd 
           
         - name: DBB Impact Build
-          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }} --impactBuild --verbose
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.removedChars.outputs.value }} --impactBuild --verbose
           shell: cmd 
           
 
