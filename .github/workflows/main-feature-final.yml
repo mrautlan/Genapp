@@ -13,6 +13,10 @@ env:
   UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
 # "on" trigger to manually start this workflow. Can add "pull, push..." for auto trigger.
 # see https://docs.github.com/en/actions/learn-github-actions/contexts
+  UCD_Dev_LPAR: 'DEV'
+  UCD_Test_LPAR: 'TEST'
+  UCD_Prod_LPAR: 'PROD'
+  UCD_Server_URL: 'https://9.76.61.223:8443'
 on: 
   workflow_dispatch:
     
@@ -27,11 +31,11 @@ jobs:
         MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
         MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+        UCDApplication: General-Insurance
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
         UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/GenappRepositoryProps.properties
         UCD_AppDeployProcess: 'Deploy'
         UCD_backendComponent: 'GeneralsBackendComponent'
-        UCD_Dev_LPAR: 'DEV'
     steps:
     
         - name: Retrieve branch name
@@ -70,7 +74,7 @@ jobs:
           shell: cmd 
 
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} ${{ UCDApplication }}  ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
           shell: cmd 
 
         - name: Cleanup repository
