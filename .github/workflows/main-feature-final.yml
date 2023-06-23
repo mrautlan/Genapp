@@ -70,7 +70,7 @@ jobs:
           shell: cmd 
 
         - name: Deploy  
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }}
+          run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} General-Insurance ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
           shell: cmd 
 
         - name: Cleanup repository
