@@ -23,5 +23,7 @@ jobs:
 
       - name: Push Tag
         run: |
+          tag_name=$(echo "${CI_COMMIT_REF_NAME}")
           git tag "${tag_name}"
           git push origin "${tag_name}"
+
