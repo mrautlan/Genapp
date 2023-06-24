@@ -8,6 +8,11 @@ jobs:
   create-release-candidate:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out Branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
       - name: Check for Existing Tag
         run: |
           tag_name=$(echo "${CI_COMMIT_REF_NAME}" | sed -e "s|refs/heads/||")-RC
