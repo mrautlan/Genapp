@@ -19,7 +19,7 @@ jobs:
           else
             echo "Creating branch"
             git checkout -b "${tag_name}"
+            echo "Creating tag"
+            git tag "${tag_name}"
+            echo "Success"
           fi
-      - name: Create Git Tag
-        run: |
-          git tag "${tag_name}"
