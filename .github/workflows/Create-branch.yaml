@@ -1,0 +1,24 @@
+name: Create Release Branch and Tag
+on:
+  create:
+    branches:
+      - refs/heads/rel*
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Main Branch
+        uses: actions/checkout@v2
+      - name: Check Tag Name
+        run: |
+          tag_name=$(echo "${GITHUB_REF}" | sed -e "s|refs/heads/||")-RC0
+          if git tag -l | grep -q "${tag_name}"; then
+            tag_name="${tag_name}-RC1"
+          fi
+      - name: Create Git Tag
+        run: |
+          git tag "${tag_name}"
+      - name: Create Release Branch
+        run: |
+          git checkout -b "${tag_name}"
