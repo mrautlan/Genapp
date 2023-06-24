@@ -19,6 +19,9 @@ jobs:
           if git tag -l | grep -q "${tag_name}"; then
             echo "Deleting existing tag ${tag_name}"
             git tag -d "${tag_name}"
+          else
+            echo "No existing tag found"
+            exit 1
           fi
 
       - name: Create Tag
@@ -26,3 +29,9 @@ jobs:
           tag_name=$(echo "${CI_COMMIT_REF_NAME}")
           git tag "${tag_name}"
           git push origin "${tag_name}"
+
+      - name: Delete Branch
+        if: ${{ steps.check-for-existing-tag.exitCode == 1 }}
+        run: |
+          echo "Deleting branch ${CI_COMMIT_REF_NAME}"
+          git branch -D "${CI_COMMIT_REF_NAME}"
