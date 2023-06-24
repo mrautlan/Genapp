@@ -17,8 +17,6 @@ jobs:
             echo "Tag already exists, deleting branch"
             git branch -D "${tag_name}"
           else
-            echo "Creating branch"
-            git checkout -b "${tag_name}"
             echo "Creating tag"
             git tag "${tag_name}"
             echo "Success"
