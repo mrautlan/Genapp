@@ -26,6 +26,5 @@ jobs:
           tag_name=$(echo "${CI_COMMIT_REF_NAME}")
           if [ -n "${tag_name}" ]; then
             git tag "${tag_name}"
-            git push origin "${tag_name}"
+            git push origin "${tag_name}":refs/heads/${{ github.ref }}"
           fi
-
