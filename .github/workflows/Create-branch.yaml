@@ -2,13 +2,13 @@ name: Create Release Branch and Tag
 on:
   create:
     branches:
-      - refs/heads/Rel*
+      - refs/heads/rel*
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Main Branch
+      - name: Checkout Master Branch
         uses: actions/checkout@v2
       - name: Check Tag Name
         run: |
