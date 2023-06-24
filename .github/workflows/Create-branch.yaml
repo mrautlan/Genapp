@@ -14,12 +14,13 @@ jobs:
         run: |
           tag_name=$(echo "${GITHUB_REF}" | sed -e "s|refs/heads/||")
           if git tag -l | grep -q "${tag_name}"; then
-            echo "Tag already exists, deleting branch"
-            git branch -D "${tag_name}"
+            echo "Tag already exists, deleting tag and creating new one"
+            git tag -d "${tag_name}"
+            git tag "${tag_name}"
           else
             echo "Creating tag"
             git tag "${tag_name}"
-            echo "Pushing tag to origin"
-            git push origin "${tag_name}"
-            echo "Success"
           fi
+      - name: Push Tag to Master
+        run: |
+          git push origin "${tag_name}"
