@@ -1,26 +1,23 @@
-name: Create Release Branch and Tag
+name: Create Release Candidate
 on:
   create:
     branches:
       - refs/heads/rel*
 
 jobs:
-  create-release:
+  create-release-candidate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Master Branch
-        uses: actions/checkout@v2
-      - name: Check Tag Name
+      - name: Check for Existing Tag
         run: |
-          tag_name=$(echo "${GITHUB_REF}" | sed -e "s|refs/heads/||")
+          tag_name=$(echo "${CI_COMMIT_REF_NAME}" | sed -e "s|refs/heads/||")-RC
           if git tag -l | grep -q "${tag_name}"; then
-            echo "Tag already exists, deleting tag and creating new one"
+            echo "Deleting existing tag ${tag_name}"
             git tag -d "${tag_name}"
-            git tag "${tag_name}"
-          else
-            echo "Creating tag"
-            git tag "${tag_name}"
           fi
-      - name: Push Tag to Master
+
+      - name: Create Tag
         run: |
+          tag_name=$(echo "${CI_COMMIT_REF_NAME}" | sed -e "s|refs/heads/||")-RC
+          git tag "${tag_name}"
           git push origin "${tag_name}"
