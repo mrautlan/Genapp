@@ -24,7 +24,7 @@ jobs:
           # Github Token
           token: ${{ secrets.RELEASE_TOKEN }}
           # Version (e.g. v0.1.0)
-          version: v.0.0.1
+          version: v0.0.1
           # Tag message
           message: "This is the start of a release candidate called ${{ github.ref_name }}-RC tag"
           
