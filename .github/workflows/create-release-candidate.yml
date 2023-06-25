@@ -16,7 +16,7 @@ jobs:
           
       - name: Create Tag
         run: |
-          git config --global user.email "jt-atkins@hotmail.com"
+          git config --global user.email "jt-atkins@uk.ibm.com"
           git config --global user.name "jt-atkins"
           git tag -a ${{ github.ref }}-RC -m "Release tag"
           git push origin ${{ github.ref }}
