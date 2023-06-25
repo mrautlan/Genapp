@@ -1,31 +1,22 @@
-name: Create Release Candidate
+name: Create Tag on Release Branch
+
 on:
-  create:
+  push:
     branches:
-      - refs/heads/rel*
+      - "*Rel*"
 
 jobs:
-  create-release-candidate:
+  create-tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Branch
+      - name: Checkout Release Branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-
-      - name: Check for Existing Tag
+      - name: Create Tag
         run: |
-          tag_name=$(echo "${CI_COMMIT_REF_NAME}")
-          if git tag -l | grep -q "${tag_name}"; then
-            echo "Deleting existing tag ${tag_name}"
-            git tag -d "${tag_name}"
-          fi
-          
-      - name: Push tag to remote
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ tag_name }}
-          tags: 'true'
-          
-
+          git tag -a ${{ github.ref }} -m "Release tag"
+          git push origin ${{ github.ref }}
+      - name: Print Tag Name
+        run: |
+          echo "Tag Name: ${{ github.ref }}"
