@@ -18,19 +18,19 @@ jobs:
         run: |
           git config --global user.email "jt-atkins@uk.ibm.com"
           git config --global user.name "jt-atkins"
-          git tag -a ${{ github.ref }}-RC -m "Release tag"
+          git tag -a ${{ github.ref_name }}-RC -m "Release tag"
           git push origin ${{ github.ref }}
           
       - name: Print Tag Name
         run: |
-          echo "Tag Name: ${{ github.ref }}-RC"
+          echo "Tag Name: ${{ github.ref_name }}-RC"
           
       - name: Publish Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}-RC
-          release_name: Release ${{ github.ref }}-RC
-          body: "This is the start of a release candidate called ${{ github.ref }}-RC tag."
+          tag_name: ${{ github.ref_name }}-RC
+          release_name: Release ${{ github.ref_name }}-RC
+          body: "This is the start of a release candidate called ${{ github.ref_name }}-RC tag."
           prerelease: true
