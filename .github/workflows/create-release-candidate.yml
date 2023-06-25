@@ -14,10 +14,14 @@ jobs:
       - uses: fregante/setup-git-user@v2
         with:
           ref: ${{ github.ref }}
+          
       - name: Create Tag
-        run: |
+      - run: git config --global user.email "jt-atkins@hotmail.com"
+      - run: git config --global user.name "jt-atkins"
+      - run: |
           git tag -a ${{ github.ref }}-RC -m "Release tag"
           git push origin ${{ github.ref }}
+          
       - name: Print Tag Name
         run: |
           echo "Tag Name: ${{ github.ref }}-RC"
