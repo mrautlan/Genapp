@@ -27,8 +27,10 @@ jobs:
           
       - name: Publish Release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           tag_name: ${{ github.ref }}-RC
           release_name: Release ${{ github.ref }}-RC
-          body: "This is a release for the ${{ github.ref }}-RC tag."
-          token: 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
+          body: "This is the start of a release candidate called ${{ github.ref }}-RC tag."
+          prerelease: true
