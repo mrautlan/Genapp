@@ -4,8 +4,6 @@ on:
   create:
     branches:
       - "*Rel*"
-    branches-ignore:
-      - "*Rel*/*"
       
 jobs:
   create-tag:
