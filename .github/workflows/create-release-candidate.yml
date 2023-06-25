@@ -31,3 +31,4 @@ jobs:
           tag_name: ${{ github.ref }}-RC
           release_name: Release ${{ github.ref }}-RC
           body: "This is a release for the ${{ github.ref }}-RC tag."
+          token: ${{ secrets.RELEASE_TOKEN }}
