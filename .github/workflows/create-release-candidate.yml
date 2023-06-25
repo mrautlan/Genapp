@@ -26,13 +26,3 @@ jobs:
       - name: Print Tag Name
         run: |
           echo "Tag Name: ${{ github.ref_name }}-RC"
-          
-      - name: Publish Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}-RC
-          release_name: Release ${{ github.ref_name }}-RC
-          body: "This is the start of a release candidate called ${{ github.ref_name }}-RC tag."
-          prerelease: true
