@@ -17,11 +17,12 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Check Existing Tags
+        env: 
+          tag_name: "${{ github.ref_name }}-RC"
         run: |
-          tag_name = "${{ github.ref_name }}-RC"
-          if git tag -l "$tag_name" > /dev/null; then
-            git tag -d "$tag_name"
-            git push origin --delete "$tag_name"
+          if git tag -l "${{ tag_name }}" > /dev/null; then
+            git tag -d "${{ tag_name }}"
+            git push origin --delete "${{ tag_name }}"
           fi
 
       - name: Create Tag
