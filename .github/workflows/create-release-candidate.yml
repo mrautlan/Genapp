@@ -11,15 +11,12 @@ jobs:
     steps:
       - name: Checkout Release Branch
         uses: actions/checkout@v2
-      - uses: fregante/setup-git-user@v2
         with:
           ref: ${{ github.ref }}
-          
       - name: Create Tag
         run: |
-          git tag -a ${{ github.ref }} -m "Release tag"
+          git tag -a ${{ github.ref }}-RC -m "Release tag"
           git push origin ${{ github.ref }}
-          
       - name: Print Tag Name
         run: |
-          echo "Tag Name: ${{ github.ref }}"
+          echo "Tag Name: ${{ github.ref }}-RC"
