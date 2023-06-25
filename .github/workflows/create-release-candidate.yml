@@ -4,8 +4,8 @@ on:
   create:
     branches:
       - "*Rel*"
-    branches-ignore:
-      - "*Rel*/*"
+    branches-from:
+      - "master"
 
 jobs:
   create-tag:
@@ -15,6 +15,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
+
+      - name: Check Existing Tags
+        run: |
+          tag_name = "${{ github.ref_name }}-RC"
+          if git tag -l "$tag_name" > /dev/null; then
+            git tag -d "$tag_name"
+            git push origin --delete "$tag_name"
+          fi
 
       - name: Create Tag
         run: |
