@@ -3,7 +3,7 @@ name: Create Tag on Release Branch
 on:
   create:
     branches:
-      - "*Rel*"
+      - "refs/heads/*Rel*"
       
 jobs:
   create-tag:
