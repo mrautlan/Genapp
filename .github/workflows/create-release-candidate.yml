@@ -20,9 +20,9 @@ jobs:
         env: 
           tag_name: "${{ github.ref_name }}-RC"
         run: |
-          if git tag -l "${{ tag_name }}" > /dev/null; then
-            git tag -d "${{ tag_name }}"
-            git push origin --delete "${{ tag_name }}"
+          if git tag -l "${{ env.tag_name }}" > /dev/null; then
+            git tag -d "${{ env.tag_name }}"
+            git push origin --delete "${{ env.tag_name }}"
           fi
 
       - name: Create Tag
