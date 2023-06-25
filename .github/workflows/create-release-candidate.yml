@@ -1,7 +1,7 @@
 name: Create Tag on Release Branch
 
 on:
-  push:
+  create:
     branches:
       - "*Rel*"
 
