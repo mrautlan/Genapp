@@ -24,3 +24,10 @@ jobs:
       - name: Print Tag Name
         run: |
           echo "Tag Name: ${{ github.ref }}-RC"
+          
+      - name: Publish Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref }}-RC
+          release_name: Release ${{ github.ref }}-RC
+          body: "This is a release for the ${{ github.ref }}-RC tag."
