@@ -20,11 +20,12 @@ jobs:
             echo "Deleting existing tag ${tag_name}"
             git tag -d "${tag_name}"
           fi
+          
+      - name: Push tag to remote
+        uses: ad-m/github-push-action@v0.5.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          tags: 'true'
+          
 
-      - name: Push Tag
-        run: |
-          tag_name=$(echo "${CI_COMMIT_REF_NAME}")
-          if [ -n "${tag_name}" ]; then
-            git tag "${tag_name}"
-            git push origin --tags
-          fi
