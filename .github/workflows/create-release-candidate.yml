@@ -3,10 +3,24 @@ name: Create Tag on Release Branch
 on:
   create:
     branches:
-      - Rel*
+      - refs/heads/*Rel*
       
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      condition: ${{ steps.condition.outputs.condition }}
+    steps:
+      - id: condition
+        run: |
+          if [[ ${{ github.head_ref }} == refs/heads/ZPROJ-\*\*\*Release\* ]]; then
+             echo "condition=true" >> $GITHUB_OUTPUT
+          else
+             echo "condition=false" >> $GITHUB_OUTPUT  
+          fi
+          
   create-tag:
+    needs: [setup]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Release Branch
