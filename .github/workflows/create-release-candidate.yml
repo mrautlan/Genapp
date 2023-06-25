@@ -23,6 +23,8 @@ jobs:
           if git tag -l "${{ env.tag_name }}" > /dev/null; then
             git tag -d "${{ env.tag_name }}"
             git push origin --delete "${{ env.tag_name }}"
+          else
+            echo "Tag not found, continuing to create tag"
           fi
 
       - name: Create Tag
@@ -31,6 +33,8 @@ jobs:
           git config --global user.name "jt-atkins"
           git tag -a ${{ github.ref }} -m "Release tag"
           git push origin --tags
+          
+          
 
       - name: Print Tag Name
         run: |
