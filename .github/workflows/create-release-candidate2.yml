@@ -1,0 +1,37 @@
+name: Create Tag on Release Branch
+
+on:
+  create:
+    branches:
+      - refs/heads/*Rel*
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Release Branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Check Existing Tags
+        run: |
+          tag_name = ${{ github.ref }}
+
+          if git tag -l "$tag_name" > /dev/null; then
+            git tag -d "$tag_name"
+            git push origin --delete "$tag_name"
+          else
+            echo "Tag not found, continuing to create tag"
+          fi
+
+      - name: Create Tag
+        run: |
+          git config --global user.email "jt-atkins@uk.ibm.com"
+          git config --global user.name "jt-atkins"
+          git tag -a ${{ github.ref }} -m "Release tag"
+          git push origin --tags
+
+      - name: Print Tag Name
+        run: |
+          echo "Tag Name: ${{ github.ref }}"
