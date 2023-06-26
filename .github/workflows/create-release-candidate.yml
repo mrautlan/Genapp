@@ -13,7 +13,7 @@ jobs:
     steps:
       - id: condition
         run: |
-          if [[ ${{ github.head_ref }} == '\*Release\*' ]]; then
+          if [[ ${{ github.head_ref }} == *"Rel"* ]]; then
              echo "condition=true" >> $GITHUB_OUTPUT
           else
              echo "condition=false" >> $GITHUB_OUTPUT  
