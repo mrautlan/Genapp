@@ -18,7 +18,9 @@ env:
   UCD_Prod_LPAR: 'PROD'
   UCD_Server_URL: 'https://9.76.61.223:8443'
 on: 
-  workflow_dispatch:
+  push:
+    branches: 
+      - '*TASK*'
     
         
 jobs:
