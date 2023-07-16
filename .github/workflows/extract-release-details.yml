@@ -39,6 +39,10 @@ jobs:
             if [ ${#new_tag} -gt 5 ]; then
               new_tag="v$major.$minor"
             fi
+            if [[ ! $new_tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "The git tag is not in semantic version format. Exiting."
+              exit 1
+            fi
             echo "new_tag=$new_tag" >> $GITHUB_ENV
           fi
           git tag $new_tag
