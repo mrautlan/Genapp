@@ -19,7 +19,8 @@ jobs:
 
       - name: Get commit hash
         run: |
-          echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
+          commit_hash=$(git rev-parse HEAD)
+          echo "::set-output name=commit_hash::$commit_hash"
 
       - name: Create .releasedetails file
         run: |
