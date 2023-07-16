@@ -1,9 +1,9 @@
 name: Extract release details
 
 on:
-  push:
+  create:
     branches:
-      - 'Release_*'
+      - '*Release_*'
 
 jobs:
   extract-release-details:
