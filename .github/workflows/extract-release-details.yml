@@ -17,21 +17,28 @@ jobs:
           git config --global user.email "prince111j@gmail.com"
           git config --global user.name "Prince111j"
 
-      - name: Get commit hash
+      - name: Create release tag
         run: |
-          commit_hash=$(git rev-parse HEAD)
-          echo "::set-output name=commit_hash::$commit_hash"
+          current_tag=$(git describe --tags --abbrev=0)
+          if [[ -z $current_tag ]]; then
+            tag="v1.0.0"
+          else
+            major=$(echo $current_tag | cut -d. -f1)
+            minor=$(echo $current_tag | cut -d. -f2)
+            patch=$(echo $current_tag | cut -d. -f3)
+            new_tag="v$major.$minor.$(($patch + 1))"
+          fi
+          git tag $new_tag
 
       - name: Create .releasedetails file
         run: |
           if [[ -f .releasedetails ]]; then
             git rm .releasedetails
           fi
-          echo "commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}" > .releasedetails
+          echo "tag: $new_tag" > .releasedetails
 
-
-      - name: Push .releasedetails file
+      - name: Push git tag and .releasedetails file
         run: |
           git add .releasedetails
-          git commit -m "Add .releasedetails file"
+          git commit -m "Add release details"
           git push
