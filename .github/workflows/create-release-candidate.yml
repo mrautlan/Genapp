@@ -1,9 +1,6 @@
 name: Create Tag on Release Branch
 
 on:
-  create:
-    branches:
-      - refs/heads/*Rel*
 
 jobs:
   setup:
