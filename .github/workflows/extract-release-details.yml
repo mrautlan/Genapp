@@ -18,7 +18,7 @@ jobs:
 
       - name: Get parent branch name
         run: |
-          parent_branch=$(git rev-parse --abbrev-ref HEAD^)
+          parent_branch=$(git rev-parse --abbrev-ref HEAD^ --)
           echo "::set-output name=parent_branch::$parent_branch"
 
       - name: Create .releasedetails file
