@@ -35,11 +35,11 @@ jobs:
             minor=$(echo $current_tag | cut -d. -f2)
             patch=0
             next_patch=$(($patch + 1))
-            new_tag="v$major.$minor.$next_patch"
+            new_tag="v$major.$minor.$next_patch-alpha.1"
             if [ ${#new_tag} -gt 5 ]; then
-              new_tag="v$major.$minor"
+              new_tag="v$major.$minor-alpha.1"
             fi
-            if [[ ! $new_tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            if [[ ! $new_tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+-[0-9a-zA-Z]+$ ]]; then
               echo "The git tag is not in semantic version format. Exiting."
               exit 1
             fi
