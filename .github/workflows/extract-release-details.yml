@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set user email and name
+        run: |
+          git config --global user.email "prince111j@gmail.com"
+          git config --global user.name "Prince111j"
+          
       - name: Get commit hash
         run: |
           echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
