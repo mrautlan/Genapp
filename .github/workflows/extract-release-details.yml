@@ -19,7 +19,8 @@ jobs:
           
       - name: Get commit hash
         run: |
-          echo "::set-output name=commit_hash::$(git rev-parse HEAD@{1})"
+          commit_hash=$(git rev-parse HEAD@{1})
+          echo "::set-output name=commit_hash::$commit_hash"
 
       - name: Create .releasedetails file
         run: |
@@ -27,7 +28,6 @@ jobs:
             git rm .releasedetails
           fi
           echo "commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}" > .releasedetails
-
 
       - name: Push .releasedetails file
         run: |
