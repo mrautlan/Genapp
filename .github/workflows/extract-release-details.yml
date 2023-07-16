@@ -44,7 +44,7 @@ jobs:
           if [[ -f .releasedetails ]]; then
             git rm .releasedetails
           fi
-          echo "${{ env.new_tag }}" >> .releasedetails
+          echo "${{ env.new_tag }}" > .releasedetails
 
       - name: Push git tag and .releasedetails file
         run: |
