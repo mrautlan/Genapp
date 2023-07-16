@@ -1,10 +1,8 @@
 name: Create Tag on Release Branch
 
 on:
-  create:
-    branches:
-      - refs/heads/*Rel*
-
+  workflow_dispatch:
+    
 jobs:
   create-tag:
     runs-on: ubuntu-latest
