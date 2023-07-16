@@ -1,4 +1,4 @@
-name: Extract release details
+name: Create release details
 
 on:
   create:
