@@ -1,7 +1,8 @@
 name: Create Tag on Release Branch
 
 on:
-
+  workflow_dispatch:
+    
 jobs:
   setup:
     runs-on: ubuntu-latest
