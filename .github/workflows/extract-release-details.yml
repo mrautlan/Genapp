@@ -26,7 +26,6 @@ jobs:
           git fetch --tags
 
       - name: Create release tag
-        id: tag 
         run: |
           current_tag=$(git describe --tags --abbrev=0 --always)
           if [[ -z $current_tag ]]; then
@@ -37,7 +36,10 @@ jobs:
             patch=0
             next_patch=$(($patch + 1))
             new_tag="v$major.$minor.$next_patch"
-            echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+            if [ ${#new_tag} -gt 5 ]; then
+              new_tag="v$major.$minor"
+            fi
+            echo "::set-output name=new_tag::$new_tag"
           fi
           git tag $new_tag
 
@@ -46,10 +48,11 @@ jobs:
           if [[ -f .releasedetails ]]; then
             git rm .releasedetails
           fi
-          echo "${{ steps.tag.outputs.new_tag }}" > .releasedetails
+          echo "${{ env.new_tag }}" > .releasedetails
 
       - name: Push git tag and .releasedetails file
         run: |
           git add .releasedetails
           git commit -m "Add release details"
           git push
+          git push --tags
