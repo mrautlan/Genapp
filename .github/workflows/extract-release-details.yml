@@ -1,0 +1,36 @@
+name: Extract release details
+
+on:
+  push:
+    branches:
+      - 'Release_*'
+
+jobs:
+  extract-release-details:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get commit hash
+        run: |
+          echo "::set-output name=commit_hash::$(git rev-parse HEAD)"
+
+      - name: Get parent branch name
+        run: |
+          parent_branch=$(git rev-parse --abbrev-ref HEAD^1)
+          echo "::set-output name=parent_branch::$parent_branch"
+
+      - name: Create .releasedetails file
+        run: |
+          if [[ -f .releasedetails ]]; then
+            git rm .releasedetails
+          fi
+          echo "commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}" > .releasedetails
+          echo "parent_branch: ${{ steps.parent_branch.outputs.parent_branch }}" >> .releasedetails
+
+      - name: Push .releasedetails file
+        run: |
+          git add .releasedetails
+          git commit -m "Add .releasedetails file"
+          git push
