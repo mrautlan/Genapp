@@ -26,6 +26,7 @@ jobs:
           git fetch --tags
 
       - name: Create release tag
+        id: tag 
         run: |
           current_tag=$(git describe --tags --abbrev=0 --always)
           if [[ -z $current_tag ]]; then
@@ -45,7 +46,7 @@ jobs:
           if [[ -f .releasedetails ]]; then
             git rm .releasedetails
           fi
-          echo "${{ env.new_tag }}" > .releasedetails
+          echo "${{ steps.tag.outputs.new_tag }}" > .releasedetails
 
       - name: Push git tag and .releasedetails file
         run: |
