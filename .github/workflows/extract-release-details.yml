@@ -36,7 +36,7 @@ jobs:
             patch=0
             next_patch=$(($patch + 1))
             new_tag="v$major.$minor.$next_patch"
-            echo "::set-output name=new_tag::$new_tag"
+            echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
           fi
           git tag $new_tag
 
