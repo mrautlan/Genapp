@@ -25,7 +25,7 @@ jobs:
         MyBranch: eglcobol # Branch on which to run the GHA pipeline
         MyWorkDir: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
         MyWorkSpace: /u/DMJTA1/GitHubWS/egl/Genapp_run_${{ github.run_number }}/GenappML2  # Absolute path to workspace (root) directory containing all required source directories
-        UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/GenappRepositoryProps.properties
+        UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/EGLGenappRepositoryProps.properties
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
