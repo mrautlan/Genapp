@@ -28,11 +28,12 @@ jobs:
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
-    
+      # Add step for Git Clone of EGL repo 
+      # Add step for Generating COBOL from EGL 
         - name: Run PowerShell script
           run: |
             Set-Variable -name 'repository_url' -value 'git@github.ibm.com:Jt-atkins/GenappML2.git'
-            Set-Variable -name 'checkout_branch' -value 'main'
+            Set-Variable -name 'checkout_branch' -value 'EGL-COBOL'
             Set-Variable -name 'copy_directory' -value 'C:\rbd'
             powershell -File C:\Users\JosephTaffe-Atkins\script2.ps1 -repository_url $repository_url -checkout_branch $checkout_branch -copy_directory $copy_directory
 
