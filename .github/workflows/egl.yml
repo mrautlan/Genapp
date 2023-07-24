@@ -29,14 +29,24 @@ jobs:
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
         MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
     steps:
-      # Add step for Git Clone of EGL repo 
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Get commit hash
+          run: echo "COMMIT_HASH=${GITHUB_SHA}" >> $GITHUB_ENV
+
+        - name: Display commit hash
+          run: echo "The recent commit hash is $COMMIT_HASH"
+      
       # Add step for Generating COBOL from EGL 
+      
         - name: Run PowerShell script
           run: |
             Set-Variable -name 'repository_url' -value 'git@github.ibm.com:Jt-atkins/GenappML2.git'
             Set-Variable -name 'checkout_branch' -value 'eglcobol'
             Set-Variable -name 'copy_directory' -value 'C:\rbd'
-            powershell -File C:\Users\JosephTaffe-Atkins\script2.ps1 -repository_url $repository_url -checkout_branch $checkout_branch -copy_directory $copy_directory
+            Set-Variable -name 'prefix_commit_message' -value 'C:\rbd'
+            powershell -File C:\Users\JosephTaffe-Atkins\script-halkbank.ps1 -repository_url $repository_url -checkout_branch $checkout_branch -copy_directory $copy_directory -prefix_commit_message $prefix_commit_message
 
         - name: Clone Cobol repository
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
