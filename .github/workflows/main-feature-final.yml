@@ -16,7 +16,7 @@ env:
   UCD_Dev_LPAR: 'DEV'
   UCD_Test_LPAR: 'TEST'
   UCD_Prod_LPAR: 'PROD'
-  UCD_Server_URL: 'https://9.76.61.223:8443'
+  UCD_Server_URL: 'https://9.76.61.222:8443'
 on: 
   push:
     branches: 
