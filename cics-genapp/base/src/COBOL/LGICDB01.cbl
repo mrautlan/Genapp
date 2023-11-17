@@ -1,6 +1,6 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS PROPERTY OF IBM.                           **
+      * LICENSED MATERIALS PROPERTY OF IBM.                            *
       *                                                                *
       * "RESTRICTED MATERIALS OF IBM.                                  *
       *                                                                *
