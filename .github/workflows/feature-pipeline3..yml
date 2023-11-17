@@ -62,7 +62,7 @@ on:
              
 concurrency:
     group: build-and-test
-  
+          
 jobs:
   DBB_Build_and_UCD_Packager:
     runs-on: self-hosted            
@@ -125,10 +125,9 @@ jobs:
           
           
           
-
-    deploy:
-        runs-on: self-hosted            
-        steps:
+        - deploy:
+          runs-on: self-hosted            
+          steps:
          -  name: Deploy-dev 
             if: ${{ github.event.inputs.dev_environment }}         
             # run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} ${{ env.UCDApplication }}  ${{ env.UCD_Dev_LPAR }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
