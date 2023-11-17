@@ -34,7 +34,7 @@ env:
 on: 
   push:
     branches: 
-      - '*db*'
+      - '*DB*'
   workflow_dispatch:
     inputs:
         dev_environment:
