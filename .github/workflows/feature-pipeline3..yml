@@ -13,7 +13,8 @@ env:
   MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
   MyBranch: ${{ github.ref }} # Branch on which to run the feature pipeline
   MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
-  MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/${{ AppName }}  # Absolute path to directory for storing the clone of source
+  # MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/${{ AppName }}  # Absolute path to directory for storing the clone of source
+  MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/GenappML2 
   MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
   
   # ssh scripts on z/OS
