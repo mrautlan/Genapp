@@ -66,8 +66,7 @@ concurrency:
 jobs:
   DBB_Build_and_UCD_Packager:
     runs-on: self-hosted            
-    steps:
- 
+    steps: 
         - name: Cleanup Build Workspace
           run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkDir }}  
           shell: cmd 
