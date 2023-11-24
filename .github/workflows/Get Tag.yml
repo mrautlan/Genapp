@@ -1,9 +1,10 @@
 on: 
   push:
     branches: 
-       - '*DEV*'
+       - '*v2*'
     paths:
        - '**.cbl'
+       
 jobs:
   Get_Tag:
     runs-on: self-hosted
@@ -11,6 +12,5 @@ jobs:
        - name: Get tag
          uses: dawidd6/action-get-tag@v1
 
-         
        - name: Use tag
          run: echo ${{steps.tag.outputs.tag}}
