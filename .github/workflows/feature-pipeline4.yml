@@ -34,7 +34,9 @@
     on: 
         push:
             branches: 
-                - '*v2*'   
+                - '*v2*' 
+            paths:
+                - '*.cbl'
         
         repository_dispatch:
             types: [ "jira-deploy" ]
@@ -110,7 +112,8 @@
               shell: cmd 
 
       Deploy:
-        runs-on: self-hosted            
+        runs-on: self-hosted  
+        needs: DBB_Build_and_UCD_Packager
         steps:            
             - name: Deploy-dev 
               if: ${{ github.event.inputs.dev_environment }}         
