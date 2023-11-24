@@ -55,7 +55,7 @@
                     echo environment is ${{ github.event.client_payload.env }}
      
             - name: Cleanup Build Workspace
-              run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkDir }}  
+              run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
               shell: cmd 
               
             - name: Retrieve Branch Name
