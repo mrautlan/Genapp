@@ -1,0 +1,116 @@
+    name: FeaturePipelineFinal4
+    ## Notes:
+    # A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
+    # Global vars
+    env:
+      # Application details 
+      AppName: 'GenappML2'
+      DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+      # DBB HLQ details. PLEASE NOTE: THE FEATURE BRANCH NAME WILL BE APPENDED TO THIS HLQ e.g. <APPHLQ>.<feature branch name in 8 characters>.*
+      MyHlq: DMJTA1.GENAPP # High level qualifier for partitioned data sets created during the build
+      
+      # Application project related variables
+      MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
+      MyBranch: ${{ github.ref }} # Branch on which to run the feature pipeline
+      MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
+      MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/${{ AppName }}  # Absolute path to directory for storing the clone of source
+      MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+      
+      # ssh scripts on z/OS
+      Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
+      DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
+      UCD_Package: '/u/DMJTA1/GitHubWS/scripts/PublishUCD.sh' # Script to perform the DBB build on z/OS
+      UCD_Deploy: '/u/DMJTA1/GitHubWS/scripts/DeployUCD.sh' # Script to perform the DBB build on z/OS
+      
+      # UCD server application details
+      UCD_Server_URL: 'https://9.76.61.222:8443'
+      UCD_AppProps: /u/DMJTA1/zAppBuild/test/Jt-atkins-dbb-zappbuild1/GenappRepositoryProps.properties
+      UCD_AppDeployProcess: 'Deploy'
+      UCD_backendComponent: 'GenAppComponent'
+      UCDApplication: GenApp-Deploy2
+      
+
+
+    on: 
+      push:
+        branches: [ *v2* ]       
+        tags: "*"
+      # pull_request: 
+        # branches: [ *v2* ] 
+      repository_dispatch:
+        types: [ "jira-deploy" ]
+        
+    concurrency:
+        group: build-and-test
+      
+    jobs:
+      DBB_Build_and_UCD_Packager:
+        runs-on: self-hosted            
+        steps:
+            - name: Print JIRA ticket number and environment
+                run: |
+                    echo JIRA number is ${{ github.event.client_payload.jira-issue }}
+                    echo environment is ${{ github.event.client_payload.env }}
+     
+            - name: Cleanup Build Workspace
+              run: ${{ env.DBB_Host }} rm -r ${{ env.MyWorkDir }}  
+              shell: cmd 
+              
+            - name: Retrieve Branch Name
+              uses: mad9000/actions-find-and-replace-string@3
+              id: getBranch
+              with:
+                source: "${{ github.ref }}"
+                find: 'refs/heads/'        
+                replaceAll: ''
+                
+            - name: Remove - From Build Hlq
+              uses: mad9000/actions-find-and-replace-string@3
+              id: removeChars
+              with:
+                source: "${{ steps.getBranch.outputs.value }}"
+                find: '-'        
+                replaceAll: ''
+                
+            - name: Remove / From Build Hlq
+              uses: mad9000/actions-find-and-replace-string@3
+              id: removeSpecial
+              with:
+                source: "${{ steps.removeChars.outputs.value }}"
+                find: '/'        
+                replaceAll: ''
+                
+            - name: Remove Spaces From Build Hlq
+              uses: mad9000/actions-find-and-replace-string@3
+              id: removeSpaces
+              with:
+                source: "${{ steps.removeSpecial.outputs.value }}"
+                find: ' '        
+                replaceAll: ''               
+            
+            - name: Limit Feature Branch Name to 8 Characters for Dbb Impact Build
+              uses: bhowell2/github-substring-action@1.0.2
+              id: hlq
+              with: 
+                value: "${{ steps.removeSpaces.outputs.value }}"
+                length_from_start: 8
+                        
+            - name: Clone Feature Branch to z/OS
+              run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+              shell: cmd 
+             
+            - name: DBB Impact Build
+              run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
+              shell: cmd 
+              
+            - name: UCD Package
+              run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_backendComponent }} ${{ env.MyWorkDir }}  ${{ env.UCD_AppProps }}
+              shell: cmd 
+
+      Deploy:
+        runs-on: self-hosted            
+        steps:            
+            - name: Deploy-dev 
+              if: ${{ github.event.inputs.dev_environment }}         
+              run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} ${{ env.UCDApplication }} ${{ github.event.client_payload.env }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
+              shell: cmd   
