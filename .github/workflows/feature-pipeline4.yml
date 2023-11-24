@@ -34,7 +34,8 @@
     on: 
     push:
         branches: 
-        - '*v2*'          
+        - '*v2*'   
+        
     repository_dispatch:
         types: [ "jira-deploy" ]
         
