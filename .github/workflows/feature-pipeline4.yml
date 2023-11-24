@@ -31,12 +31,7 @@
       
 
 
-    on: 
-        push:
-            branches: 
-                - '*v2*' 
-            paths:
-                - '**.cbl'
+
         
         repository_dispatch:
             types: [ jira-deploy ]
