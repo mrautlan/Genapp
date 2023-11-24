@@ -32,12 +32,10 @@
 
 
     on: 
-      push:
-        branches: [ *v2* ]       
-        tags: "*"
-      # pull_request: 
-        # branches: [ *v2* ] 
-      repository_dispatch:
+    push:
+        branches: 
+        - '*v2*'          
+    repository_dispatch:
         types: [ "jira-deploy" ]
         
     concurrency:
@@ -48,7 +46,7 @@
         runs-on: self-hosted            
         steps:
             - name: Print JIRA ticket number and environment
-                run: |
+              run: |
                     echo JIRA number is ${{ github.event.client_payload.jira-issue }}
                     echo environment is ${{ github.event.client_payload.env }}
      
@@ -114,3 +112,4 @@
               if: ${{ github.event.inputs.dev_environment }}         
               run: ${{ env.DBB_Host }} ${{ env.UCD_Deploy }} ${{ env.UCDApplication }} ${{ github.event.client_payload.env }} ${{ env.UCD_Server_URL }} ${{ env.UCD_backendComponent }}:${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_AppDeployProcess }} ${{ env.UCD_AppProps }}
               shell: cmd   
+ 
