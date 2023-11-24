@@ -118,9 +118,7 @@ jobs:
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
           shell: cmd 
           
-        - name: UCD Package
-          run: ${{ env.DBB_Host }} ${{ env.UCD_Package }} ${{ env.MyBranch }}.${{ github.run_number }}  ${{ env.UCD_backendComponent }} ${{ env.MyWorkDir }}  ${{ env.UCD_AppProps }}
-          shell: cmd 
+
           
           
           
