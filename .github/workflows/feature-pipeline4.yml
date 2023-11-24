@@ -36,7 +36,7 @@
             branches: 
                 - '*v2*' 
             paths:
-                - '*.cbl'
+                - '**.cbl'
         
         repository_dispatch:
             types: [ "jira-deploy" ]
