@@ -5,14 +5,13 @@ on:
     paths:
        - '**.cbl'
 jobs:
- Test:
-   runs-on: self-hosted
-   steps:
-     - name: Get tag
-       id: tag
-       uses: dawidd6/action-get-tag@v1
-       with:
-           strip_v: true
+  Get_Tag:
+    runs-on: self-hosted
+    steps:
+       - name: Get tag
+         uses: dawidd6/action-get-tag@v1
+         with:
+             strip_v: true
          
-     - name: Use tag
-       run: echo ${{steps.tag.outputs.tag}}
+       - name: Use tag
+         run: echo ${{steps.tag.outputs.tag}}
