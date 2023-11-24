@@ -9,8 +9,9 @@ jobs:
   Get_Tag:
     runs-on: self-hosted
     steps:
-       - name: Get tag
-         uses: dawidd6/action-get-tag@v1
+      - id: get_version
+        uses: battila7/get-version-action@v2
 
-       - name: Use tag
-         run: echo ${{steps.tag.outputs.tag}}
+      - run: echo ${{ steps.get_version.outputs.version }}
+
+      - run: echo ${{ steps.get_version.outputs.version-without-v }}
