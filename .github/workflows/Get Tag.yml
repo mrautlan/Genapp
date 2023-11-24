@@ -2,9 +2,9 @@ on:
   push:
     branches: 
        - '*DEV*'
-    path:
+    paths:
        - '**.cbl'
-Job:
+jobs:
  Test:
    runs-on: self-hosted
    steps:
