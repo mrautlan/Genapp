@@ -40,7 +40,10 @@
         
     concurrency:
         group: build-and-test
-      
+        
+    permissions:
+        contents: read  
+        
     jobs:
       DBB_Build_and_UCD_Packager:
         runs-on: self-hosted            
