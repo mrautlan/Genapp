@@ -32,12 +32,12 @@
 
 
     on: 
-    push:
-        branches: 
-        - '*v2*'   
+        push:
+            branches: 
+                - '*v2*'   
         
-    repository_dispatch:
-        types: [ "jira-deploy" ]
+        repository_dispatch:
+            types: [ "jira-deploy" ]
         
     concurrency:
         group: build-and-test
