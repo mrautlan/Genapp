@@ -1,4 +1,4 @@
-name: Read Tag from File and Store in Variable
+name: Read Tag from File and build using tag as baseline
 
 on: 
   push:
@@ -8,7 +8,7 @@ on:
       - '**.cbl'
 
 jobs:
-  read-tag:
+  Build-Feature-Branch-Rules:
     runs-on: ubuntu-latest
 
     steps:
