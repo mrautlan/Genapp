@@ -26,7 +26,7 @@ jobs:
               console.log(`Tag value is ${tag}`);
               core.setOutput('tag', tag);
             } catch (error) {
-              console.log('You need to work on a valid feature branch');
+              console.log('You need to work on a valid feature branch with a TAG.txt, please branch from Main again');
               core.setFailed('TAG.txt file not found');
             }
 
