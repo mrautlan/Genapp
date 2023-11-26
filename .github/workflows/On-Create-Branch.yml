@@ -6,8 +6,8 @@ on:
 jobs:
   get-latest-tag:
     runs-on: ubuntu-latest
-    outputs:
-      commitFailed: ${{ steps.check-failure.outputs.commitFailed }}
+#    outputs:
+#      commitFailed: ${{ steps.check-failure.outputs.commitFailed }}
 
     steps:
       - name: Checkout repository
