@@ -1,0 +1,30 @@
+name: Read Tag from File and Store in Variable
+
+on: 
+  push:
+    branches: 
+      - '*'
+    paths:
+      - '**.cbl'
+      
+jobs:
+  read-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Read tag from file and set as output
+        id: readfile
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const tag = fs.readFileSync('TAG.txt', 'utf8');
+            console.log(`Tag value is ${tag}`);
+            core.setOutput('tag', tag);
+
+      # Example step using the output
+      - name: Use the Tag
+        run: echo "The tag value is ${{ steps.readfile.outputs.tag }}"
