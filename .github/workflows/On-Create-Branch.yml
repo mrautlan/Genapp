@@ -4,7 +4,7 @@ on:
       - '*'
 
 jobs:
-  get-latest-tag:
+  create-branch-rules:
     runs-on: ubuntu-latest
 #    outputs:
 #      commitFailed: ${{ steps.check-failure.outputs.commitFailed }}
