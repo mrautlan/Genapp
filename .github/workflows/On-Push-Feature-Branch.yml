@@ -1,36 +1,91 @@
-name: Read Tag from File and build using tag as baseline
+name: FeaturePipelineFinal
+## Notes:
+# A sample z/OS DBB workflow using GitHub Actions (GHA) with SSH connection
+# Global vars
+env:
+          # SSH connection information
+          AppName: 'Genapp'
+          DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+          # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
+          Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
+          DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
 
 on: 
   push:
     branches: 
       - '*'
-    paths:
-      - '**.cbl'
-
+    
+        
 jobs:
-  Build-Feature-Branch-Rules:
-    runs-on: ubuntu-latest
-
+  DBB_Build_on_zOS:
+    runs-on: self-hosted
+    env:
+        # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
+        MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
+        MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
+        MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
+        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/Genapp  # Absolute path to workspace (root) directory containing all required source directories
+        MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
+        UCDApplication: General-Insurance
+        MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+        
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Read tag from file and set as output
-        id: readfile
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            try {
-              const tag = fs.readFileSync('TAG.txt', 'utf8');
-              console.log(`Tag value is ${tag}`);
-              core.setOutput('tag', tag);
-            } catch (error) {
-              console.log('You need to work on a valid feature branch with a TAG.txt, please branch from Main again');
-              core.setFailed('TAG.txt file not found');
-            }
-
-      # Example step using the output
-      - name: Use the Tag
-        if: success()
-        run: echo "The previous production release tag value is ${{ steps.readfile.outputs.tag }}"
+    
+        - name: Retrieve branch name
+          uses: mad9000/actions-find-and-replace-string@3
+          id: getBranch
+          with:
+            source: "${{ github.ref }}"
+            find: 'refs/heads/'        
+            replace: ''
+            
+        - name: Cleanup Build Workspace
+          run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
+          shell: cmd 
+          
+        - name: Retrieve Branch Name
+          uses: mad9000/actions-find-and-replace-string@3
+          id: getBranch
+          with:
+            source: "${{ github.ref }}"
+            find: 'refs/heads/'        
+            replaceAll: ''
+            
+        - name: Remove - From Build Hlq
+          uses: mad9000/actions-find-and-replace-string@3
+          id: removeChars
+          with:
+            source: "${{ steps.getBranch.outputs.value }}"
+            find: '-'        
+            replaceAll: ''
+            
+        - name: Remove / From Build Hlq
+          uses: mad9000/actions-find-and-replace-string@3
+          id: removeSpecial
+          with:
+            source: "${{ steps.removeChars.outputs.value }}"
+            find: '/'        
+            replaceAll: ''
+            
+        - name: Remove Spaces From Build Hlq
+          uses: mad9000/actions-find-and-replace-string@3
+          id: removeSpaces
+          with:
+            source: "${{ steps.removeSpecial.outputs.value }}"
+            find: ' '        
+            replaceAll: ''               
+        
+        - name: Limit Feature Branch Name to 8 Characters for Dbb Impact Build
+          uses: bhowell2/github-substring-action@1.0.2
+          id: hlq
+          with: 
+            value: "${{ steps.removeSpaces.outputs.value }}"
+            length_from_start: 8
+                    
+        - name: Clone Feature Branch to z/OS
+          run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+          shell: cmd 
+         
+        - name: DBB Impact Build
+          run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
+          shell: cmd 
