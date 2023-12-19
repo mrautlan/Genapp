@@ -5,15 +5,16 @@ name: FeaturePipelineFinal
 env:
           # SSH connection information
           AppName: 'Genapp'
-          DBB_Host: '"C:\Program Files\PuTTY\plink.exe" DMJTA1@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+          # todo: edit ssh syntax
+          DBB_Host: '"C:\Program Files\PuTTY\plink.exe" MAXRAUT@WTSC47.CPOLAB.IBM.COM -pw ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
           # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
-          Clone: '/u/DMJTA1/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
-          DBB_Build: '/u/DMJTA1/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
+          Clone: '/u/maxraut/GitHubWS/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
+          DBB_Build: '/u/maxraut/GitHubWS/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
 
 on: 
   push:
     branches: 
-      - '*'
+      - 'Test*'
     
         
 jobs:
@@ -23,21 +24,13 @@ jobs:
         # Project related variables. GHA automatically fills in relevant repository information for values enclosed in ${{ ... }}.
         MyRepo: git@github.com:${{ github.repository }}.git # Source code repository URL (SSH)
         MyBranch: ${{ github.ref }} # Branch on which to run the GHA pipeline
-        MyWorkDir: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
-        MyWorkSpace: /u/DMJTA1/GitHubWS/Genapp_run_${{ github.run_number }}/Genapp  # Absolute path to workspace (root) directory containing all required source directories
+        MyWorkDir: /u/maxraut/GitHubWS/Genapp_run_${{ github.run_number }} # Absolute path to directory for storing the clone and build outputs
+        MyWorkSpace: /u/maxraut/GitHubWS/Genapp_run_${{ github.run_number }}/Genapp  # Absolute path to workspace (root) directory containing all required source directories
         MyApplication: cics-genapp # Application directory name (relative to MyWorkSpace)
-        UCDApplication: General-Insurance
-        MyHlq: DMJTA1 # High level qualifier for partitioned data sets created during the build
+       # UCDApplication: General-Insurance
+        MyHlq: MAXRAUT # High level qualifier for partitioned data sets created during the build
         
     steps:
-    
-        - name: Retrieve branch name
-          uses: mad9000/actions-find-and-replace-string@3
-          id: getBranch
-          with:
-            source: "${{ github.ref }}"
-            find: 'refs/heads/'        
-            replace: ''
             
         - name: Cleanup Build Workspace
           run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
