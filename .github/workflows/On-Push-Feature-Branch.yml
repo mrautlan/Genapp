@@ -34,7 +34,7 @@ jobs:
             
         - name: Cleanup Build Workspace
           run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
-          shell: zsh
+          shell: bash
           
         - name: Retrieve Branch Name
           uses: mad9000/actions-find-and-replace-string@3
@@ -77,8 +77,8 @@ jobs:
                     
         - name: Clone Feature Branch to z/OS
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
-          shell: zsh 
+          shell: bash 
          
         - name: DBB Impact Build
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
-          shell: zsh 
+          shell: bash 
