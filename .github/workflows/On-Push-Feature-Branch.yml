@@ -6,7 +6,7 @@ env:
           # SSH connection information
           AppName: 'Genapp'
           # MacOS Syntax
-          #  DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM -i ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+          #   DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM -i ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
           DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
           # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
           Clone: '/u/maxraut/GitHubActionScripts/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
