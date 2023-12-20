@@ -6,8 +6,8 @@ env:
           # SSH connection information
           AppName: 'Genapp'
           # MacOS Syntax
-          #DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM -i ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
-          DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+          DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM -i ${{ secrets.WTSC47_PW }}' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
+         # DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
           # Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
           Clone: '/u/maxraut/GitHubActionScripts/scripts/git-clone-ssh.sh' # Script to clone the code from GitHub to z/OS
           DBB_Build: '/u/maxraut/GitHubActionScripts/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
@@ -34,8 +34,6 @@ jobs:
     steps:
             
         - name: Cleanup Build Workspace
-          env:
-           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
           shell: bash
           
@@ -79,13 +77,9 @@ jobs:
             length_from_start: 8
                     
         - name: Clone Feature Branch to z/OS
-          env:
-           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: bash 
          
         - name: DBB Impact Build
-          env:
-           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
           shell: bash 
