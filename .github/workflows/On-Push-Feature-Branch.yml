@@ -34,6 +34,8 @@ jobs:
     steps:
             
         - name: Cleanup Build Workspace
+          env:
+           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} rm -rf ${{ env.MyWorkDir }}  
           shell: bash
           
@@ -77,9 +79,13 @@ jobs:
             length_from_start: 8
                     
         - name: Clone Feature Branch to z/OS
+          env:
+           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: bash 
          
         - name: DBB Impact Build
+          env:
+           super_secret: ${{ secrets.WTSC47_PW }}
           run: ${{ env.DBB_Host }} ${{ env.DBB_Build }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyApplication }} ${{ env.MyHlq }}.${{ steps.hlq.outputs.substring }} --impactBuild --verbose
           shell: bash 
