@@ -10,7 +10,7 @@ env:
           DBB_Host: 'ssh MAXRAUT@WTSC47.CPOLAB.IBM.COM' # A valid SSH account on Z. With pre-generated and tested keys in the runner.
           #Pipeline scripts on z/OS (relative to the SSH user's Home Dir in USS)
           Clone: '/u/maxraut/GitHubActionScripts/scripts/clone.sh' # Script to clone the code from GitHub to z/OS
-          DBB_Build: '/u/maxraut/GitHubActionScripts/scripts/dbb-build.sh' # Script to perform the DBB build on z/OS
+          DBB_Build: '/u/maxraut/GitHubActionScripts/scripts/build.sh' # Script to perform the DBB build on z/OS
 
 on: 
   push:
