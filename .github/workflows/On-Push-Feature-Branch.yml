@@ -77,7 +77,8 @@ jobs:
             length_from_start: 8
                     
         - name: Clone Feature Branch to z/OS
-          run: ${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
+          run: ssh maxraut@wtsc47.cpolab.ibm.com /u/maxraut/git clone -b main git@github.com:mrautlan/Genapp.git > /u/maxraut/temp.log
+          #${{ env.DBB_Host }} ${{ env.Clone }} ${{ env.MyRepo }} ${{ env.MyWorkDir }} ${{ env.MyWorkSpace }} ${{ env.MyBranch }}
           shell: bash 
          
         - name: DBB Impact Build
